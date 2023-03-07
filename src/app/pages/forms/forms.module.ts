@@ -5,6 +5,7 @@ import { TagInputModule } from "ngx-chips";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 
+import { FormsComponentsOldComponent } from "./componentsold/componentsold.component";
 import { FormsComponentsComponent } from "./components/components.component";
 import { ElementsComponent } from "./elements/elements.component";
 import { ValidationComponent } from "./validation/validation.component";
@@ -14,6 +15,7 @@ import { FormsRoutes } from "./forms.routing";
 @NgModule({
   declarations: [
     FormsComponentsComponent,
+    FormsComponentsOldComponent,
     ElementsComponent,
     ValidationComponent
   ],
