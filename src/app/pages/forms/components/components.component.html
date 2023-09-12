@@ -3,7 +3,7 @@
     <div class=" header-body">
       <div class=" row align-items-center py-4">
         <div class=" col-lg-6 col-7">
-          <h6 class=" h2 text-white d-inline-block mb-0">Categoría</h6>
+          <h6 class=" h2 text-white d-inline-block mb-0">EnergyPlus</h6>
         </div>
       </div>
     </div>
@@ -17,23 +17,22 @@ http://bahamut.tamu.edu/Images/20150401%20IC3%204_0/Documentation/User%20Manual.
 https://fontawesome.com/v5/search -->
 
 <div class="container-fluid mt--6">
-  <div class="row">
-    <div class="col-lg-12">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 ">
       <div class="card-wrapper">
         <div class="card">
-          <div class="card-header"><h3 class=" mb-0">Subcategoría</h3></div>
+          <div class="card-header"><h3 class=" mb-0">Global</h3></div>
 
           <div class="card-body">
             <form>
               <div class="row">
-                
-                <div class="col-md-6">
+
+                <div class="col-md-12">
                   <div
                     class="form-group"
-                    [ngClass]="{ focused: focus === true }"
-                  >
+                    [ngClass]="{ focused: focus === true }">
                     <label class="form-control-label">
-                      Numérico
+                      Número de pisos
                     </label>
                     <div class="input-group input-group-merge">
                       <div class="input-group-prepend">
@@ -41,36 +40,167 @@ https://fontawesome.com/v5/search -->
                           <i class="fas fa-building"> </i>
                         </span>
                       </div>
-                      
+
                       <input
                         class=" form-control"
                         placeholder="Numérico"
                         type="number"
                         min="1"
+                        max="10"
                         step="1"
                         (focus)="focus = true"
-                        (blur)="focus = false"
-                      />
+                        (blur)="focus = false" />
                     </div>
                   </div>
                 </div>
 
-                <div class="col-md-6">
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card-wrapper">
+        <div class="card">
+          <div class="card-header"><h3 class=" mb-0">General</h3></div>
+
+          <div class="card-body">
+            <form>
+
+              <div class="row">
+
+                <div class="col-md-4">
                   <label class="form-control-label">
-                    Categórico
+                    Ciudad
                   </label>
 
-                  <select class=" form-control" data-toggle="select" id="selectr" (focus)="focus1 = true" (blur)="focus1 = false">
-                    <option value="elemento1"> Elemento 1 </option>
-                    <option value="elemento2"> Elemento 2 </option>
-                    <option value="elemento3"> Elemento 3 </option>
-                    <option value="elemento4"> Elemento 4 </option>
-                    <option value="elemento5"> Elemento 5 </option>
-                    <option value="elemento6"> Elemento 6 </option>
+                  <select class=" form-control" data-toggle="select"
+                    id="selectr" (focus)="focus1 = true" (blur)="focus1 = false">
+                    <option value="guayaquil"> Guayaquil </option>
+                    <option value="quito"> Quito </option>
+                    <option value="cuenca"> Cuenca </option>
+                    <option value="machala"> Machala </option>
+                    <option value="manta"> Manta </option>
+                    <option value="riobamba"> Riobamba </option>
+                  </select>
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-control-label">
+                    Zona climática
+                  </label>
+
+                  <select class=" form-control" data-toggle="select"
+                    id="selectr2" (focus)="focus2 = true" (blur)="focus2 = false">
+                    <option value="zc1"> ZC1 </option>
+                    <option value="zc2"> ZC2 </option>
+                    <option value="zc3"> ZC3 </option>
+                    <option value="zc4"> ZC4 </option>
+                    <option value="zc5"> ZC5 </option>
+                  </select>
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-control-label">
+                    Tipología
+                  </label>
+
+                  <select class=" form-control" data-toggle="select"
+                    id="selectr3" (focus)="focus3 = true" (blur)="focus3 = false">
+                    <option value="a"> A </option>
+                    <option value="b"> B </option>
+                    <option value="c"> C </option>
                   </select>
                 </div>
 
               </div>
+
+              <div class="row mt-4">
+                <div class="col-md-4">
+
+                  <div
+                    class="form-group"
+                    [ngClass]="{ focused: focus4 === true }">
+                    <label class="form-control-label">
+                      Longitud de fachada (F)
+                    </label>
+                    <div class="input-group input-group-merge">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-building"> </i>
+                        </span>
+                      </div>
+
+                      <input
+                        class=" form-control"
+                        placeholder="Numérico"
+                        type="number"
+                        step=".01"
+                        (focus)="focus4 = true"
+                        (blur)="focus4 = false" />
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-4">
+
+                  <div
+                    class="form-group"
+                    [ngClass]="{ focused: focus5 === true }">
+                    <label class="form-control-label">
+                      Longitud Lateral (L)
+                    </label>
+                    <div class="input-group input-group-merge">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-building"> </i>
+                        </span>
+                      </div>
+
+                      <input
+                        class=" form-control"
+                        placeholder="Numérico"
+                        type="number"
+                        step=".01"
+                        (focus)="focus5 = true"
+                        (blur)="focus5 = false" />
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-4">
+
+                  <div
+                    class="form-group"
+                    [ngClass]="{ focused: focus6 === true }">
+                    <label class="form-control-label">
+                      Altura (H)
+                    </label>
+                    <div class="input-group input-group-merge">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-building"> </i>
+                        </span>
+                      </div>
+
+                      <input
+                        class=" form-control"
+                        placeholder="Numérico"
+                        type="number"
+                        step=".01"
+                        (focus)="focus6 = true"
+                        (blur)="focus6 = false" />
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
             </form>
           </div>
         </div>

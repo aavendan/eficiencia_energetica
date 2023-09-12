@@ -16,6 +16,7 @@ export class FormsComponentsComponent implements OnInit {
   focus3;
   focus4;
   focus5;
+  focus6;
 
   tagItems = ["Bucharest", "Cluj", "Iasi", "Timisoara", "Piatra Neamt"];
 
@@ -31,10 +32,20 @@ export class FormsComponentsComponent implements OnInit {
   ngOnInit() {
     var selectr: any = document.getElementById("selectr");
     var options = {};
-    var optionsMultiple = { multiple: true };
     var selectorDefault = new Selectr(selectr, options);
-    var selectrmultiple: any = document.getElementById("selectr-multiple");
 
+    var selectr2: any = document.getElementById("selectr2");
+    var options = {};
+    var selectorDefault2 = new Selectr(selectr2, options);
+
+    var selectr3: any = document.getElementById("selectr3");
+    var options = {};
+    var selectorDefault3 = new Selectr(selectr3, options);
+
+
+
+    var optionsMultiple = { multiple: true };
+    var selectrmultiple: any = document.getElementById("selectr-multiple");
     var selectorMultiple = new Selectr(selectrmultiple, optionsMultiple);
 
     var c: any = document.getElementById("input-slider"),

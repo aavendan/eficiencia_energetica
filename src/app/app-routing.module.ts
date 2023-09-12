@@ -10,7 +10,7 @@ import { PresentationComponent } from "./pages/presentation/presentation.compone
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "forms/components",
+    redirectTo: "eficiency/parameters",
     pathMatch: "full"
   },
   {
@@ -18,7 +18,7 @@ const routes: Routes = [
       component: AdminLayoutComponent,
       children: [
         {
-          path: "forms",
+          path: "eficiency",
           loadChildren: () => import('./pages/forms/forms.module').then(m => m.FormsModules)
         },
       ]

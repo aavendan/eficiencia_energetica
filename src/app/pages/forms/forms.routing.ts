@@ -10,7 +10,7 @@ export const FormsRoutes: Routes = [
     path: "",
     children: [
       {
-        path: "components",
+        path: "parameters",
         component: FormsComponentsComponent
       }
     ]

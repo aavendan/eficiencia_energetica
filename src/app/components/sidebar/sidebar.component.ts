@@ -100,17 +100,17 @@ export const ROUTES: RouteInfo[] = [
   //   ]
   // },
   {
-    path: "/forms/components",
-    title: "Categoría",
+    path: "/eficiency/parameters",
+    title: "Parámetros",
     type: "link",
     icontype: "ni-archive-2 text-green",
   },
-  {
-    path: "/forms/old",
-    title: "Form elements Old",
-    type: "link",
-    icontype: "ni-archive-2 text-green",
-  },
+  // {
+  //   path: "/eficiency/old",
+  //   title: "Form elements Old",
+  //   type: "link",
+  //   icontype: "ni-archive-2 text-green",
+  // },
   // {
   //   path: "/tables",
   //   title: "Tables",
