@@ -33,7 +33,7 @@
            node-version: "18"
              
        - name: Install deps
-         run: npm i
+         run: npm i --force
            
        - name: Build
          run: npm run build:prod
