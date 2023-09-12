@@ -101,7 +101,7 @@ export const ROUTES: RouteInfo[] = [
   // },
   {
     path: "/eficiency/parameters",
-    title: "Parámetros",
+    title: "General",
     type: "link",
     icontype: "ni-archive-2 text-green",
   },

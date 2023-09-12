@@ -17,7 +17,7 @@ http://bahamut.tamu.edu/Images/20150401%20IC3%204_0/Documentation/User%20Manual.
 https://fontawesome.com/v5/search -->
 
 <div class="container-fluid mt--6">
-  <div class="row justify-content-center">
+  <!-- <div class="row justify-content-center">
     <div class="col-lg-6 ">
       <div class="card-wrapper">
         <div class="card">
@@ -27,7 +27,64 @@ https://fontawesome.com/v5/search -->
             <form>
               <div class="row">
 
-                <div class="col-md-12">
+                
+
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card-wrapper">
+        <div class="card">
+          <div class="card-header"><h3 class=" mb-0">General</h3></div>
+
+          <div class="card-body">
+            <form>
+
+              <div class="row">
+
+                <div class="col-md-6">
+                  <label class="form-control-label">
+                    Ciudad
+                  </label>
+
+                  <select class=" form-control" data-toggle="select"
+                    id="selectr" (focus)="focus1 = true" (blur)="focus1 = false">
+                    <option value="guayaquil"> Guayaquil </option>
+                    <option value="quito"> Quito </option>
+                    <option value="cuenca"> Cuenca </option>
+                    <option value="machala"> Machala </option>
+                    <option value="manta"> Manta </option>
+                    <option value="riobamba"> Riobamba </option>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-control-label">
+                    Zona climática
+                  </label>
+
+                  <select class=" form-control" data-toggle="select"
+                    id="selectr2" (focus)="focus2 = true" (blur)="focus2 = false">
+                    <option value="zc1"> ZC1 </option>
+                    <option value="zc2"> ZC2 </option>
+                    <option value="zc3"> ZC3 </option>
+                    <option value="zc4"> ZC4 </option>
+                    <option value="zc5"> ZC5 </option>
+                  </select>
+                </div>
+
+
+              </div>
+
+              <div class="row mt-4">
+                <div class="col-md-6">
                   <div
                     class="form-group"
                     [ngClass]="{ focused: focus === true }">
@@ -53,59 +110,7 @@ https://fontawesome.com/v5/search -->
                     </div>
                   </div>
                 </div>
-
-              </div>
-
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card-wrapper">
-        <div class="card">
-          <div class="card-header"><h3 class=" mb-0">General</h3></div>
-
-          <div class="card-body">
-            <form>
-
-              <div class="row">
-
-                <div class="col-md-4">
-                  <label class="form-control-label">
-                    Ciudad
-                  </label>
-
-                  <select class=" form-control" data-toggle="select"
-                    id="selectr" (focus)="focus1 = true" (blur)="focus1 = false">
-                    <option value="guayaquil"> Guayaquil </option>
-                    <option value="quito"> Quito </option>
-                    <option value="cuenca"> Cuenca </option>
-                    <option value="machala"> Machala </option>
-                    <option value="manta"> Manta </option>
-                    <option value="riobamba"> Riobamba </option>
-                  </select>
-                </div>
-
-                <div class="col-md-4">
-                  <label class="form-control-label">
-                    Zona climática
-                  </label>
-
-                  <select class=" form-control" data-toggle="select"
-                    id="selectr2" (focus)="focus2 = true" (blur)="focus2 = false">
-                    <option value="zc1"> ZC1 </option>
-                    <option value="zc2"> ZC2 </option>
-                    <option value="zc3"> ZC3 </option>
-                    <option value="zc4"> ZC4 </option>
-                    <option value="zc5"> ZC5 </option>
-                  </select>
-                </div>
-
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <label class="form-control-label">
                     Tipología
                   </label>
@@ -117,7 +122,6 @@ https://fontawesome.com/v5/search -->
                     <option value="c"> C </option>
                   </select>
                 </div>
-
               </div>
 
               <div class="row mt-4">
