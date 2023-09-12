@@ -41,6 +41,6 @@
        - name: Deploy
          uses: crazy-max/ghaction-github-pages@v3.1.0
          with:
-           build_dir: dist/argon-dashboard-pro-angular
+           build_dir: dist
          env:
            GITHUB_TOKEN:  ${{secrets.GITHUB_TOKEN}} 
