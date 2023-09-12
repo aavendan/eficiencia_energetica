@@ -6,7 +6,7 @@ import { Component, OnInit, HostListener } from "@angular/core";
   styleUrls: ["./admin-layout.component.scss"]
 })
 export class AdminLayoutComponent implements OnInit {
-  isMobileResolution: boolean;
+  isMobileResolution: boolean = true;
 
   constructor() {
     if (window.innerWidth < 1200) {
