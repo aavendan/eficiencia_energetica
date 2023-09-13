@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { TagInputModule } from "ngx-chips";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { FormsComponentsOldComponent } from "./componentsold/componentsold.component";
 import { FormsComponentsComponent } from "./components/components.component";
@@ -24,6 +25,7 @@ import { FormsRoutes } from "./forms.routing";
     RouterModule.forChild(FormsRoutes),
     FormsModule,
     TagInputModule,
+    TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot()
   ]

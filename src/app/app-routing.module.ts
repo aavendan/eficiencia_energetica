@@ -10,7 +10,7 @@ import { PresentationComponent } from "./pages/presentation/presentation.compone
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "eficiency/parameters",
+    redirectTo: "eficiency/simulator",
     pathMatch: "full"
   },
   {

@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+
+.tab-content {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    border: 1px solid #e6ecf1;
+    border-radius: 0.25rem;
+    background-color: #f5f7f9;
+}
+
+@media (max-width: 767.98px) {
+    .nav-pills:not(.nav-pills-circle) .nav-item {
+      padding-right: 1rem !important;
+    }
+  }

@@ -100,10 +100,10 @@ export const ROUTES: RouteInfo[] = [
   //   ]
   // },
   {
-    path: "/eficiency/parameters",
-    title: "General",
+    path: "/eficiency/simulator",
+    title: "Simulador",
     type: "link",
-    icontype: "ni-archive-2 text-green",
+    icontype: "ni-sound-wave text-green",
   },
   // {
   //   path: "/eficiency/old",
