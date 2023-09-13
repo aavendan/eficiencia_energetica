@@ -115,6 +115,7 @@ https://fontawesome.com/v5/search -->
                       </div>
 
                     </div>
+
                     <div class="col-md-6">
                       
                       <!-- País -->
@@ -143,6 +144,7 @@ https://fontawesome.com/v5/search -->
                       </div>
 
                     </div>
+
                     <div class="col-md-6">
                       
                       <!-- Razón Social -->
@@ -156,7 +158,7 @@ https://fontawesome.com/v5/search -->
                           
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="fas fa-circle-08"> </i>
+                              <i class="fas fa-user"> </i>
                             </span>
                           </div>
 
@@ -170,6 +172,7 @@ https://fontawesome.com/v5/search -->
                       </div>
 
                     </div>
+
                     <div class="col-md-6">
                       
                       <!-- Ciudad -->
@@ -183,6 +186,7 @@ https://fontawesome.com/v5/search -->
                       </select>
 
                     </div>
+
                     <div class="col-md-6">
                       
                       <!-- Dirección / Teléfono -->
@@ -193,24 +197,16 @@ https://fontawesome.com/v5/search -->
                         <label class="form-control-label">
                           Dirección / Teléfono
                         </label>
-                        <div class="input-group input-group-merge">
-                          
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="fas fa-credit-card"> </i>
-                            </span>
-                          </div>
 
-                          <input
-                            class="form-control"
-                            placeholder="Dirección / Teléfono"
-                            type="number"
-                            (focus)="focus5 = true"
-                            (blur)="focus5 = false" />
-                        </div>
+                        <div id="dirtel" 
+                        data-toggle="dirtel" 
+                        (focus)="focus5 = true"
+                        (blur)="focus5 = false"></div>
+
                       </div>
 
                     </div>
+
                     <div class="col-md-6">
 
                       <!-- Zona climática -->
@@ -222,19 +218,45 @@ https://fontawesome.com/v5/search -->
                       <select class=" form-control" data-toggle="select"
                         id="selectr2" (focus)="focus6 = true" (blur)="focus6 = false" >
                       </select>
-    
-                      <!-- <select class=" form-control" data-toggle="select"
-                        id="selectr2" (focus)="focus6 = true" (blur)="focus6 = false">
-                        <option value="zc1"> ZC1 </option>
-                        <option value="zc2"> ZC2 </option>
-                        <option value="zc3"> ZC3 </option>
-                        <option value="zc4"> ZC4 </option>
-                        <option value="zc5"> ZC5 </option>
-                      </select> -->
 
                     </div>
+
                   </div>
                 </tab>
+
+                <tab>
+                  <ng-template tabHeading>2. General</ng-template>
+                  <div class="row justify-content-center">
+                    <div class="col-md-6">Tipo de vivienda</div>
+                    <div class="col-md-6">Imagen con el tipo de vivienda</div>
+                    <div class="col-md-12">Dimensiones</div>
+                  </div>
+                </tab>
+
+                <tab>
+                  <ng-template tabHeading>3. Pared expuesta</ng-template>
+                  <div class="row justify-content-center">
+                    <div class="col-md-12">Capas</div>
+                    <div class="col-md-12">Resultado</div>
+                  </div>
+                </tab>
+
+                <tab>
+                  <ng-template tabHeading>4. Techo expuesta</ng-template>
+                  <div class="row justify-content-center">
+                    <div class="col-md-12">Capas</div>
+                    <div class="col-md-12">Resultado</div>
+                  </div>
+                </tab>
+
+                <tab>
+                  <ng-template tabHeading>5. Piso en contacto con terreno</ng-template>
+                  <div class="row justify-content-center">
+                    <div class="col-md-12">Capas</div>
+                    <div class="col-md-12">Resultado</div>
+                  </div>
+                </tab>
+
               </tabset>
             </form>
           </div>

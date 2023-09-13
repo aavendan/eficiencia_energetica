@@ -56,7 +56,7 @@ export class FormsComponentsComponent implements OnInit {
 
       new Selectr((document.getElementById("selectr") as any), configs.default)
 
-    })
+    });
 
     this.service.getZones().subscribe((response) => { 
       
@@ -70,8 +70,27 @@ export class FormsComponentsComponent implements OnInit {
 
       new Selectr((document.getElementById("selectr2") as any), configs.default)
 
-    })
+    });
 
+
+    var quill = new Quill("#dirtel", {
+      modules: {
+        toolbar: [
+          ["bold", "italic"],
+          ["link", "blockquote", "code"],
+          [
+            {
+              list: "ordered"
+            },
+            {
+              list: "bullet"
+            }
+          ]
+        ]
+      },
+      placeholder: "Dirección/Teléfono",
+      theme: "snow"
+    });
 
     // var optionsMultiple = { multiple: true };
     // var selectrmultiple: any = document.getElementById("selectr-multiple");
@@ -163,24 +182,7 @@ export class FormsComponentsComponent implements OnInit {
     // });
     // document.getElementsByClassName("dz-preview-multiple")[0].innerHTML = "";
 
-    // var quill = new Quill("#quill", {
-    //   modules: {
-    //     toolbar: [
-    //       ["bold", "italic"],
-    //       ["link", "blockquote", "code", "image"],
-    //       [
-    //         {
-    //           list: "ordered"
-    //         },
-    //         {
-    //           list: "bullet"
-    //         }
-    //       ]
-    //     ]
-    //   },
-    //   placeholder: "Quill WYSIWYG",
-    //   theme: "snow"
-    // });
+   
 
 
     
