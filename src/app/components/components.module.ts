@@ -16,6 +16,8 @@ import { RouterModule } from "@angular/router";
 import { CollapseModule } from "ngx-bootstrap/collapse";
 import { DxVectorMapModule, DxPieChartModule } from 'devextreme-angular';
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
+import { ParedComponent } from './ceela/pared/pared.component';
+import { TechoComponent } from './ceela/techo/techo.component';
 
 @NgModule({
   imports: [
@@ -31,7 +33,9 @@ import { BsDropdownModule } from "ngx-bootstrap/dropdown";
     FooterComponent,
     VectorMapComponent1,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    // ParedComponent,
+    // TechoComponent
   ],
   exports: [
     FooterComponent,

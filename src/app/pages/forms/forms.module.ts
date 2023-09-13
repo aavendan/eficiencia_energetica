@@ -11,6 +11,9 @@ import { FormsComponentsComponent } from "./components/components.component";
 import { ElementsComponent } from "./elements/elements.component";
 import { ValidationComponent } from "./validation/validation.component";
 
+import { ParedComponent } from "../../components/ceela/pared/pared.component";
+import { TechoComponent } from "../../components/ceela/techo/techo.component";
+
 import { RouterModule } from "@angular/router";
 import { FormsRoutes } from "./forms.routing";
 @NgModule({
@@ -18,7 +21,9 @@ import { FormsRoutes } from "./forms.routing";
     FormsComponentsComponent,
     FormsComponentsOldComponent,
     ElementsComponent,
-    ValidationComponent
+    ValidationComponent,
+    ParedComponent,
+    TechoComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,310 @@
+<div class="row justify-content-center">
+    <div class="col-md-12">
+      
+      <!-- Pared expuesta -->
+      <div class=" table-responsive" id="first-list">
+        <table class=" table align-items-center table-flush">
+          <thead class=" thead-light">
+            <tr>
+              <th scope="col">Capa</th>
+
+              <th scope="col">Material</th>
+
+              <th scope="col">Espesor</th>
+
+              <th scope="col">k[W/m-K]​</th>
+
+              <th scope="col">Dens. [kg/m3]</th>
+
+              <th scope="col">Cp [J/kg-K]​</th>
+              
+              <th scope="col">Abs. Sol. [-]​</th>
+
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tbody class=" list">
+
+            <!-- Ejemplo 1 -->
+            <tr>
+              <th scope="row">
+                <!-- Capa -->
+                <input
+                class="form-control"
+                placeholder="Capa"
+                value="Capa 1" />
+                <!-- Fin Capa -->
+              </th>
+
+              <td>
+                <!-- Material -->
+                <input
+                class="form-control"
+                placeholder="Material"
+                value="Mortero de Cemento" />
+                <!-- Fin Material -->
+              </td>
+              
+              <td>
+                <!-- Espesor -->
+                <input
+                class="form-control"
+                placeholder="1.0"
+                type="number"
+                min="0.0"
+                step=".01"
+                value="1.0" />
+                <!-- Fin Espesor -->
+              </td>
+
+              <td>
+                <!-- Conductividad térmica​ -->
+                <input
+                class="form-control"
+                placeholder="0.30"
+                disabled="disabled"
+                type="number"
+                min="0.0"
+                step=".01"
+                value="0.30"  />
+                <!-- Fin Conductividad térmica​ -->
+              </td>
+              
+              <td>
+                <!-- Densidad -->
+                <input
+                class="form-control"
+                placeholder="1400.0​"
+                disabled="disabled"
+                type="number"
+                min="0.0"
+                step=".01"
+                value="1400.0​" />
+                <!-- Fin Densidad​ -->
+              </td>
+              
+              <td>
+                <!-- Calor especifico -->
+                <input
+                class="form-control"
+                placeholder="1000.0​"
+                disabled="disabled"
+                type="number"
+                min="0.0"
+                step=".01"
+                value="1000.0​​" />
+                <!-- Fin Calor especifico -->
+              </td>
+              
+              <td>
+                <!-- Absortancia Solar -->
+                <input
+                class="form-control"
+                placeholder="0.7​"
+                disabled="disabled"
+                type="number"
+                min="0.0"
+                step=".01"
+                value="0.7​​​" />
+                <!-- Fin Absortancia Solar -->
+              </td>
+
+              <td class=" text-right">
+                <div class="dropdown no-caret" dropdown>
+                  <a
+                    aria-controls="dropdown-basic"
+                    class=" btn btn-sm btn-icon-only text-light dropdown-toggle"
+                    dropdownToggle
+                    href="javascript:void(0)"
+                    role="button"
+                  >
+                    <i class=" fas fa-ellipsis-v"> </i>
+                  </a>
+
+                  <div
+                    class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"
+                    *dropdownMenu
+                  >
+                    <a href="javascript:void(0)" class="dropdown-item">
+                      Editar
+                    </a>
+
+                    <a href="javascript:void(0)" class="dropdown-item">
+                      Eliminar
+                    </a>
+
+                  </div>
+                </div>
+              </td>
+            </tr>
+            
+            <!-- Ejemplo 2 -->
+            <tr>
+              <th scope="row">
+                <!-- Capa -->
+                <input
+                class="form-control"
+                placeholder="Capa"
+                value="Capa 2" />
+                <!-- Fin Capa -->
+              </th>
+
+              <td>
+                <!-- Material -->
+                <input
+                class="form-control"
+                placeholder="Material"
+                value="Ladrillo de arcilla​" />
+                <!-- Fin Material -->
+              </td>
+              
+              <td>
+                <!-- Espesor -->
+                <input
+                class="form-control"
+                placeholder="7.0"
+                type="number"
+                min="0.0"
+                step=".01"
+                value="7.0" />
+                <!-- Fin Espesor -->
+              </td>
+
+              <td>
+                <!-- Conductividad térmica​ -->
+                <input
+                class="form-control"
+                placeholder="0.30"
+                disabled="disabled"
+                type="number"
+                min="0.0"
+                step=".01"
+                value="1.0"  />
+                <!-- Fin Conductividad térmica​ -->
+              </td>
+              
+              <td>
+                <!-- Densidad -->
+                <input
+                class="form-control"
+                placeholder="1400.0​"
+                disabled="disabled"
+                type="number"
+                min="0.0"
+                step=".01"
+                value="1400.0​" />
+                <!-- Fin Densidad​ -->
+              </td>
+              
+              <td>
+                <!-- Calor especifico -->
+                <input
+                class="form-control"
+                placeholder="1000.0​"
+                disabled="disabled"
+                type="number"
+                min="0.0"
+                step=".01"
+                value="1000.0​​" />
+                <!-- Fin Calor especifico -->
+              </td>
+              
+              <td>
+                <!-- Absortancia Solar -->
+                <input
+                class="form-control"
+                placeholder="0.7​"
+                disabled="disabled"
+                
+                min="0.0"
+                step=".01"
+                value="N/A​" />
+                <!-- Fin Absortancia Solar -->
+              </td>
+
+              <td class=" text-right">
+                <div class="dropdown no-caret" dropdown>
+                  <a
+                    aria-controls="dropdown-basic"
+                    class=" btn btn-sm btn-icon-only text-light dropdown-toggle"
+                    dropdownToggle
+                    href="javascript:void(0)"
+                    role="button"
+                  >
+                    <i class=" fas fa-ellipsis-v"> </i>
+                  </a>
+
+                  <div
+                    class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"
+                    *dropdownMenu
+                  >
+                    <a href="javascript:void(0)" class="dropdown-item">
+                      Editar
+                    </a>
+
+                    <a href="javascript:void(0)" class="dropdown-item">
+                      Eliminar
+                    </a>
+
+                  </div>
+                </div>
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      <!-- Fin -->
+
+    </div>
+
+    <!-- Pared expuesta Resultado Valor U -->
+    <div class="col-md-3">
+      
+      <div
+        class="form-group">
+        <label class="form-control-label">
+          Resultado: Valor U [W/m2-K]​
+        </label>
+        <div class="input-group input-group-merge">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="fas fa-check"> </i>
+            </span>
+          </div>
+
+          <input
+            class="form-control"
+            placeholder="0.35​" />
+        </div>
+      </div>
+
+    </div>
+    <!-- Fin -->
+
+    <!-- Pared expuesta Resultado SRI -->
+    <div class="col-md-3">
+      
+      <div
+        class="form-group">
+        <label class="form-control-label">
+          Resultado: SRI[-]
+        </label>
+        <div class="input-group input-group-merge">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="fas fa-check"> </i>
+            </span>
+          </div>
+
+          <input
+            class="form-control"
+            placeholder="0.64" />
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- Fin -->
+  </div>
