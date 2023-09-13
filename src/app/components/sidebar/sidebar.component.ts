@@ -172,6 +172,11 @@ export class SidebarComponent implements OnInit {
     this.router.events.subscribe(event => {
       this.isCollapsed = true;
     });
+
+    const body = document.getElementsByTagName("body")[0];
+    body.classList.remove("g-sidenav-pinned");
+    body.classList.remove("g-sidenav-show");
+    body.classList.add("g-sidenav-hidden");
   }
   onMouseEnterSidenav() {
     if (!document.body.classList.contains("g-sidenav-pinned")) {
