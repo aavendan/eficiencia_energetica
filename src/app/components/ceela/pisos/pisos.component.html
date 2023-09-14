@@ -1,0 +1,31 @@
+<div class="row justify-content-center">
+    <div class="col-md-12">
+        <ngx-datatable
+            #mydatatable
+            class="material"
+            [headerHeight]="50"
+            [limit]="5"
+            [footerHeight]="50"
+            rowHeight="auto"
+            [rows]="rows">
+            <ngx-datatable-column name="Capa">
+                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                    let-value="value" let-row="row">
+                    <span
+                        title="Double click to edit"
+                        (dblclick)="editing[rowIndex + '-name'] = true"
+                        *ngIf="!editing[rowIndex + '-name']">
+                        {{ value }}
+                    </span>
+                    <input
+                        autofocus
+                        class="form-control"
+                        (blur)="updateValue($event, 'name', rowIndex)"
+                        *ngIf="editing[rowIndex + '-name']"
+                        type="text"
+                        [value]="value" />
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>

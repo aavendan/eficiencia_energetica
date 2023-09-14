@@ -18,6 +18,8 @@ import { DxVectorMapModule, DxPieChartModule } from 'devextreme-angular';
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { ParedComponent } from './ceela/pared/pared.component';
 import { TechoComponent } from './ceela/techo/techo.component';
+import { PisosComponent } from './ceela/pisos/pisos.component';
+import { VentanasComponent } from './ceela/ventanas/ventanas.component';
 
 @NgModule({
   imports: [
@@ -34,6 +36,8 @@ import { TechoComponent } from './ceela/techo/techo.component';
     VectorMapComponent1,
     NavbarComponent,
     SidebarComponent,
+    // PisosComponent,
+    // VentanasComponent,
     // ParedComponent,
     // TechoComponent
   ],
