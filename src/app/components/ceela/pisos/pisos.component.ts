@@ -11,15 +11,11 @@ export class PisosComponent implements OnInit {
   rows = [
     {
       "capa": "Capa 1",
-      // "gender": "female",
-      // "company": "Johnson, Johnson and Partners, LLC CMP DDC",
-      // "age": 22
+      "espesor": 1.0
     },
     {
       "capa": "Capa 2",
-      // "gender": "female",
-      // "company": "Sealoud",
-      // "age": 55
+      "espesor": 7.0
     }
   ];
 

@@ -6,13 +6,13 @@
             [headerHeight]="50"
             [limit]="5"
             [footerHeight]="50"
-            rowHeight="auto"
+            rowHeight="50"
             [rows]="rows">
             <ngx-datatable-column name="Capa">
                 <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
                     let-value="value" let-row="row">
                     <span
-                        title="Double click to edit"
+                        title="Doble click para editar"
                         (dblclick)="editing[rowIndex + '-name'] = true"
                         *ngIf="!editing[rowIndex + '-name']">
                         {{ value }}
@@ -26,6 +26,11 @@
                         [value]="value" />
                 </ng-template>
             </ngx-datatable-column>
+            <ngx-datatable-column name="Espesor">
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  {{ value }}
+                </ng-template>
+              </ngx-datatable-column>
         </ngx-datatable>
     </div>
 </div>

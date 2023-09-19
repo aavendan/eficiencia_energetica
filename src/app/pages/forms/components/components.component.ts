@@ -46,7 +46,9 @@ export class FormsComponentsComponent implements OnInit {
 
     this.service.getCities().subscribe((response) => { 
       
-      var data = Object.keys(response).map((key) =>  response[key]);
+      var data = Object.entries(response).map((objt) =>  {
+        return {"text": objt[1]["city"],"value": objt[1]["city"]}
+      });
 
       var configs = {
         default: {
@@ -60,7 +62,11 @@ export class FormsComponentsComponent implements OnInit {
 
     this.service.getZones().subscribe((response) => { 
       
-      var data = Object.keys(response).map((key) =>  response[key]);
+      var unique = [...new Set(Object.entries(response).map(item => item[1]["zc_label"]))];
+
+      var data = unique.map((objt) =>  {
+        return {"text": objt,"value": objt}
+      });
 
       var configs = {
         default: {
@@ -71,6 +77,7 @@ export class FormsComponentsComponent implements OnInit {
       new Selectr((document.getElementById("selectr2") as any), configs.default)
 
     });
+    
 
 
     var quill = new Quill("#dirtel", {

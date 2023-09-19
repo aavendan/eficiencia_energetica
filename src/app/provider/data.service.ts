@@ -8,8 +8,12 @@ import { CityModel } from '../interface/city-model';
 })
 export class DataService {
 
-  URL_CITY = "https://energyplus-a3d2c-default-rtdb.firebaseio.com/cities.json";
-  URL_ZONES = "https://energyplus-a3d2c-default-rtdb.firebaseio.com/zones.json";
+  PROXY = "https://cors-anywhere.herokuapp.com/"
+
+  URL_CITY = "http://146.190.159.73/cities"
+  URL_ZONES = "http://146.190.159.73/cities";
+  URL_WALL_MATERIALS = "http://146.190.159.73/wallMaterials";
+  URL_WALL_MATERIALS_ID = "http://146.190.159.73/wallMaterials/id/";
 
   constructor(private http: HttpClient) { }
 
@@ -20,4 +24,13 @@ export class DataService {
   getZones() {
     return this.http.get(this.URL_ZONES);
   }
+
+  getWallMaterials() {
+    return this.http.get(this.URL_WALL_MATERIALS);
+  }
+
+  getWallMaterialsId(id: string) {
+    return this.http.get(this.URL_WALL_MATERIALS_ID + id);
+  }
+
 }
