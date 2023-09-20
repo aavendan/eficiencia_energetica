@@ -199,7 +199,7 @@ https://fontawesome.com/v5/search -->
                             </label>
           
                             <select class=" form-control" data-toggle="select"
-                              id="selectr" (focus)="focus4 = true" (blur)="focus4 = false" >
+                              id="selectr" (focus)="focus4 = true" (blur)="focus4 = false" (change)="onChange($event.target.value)" >
                             </select>
                             <!-- Ciudad -->
                           </div>
@@ -212,7 +212,7 @@ https://fontawesome.com/v5/search -->
                               Zona climática
                             </label>
 
-                            <select class=" form-control" data-toggle="select"
+                            <select #zones class=" form-control" data-toggle="select"
                               id="selectr2" (focus)="focus6 = true" (blur)="focus6 = false" >
                             </select>
                             <!-- Zona climática -->

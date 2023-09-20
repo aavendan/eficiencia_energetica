@@ -10,6 +10,8 @@ import Selectr from "mobius1-selectr";
 })
 export class ParedComponent implements OnInit {
 
+  layers = [1,2,3]
+
   constructor(private service: DataService) { }
 
   ngOnInit(): void {
@@ -26,24 +28,61 @@ export class ParedComponent implements OnInit {
         }
       }
 
-      new Selectr((document.getElementById("selectrMaterial1") as any), configs.default)
+      this.layers.forEach(id => {
+        new Selectr((document.getElementById("selectrMaterial"+id.toString()) as any), configs.default)
+      });
+
+      
 
     });
   }
 
-  onChange(id: string) {
-    this.service.getWallMaterialsId(id).subscribe((response) => {
+  onChange(id: string, materialId: string) {
+    this.service.getWallMaterialsId(materialId).subscribe((response) => {
 
-      let selectrConductividad1 = document.getElementById("selectrConductividad1") as HTMLInputElement | null
-      selectrConductividad1.value = response["k"]
+      let selectrConductividad = document.getElementById("selectrConductividad"+id) as HTMLInputElement | null
+      selectrConductividad.value = response["k"]
 
-      let selectrDensidad1 = document.getElementById("selectrDensidad1") as HTMLInputElement | null
-      selectrDensidad1.value = response["d"]
+      let selectrDensidad = document.getElementById("selectrDensidad"+id) as HTMLInputElement | null
+      selectrDensidad.value = response["d"]
 
-      let selectrCalor1 = document.getElementById("selectrCalor1") as HTMLInputElement | null
-      selectrCalor1.value = response["c"]
+      let selectrCalor = document.getElementById("selectrCalor"+id) as HTMLInputElement | null
+      selectrCalor.value = response["c"]
       
+      let selectrEspesor = document.getElementById("selectrEspesor"+id) as HTMLInputElement | null
+      selectrEspesor.value = "0.0"
+      
+      this.onChangeEspesor();
     })
+  }
+
+  onChangeEspesor() {
+    
+    let values = [];
+
+    this.layers.forEach(id => {
+      let espesorRef = document.getElementById("selectrEspesor"+id.toString()) as HTMLInputElement
+      let conductividadRef = document.getElementById("selectrConductividad"+id.toString()) as HTMLInputElement
+      
+      let espesorValue = parseFloat(espesorRef.value)
+      let conductividadValue = parseFloat(conductividadRef.value)
+
+      if(espesorValue != 0 && conductividadValue != 0) {
+        values.push( {"e":espesorValue, "k":conductividadValue } )
+      }
+      
+
+    });
+
+    if(values.length > 0) {
+      this.service.postUV(values).subscribe(result => {
+        let paredUV = document.getElementById("paredUV") as HTMLInputElement | null
+        paredUV.value = result.toString()
+      })
+    }
+    
+    
+
   }
 
 }

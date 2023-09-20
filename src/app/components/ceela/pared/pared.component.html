@@ -27,14 +27,14 @@
           <tbody class=" list">
 
             <!-- Ejemplo 1 -->
-            <tr>
+            <tr *ngFor="let layer of layers">
               <th scope="row">
                 <!-- Capa -->
                 <!-- <input
                 class="form-control"
                 placeholder="Capa"
                 value="Capa 1" /> -->
-                <span>Capa 1</span>
+                <span>Capa {{layer}}</span>
                 <!-- Fin Capa -->
               </th>
 
@@ -45,7 +45,7 @@
                 placeholder="Material"
                 value="Mortero de Cemento" /> -->
                 <select class="form-control upselectr" data-toggle="select"
-                  id="selectrMaterial1" (change)="onChange($event.target.value)">
+                  id="selectrMaterial{{layer}}" (change)="onChange(layer,$event.target.value)">
                 </select>
                 <!-- Fin Material -->
               </td>
@@ -53,20 +53,21 @@
               <td>
                 <!-- Espesor -->
                 <input
-                id="selectrEspesor1"
+                id="selectrEspesor{{layer}}"
                 class="form-control"
                 placeholder="1.0"
                 type="number"
                 min="0.0"
                 step=".01"
-                value="0.0" />
+                value="0.0"
+                (change)="onChangeEspesor()" />
                 <!-- Fin Espesor -->
               </td>
 
               <td>
                 <!-- Conductividad térmica​ -->
                 <input
-                id="selectrConductividad1"
+                id="selectrConductividad{{layer}}"
                 class="form-control"
                 placeholder="0.30"
                 disabled="disabled"
@@ -80,7 +81,7 @@
               <td>
                 <!-- Densidad -->
                 <input
-                id="selectrDensidad1"
+                id="selectrDensidad{{layer}}"
                 class="form-control"
                 placeholder="1400.0​"
                 disabled="disabled"
@@ -94,7 +95,7 @@
               <td>
                 <!-- Calor especifico -->
                 <input
-                id="selectrCalor1"
+                id="selectrCalor{{layer}}"
                 class="form-control"
                 placeholder="1000.0​"
                 disabled="disabled"
@@ -120,7 +121,7 @@
 
               
             </tr>
-            
+           
            
           </tbody>
         </table>
@@ -145,7 +146,8 @@
 
           <input
             class="form-control"
-            placeholder="0.0" />
+            placeholder="0.0"
+            id="paredUV" />
         </div>
       </div>
       <!-- Fin -->

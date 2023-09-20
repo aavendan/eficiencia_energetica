@@ -1,7 +1,6 @@
-import { Component, OnInit } from "@angular/core";
 import { DataService } from "../../../provider/data.service";
 import { CityModel } from '../../../interface/city-model';
-
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import noUiSlider from "nouislider";
 import Dropzone from "dropzone";
@@ -32,6 +31,10 @@ export class FormsComponentsComponent implements OnInit {
   bsRangeValue: Date[];
   maxDate = new Date();
 
+  @ViewChild('zones') zones!: ElementRef;
+
+  selectr2:any;
+
   constructor(private service: DataService) {
     this.maxDate.setDate(this.maxDate.getDate() + 7);
     this.bsRangeValue = [this.bsValue, this.maxDate];
@@ -47,7 +50,7 @@ export class FormsComponentsComponent implements OnInit {
     this.service.getCities().subscribe((response) => { 
       
       var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["city"],"value": objt[1]["city"]}
+        return {"text": objt[1]["city"],"value": objt[1]["id"]}
       });
 
       var configs = {
@@ -61,20 +64,21 @@ export class FormsComponentsComponent implements OnInit {
     });
 
     this.service.getZones().subscribe((response) => { 
-      
-      var unique = [...new Set(Object.entries(response).map(item => item[1]["zc_label"]))];
 
-      var data = unique.map((objt) =>  {
-        return {"text": objt,"value": objt}
-      });
-
+      let data = Object.entries(response)
+                        .map(item => item[1]["zc_label"] )
+                        .filter((name, index, currentVal) => currentVal.indexOf(name) === index )
+                        .map(txt =>  {
+                          return {"text": txt,"value": txt}
+                        });
+     
       var configs = {
         default: {
           data: data
         }
       }
 
-      new Selectr((document.getElementById("selectr2") as any), configs.default)
+      this.selectr2 = new Selectr((document.getElementById("selectr2") as any), configs.default)
 
     });
     
@@ -193,5 +197,21 @@ export class FormsComponentsComponent implements OnInit {
 
 
     
+  }
+
+  onChange(id) {
+    this.service.getCitiesId(id).subscribe(response => {
+      console.log(response)
+
+      this.zones.nativeElement.value = response["zc_label"]
+
+      console.log(this.selectr2)
+
+      // let element = document.getElementById("selectr2")  as HTMLSelectElement | null;
+      // element.value = "Fría"
+      
+      // element.value = response["zc_label"];
+      // element.selectedIndex = 2;//response["zc_label"];
+    })
   }
 }
