@@ -77,7 +77,7 @@ export class ParedComponent implements OnInit {
     if(values.length > 0) {
       this.service.postUV(values).subscribe(result => {
         let paredUV = document.getElementById("paredUV") as HTMLInputElement | null
-        paredUV.value = result.toString()
+        paredUV.value = parseFloat(result.toString()).toFixed(2)
       })
     }
     
