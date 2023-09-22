@@ -8,15 +8,17 @@ import { CityModel } from '../interface/city-model';
 })
 export class DataService {
 
+  IP = "http://143.198.69.86"
+
   PROXY = "https://cors-anywhere.herokuapp.com/"
 
-  URL_CITY = "http://146.190.159.73/cities"
-  URL_CITY_ID = "http://146.190.159.73/cities/id/";
-  URL_ZONES = "http://146.190.159.73/cities";
-  URL_WALL_MATERIALS = "http://146.190.159.73/wallMaterials";
-  URL_WALL_MATERIALS_ID = "http://146.190.159.73/wallMaterials/id/";
+  URL_CITY = this.IP + "/cities"
+  URL_CITY_ID = this.IP + "/cities/id/";
+  URL_ZONES = this.IP + "/cities";
+  URL_WALL_MATERIALS = this.IP + "/wallMaterials";
+  URL_WALL_MATERIALS_ID = this.IP + "/wallMaterials/id/";
 
-  URL_UV = " http://146.190.159.73:80/uv"
+  URL_UV = this.IP + ":80/uv"
 
   constructor(private http: HttpClient) { }
 
