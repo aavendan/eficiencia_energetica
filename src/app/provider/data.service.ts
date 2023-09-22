@@ -18,7 +18,7 @@ export class DataService {
   URL_WALL_MATERIALS = this.IP + "/wallMaterials";
   URL_WALL_MATERIALS_ID = this.IP + "/wallMaterials/id/";
 
-  URL_UV = this.IP + ":80/uv"
+  URL_UV = this.IP + "/uv"
 
   constructor(private http: HttpClient) { }
 
