@@ -31,7 +31,7 @@ export class FormsComponentsComponent implements OnInit {
   bsRangeValue: Date[];
   maxDate = new Date();
 
-  @ViewChild('zones') zones!: ElementRef;
+  // @ViewChild('zones') zones!: ElementRef;
 
   selectr2:any;
 
@@ -201,17 +201,9 @@ export class FormsComponentsComponent implements OnInit {
 
   onChange(id) {
     this.service.getCitiesId(id).subscribe(response => {
-      console.log(response)
-
-      this.zones.nativeElement.value = response["zc_label"]
-
-      console.log(this.selectr2)
-
-      // let element = document.getElementById("selectr2")  as HTMLSelectElement | null;
-      // element.value = "Fría"
       
-      // element.value = response["zc_label"];
-      // element.selectedIndex = 2;//response["zc_label"];
+      this.selectr2.setValue(response["zc_label"])
+
     })
   }
 }
