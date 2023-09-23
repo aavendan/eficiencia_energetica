@@ -235,7 +235,25 @@ https://fontawesome.com/v5/search -->
 
                 <tab>
                   <ng-template tabHeading>3. Pared expuesta</ng-template>
-                  <app-pared></app-pared>
+                  <accordion [isAnimated]="false" [closeOthers]="true">
+                    <accordion-group>
+                      <h5 class="mb-0" accordion-heading>Pared Izquierda</h5>
+                      <app-pared></app-pared>
+                    </accordion-group>
+                    <accordion-group >
+                      <h5 class="mb-0" accordion-heading>Pared Derecha</h5>
+                      Pared Derecha
+                    </accordion-group>
+                    <accordion-group >
+                      <h5 class="mb-0" accordion-heading>Pared Frontal</h5>
+                      Pared Frontal
+                    </accordion-group>
+                    <accordion-group >
+                      <h5 class="mb-0" accordion-heading>Pared Lateral</h5>
+                      Pared Lateral
+                    </accordion-group>
+                  </accordion>
+                  
                 </tab>
 
                 <tab>

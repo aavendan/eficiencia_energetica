@@ -5,6 +5,7 @@ import { TagInputModule } from "ngx-chips";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { AccordionModule } from 'ngx-bootstrap/accordion'
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 
 import { FormsComponentsOldComponent } from "./componentsold/componentsold.component";
@@ -38,6 +39,7 @@ import { FormsRoutes } from "./forms.routing";
     FormsModule,
     TagInputModule,
     NgxDatatableModule,
+    AccordionModule.forRoot(),
     TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot()

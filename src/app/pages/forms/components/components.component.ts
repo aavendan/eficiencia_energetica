@@ -23,6 +23,7 @@ export class FormsComponentsComponent implements OnInit {
   focus7;
   focus8;
 
+
   tagItems = ["Bucharest", "Cluj", "Iasi", "Timisoara", "Piatra Neamt"];
 
   public cities : CityModel[] = [ {cod:1,name:'Guayaquil'}];
