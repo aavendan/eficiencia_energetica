@@ -234,23 +234,21 @@ https://fontawesome.com/v5/search -->
                 </tab>
 
                 <tab>
+                  
                   <ng-template tabHeading>3. Pared expuesta</ng-template>
                   <accordion [isAnimated]="false" [closeOthers]="true">
-                    <accordion-group>
-                      <h5 class="mb-0" accordion-heading>Pared Izquierda</h5>
-                      <app-pared></app-pared>
-                    </accordion-group>
-                    <accordion-group >
-                      <h5 class="mb-0" accordion-heading>Pared Derecha</h5>
-                      Pared Derecha
-                    </accordion-group>
-                    <accordion-group >
-                      <h5 class="mb-0" accordion-heading>Pared Frontal</h5>
-                      Pared Frontal
-                    </accordion-group>
-                    <accordion-group >
-                      <h5 class="mb-0" accordion-heading>Pared Lateral</h5>
-                      Pared Lateral
+                    <accordion-group *ngFor="let location of locations">
+                      
+                      <h5 class="mb-0 row" accordion-heading>
+                        <span class="col-3">Pared {{ location | titlecase }}</span>
+                        <span class="col-2 offset-6">Valor U [W/m2-K]​</span>
+                        <span class="col-1" id="paredUV{{location}}">0.0</span>
+                        <!-- <input
+                          class="form-control"
+                          placeholder="0.0"
+                          id="paredUV{{location}}" /> -->
+                      </h5>
+                      <app-pared [location]="location"></app-pared>
                     </accordion-group>
                   </accordion>
                   

@@ -24,9 +24,7 @@ export class FormsComponentsComponent implements OnInit {
   focus8;
 
 
-  tagItems = ["Bucharest", "Cluj", "Iasi", "Timisoara", "Piatra Neamt"];
-
-  public cities : CityModel[] = [ {cod:1,name:'Guayaquil'}];
+  locations: string[] = ["frontal", "trasera", "izquierda", "derecha"];
 
   bsValue = new Date();
   bsRangeValue: Date[];
