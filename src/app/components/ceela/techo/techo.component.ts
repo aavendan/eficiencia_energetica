@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from "../../../provider/data.service";
 
 @Component({
   selector: 'app-techo',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TechoComponent implements OnInit {
 
-  constructor() { }
+
+  layers = [1,2,3]
+
+  constructor(private service: DataService) { }
 
   ngOnInit(): void {
+    
   }
 
 }

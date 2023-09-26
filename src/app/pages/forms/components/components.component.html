@@ -240,13 +240,8 @@ https://fontawesome.com/v5/search -->
                     <accordion-group *ngFor="let location of locations">
                       
                       <h5 class="mb-0 row" accordion-heading>
-                        <span class="col-3">Pared {{ location | titlecase }}</span>
-                        <span class="col-2 offset-6">Valor U [W/m2-K]​</span>
-                        <span class="col-1" id="paredUV{{location}}">0.0</span>
-                        <!-- <input
-                          class="form-control"
-                          placeholder="0.0"
-                          id="paredUV{{location}}" /> -->
+                        <span class="col-2">Pared {{ location | titlecase }}</span>
+                        <span class="col-2 offset-8" id="paredUV{{location}}">Valor U [W/m2-K] 0.0</span>
                       </h5>
                       <app-pared [location]="location"></app-pared>
                     </accordion-group>
@@ -255,13 +250,20 @@ https://fontawesome.com/v5/search -->
                 </tab>
 
                 <tab>
+                  
                   <ng-template tabHeading>4. Techo expuesto</ng-template>
                   <app-techo></app-techo>
+                  
                 </tab>
 
                 <tab>
                   <ng-template tabHeading>5. Piso en contacto con terreno</ng-template>
                   <app-pisos></app-pisos>
+                </tab>
+
+                <tab>
+                  <ng-template tabHeading>6. Ventana expuesto</ng-template>
+                  <app-ventanas></app-ventanas>
                 </tab>
 
               </tabset>

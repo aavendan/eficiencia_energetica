@@ -79,9 +79,11 @@ export class ParedComponent implements OnInit {
     if(values.length > 0) {
       this.service.postUV(values).subscribe(result => {
         let paredUV = document.getElementById("paredUV"+this.location) as HTMLElement | null
-        paredUV.textContent = parseFloat(result.toString()).toFixed(2)
+        paredUV.textContent = "Valor U [W/m2-K] " +parseFloat(result.toString()).toFixed(2)
+        
         // let paredUV = document.getElementById("paredUV"+this.location) as HTMLInputElement | null
         // paredUV.value = parseFloat(result.toString()).toFixed(2)
+        
       })
     }
     
