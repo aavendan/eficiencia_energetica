@@ -6,11 +6,11 @@
             <table class=" table align-items-center table-flush">
                 <thead class=" thead-light">
                     <tr>
+                        <th scope="col">Tipo</th>
+
                         <th scope="col" class="size-1">Area [m2]</th>
 
                         <th scope="col" class="size-1">WWR [%]</th>
-
-                        <th scope="col">Tipo</th>
 
                         <th scope="col" class="size-1">U [W/m2-K]</th>
 
@@ -21,6 +21,18 @@
 
                 <tbody class=" list">
                     <tr>
+
+                        <td>
+
+                            <!-- Tipo -->
+                            
+                            <select class="form-control upselectr"
+                                data-toggle="select"
+                                id="selectrTipo{{location}}">
+                            </select>
+                            <!-- Fin Tipo -->
+
+                        </td>
 
                         <td>
                             <!-- Área -->
@@ -42,22 +54,11 @@
                                 class="form-control"
                                 placeholder="0.0"
                                 type="number"
+                                disabled = "disabled"
                                 min="0.0"
                                 step=".01"
                                 value="0.0" />
                             <!-- Fin WWR -->
-                        </td>
-
-                        <td>
-
-                            <!-- Tipo -->
-                            
-                            <select class="form-control upselectr"
-                                data-toggle="select"
-                                id="selectrTipo{{location}}">
-                            </select>
-                            <!-- Fin Tipo -->
-
                         </td>
 
                         <td>
