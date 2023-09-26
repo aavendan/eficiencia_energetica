@@ -241,7 +241,7 @@ https://fontawesome.com/v5/search -->
                       
                       <h5 class="mb-0 row" accordion-heading>
                         <span class="col-2">Pared {{ location | titlecase }}</span>
-                        <span class="col-2 offset-8" id="paredUV{{location}}">Valor U [W/m2-K] 0.0</span>
+                        <span class="col-2 offset-8 text-right" id="paredUV{{location}}"></span>
                       </h5>
                       <app-pared [location]="location"></app-pared>
                     </accordion-group>
@@ -262,8 +262,21 @@ https://fontawesome.com/v5/search -->
                 </tab>
 
                 <tab>
-                  <ng-template tabHeading>6. Ventana expuesto</ng-template>
-                  <app-ventanas></app-ventanas>
+
+                  <ng-template tabHeading>6. Ventana expuesta</ng-template>
+                  <accordion [isAnimated]="false" [closeOthers]="true">
+                    <accordion-group *ngFor="let location of locations">
+                      
+                      <h5 class="mb-0 row" accordion-heading>
+                        <span class="col-2">Fachada {{ location | titlecase }}</span>
+                        <span class="col-2 offset-6 text-right" id="ventanaUV{{location}}"></span>
+                        <span class="col-2 text-right" id="ventanaSHGC{{location}}"></span>
+                      </h5>
+                      <app-ventanas [location]="location"></app-ventanas>
+                    </accordion-group>
+                  </accordion>
+                  <!-- <app-ventanas></app-ventanas> -->
+
                 </tab>
 
               </tabset>

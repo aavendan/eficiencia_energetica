@@ -18,6 +18,9 @@ export class ParedComponent implements OnInit {
 
   ngOnInit(): void {
 
+    let paredUV = document.getElementById("paredUV"+this.location) as HTMLElement | null
+    paredUV.textContent = "Valor U: 0.0 [W/m2-K]"
+
     this.service.getWallMaterials().subscribe((response) => { 
       
       var data = Object.entries(response).map((objt) =>  {
@@ -79,7 +82,7 @@ export class ParedComponent implements OnInit {
     if(values.length > 0) {
       this.service.postUV(values).subscribe(result => {
         let paredUV = document.getElementById("paredUV"+this.location) as HTMLElement | null
-        paredUV.textContent = "Valor U [W/m2-K] " +parseFloat(result.toString()).toFixed(2)
+        paredUV.textContent = "Valor U: " +parseFloat(result.toString()).toFixed(2)+" [W/m2-K]"
         
         // let paredUV = document.getElementById("paredUV"+this.location) as HTMLInputElement | null
         // paredUV.value = parseFloat(result.toString()).toFixed(2)

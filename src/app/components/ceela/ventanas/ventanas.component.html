@@ -1,1 +1,96 @@
-<p>ventanas works!</p>
+<div class="row justify-content-center">
+    <div class="col-md-12">
+
+        <!-- Ventana expuesta -->
+        <div class id="first-list">
+            <table class=" table align-items-center table-flush">
+                <thead class=" thead-light">
+                    <tr>
+                        <th scope="col" class="size-1">Area [m2]</th>
+
+                        <th scope="col" class="size-1">WWR [%]</th>
+
+                        <th scope="col">Tipo</th>
+
+                        <th scope="col" class="size-1">U [W/m2-K]</th>
+
+                        <th scope="col" class="size-1">SGHC[-]</th>
+
+                    </tr>
+                </thead>
+
+                <tbody class=" list">
+                    <tr>
+
+                        <td>
+                            <!-- Área -->
+                            <input
+                                id="selectrArea{{location}}"
+                                class="form-control"
+                                placeholder="0.0"
+                                type="number"
+                                min="0.0"
+                                step=".01"
+                                value="0.0" />
+                            <!-- Fin Área​ -->
+                        </td>
+
+                        <td>
+                            <!-- WWR -->
+                            <input
+                                id="selectrWWR{{location}}"
+                                class="form-control"
+                                placeholder="0.0"
+                                type="number"
+                                min="0.0"
+                                step=".01"
+                                value="0.0" />
+                            <!-- Fin WWR -->
+                        </td>
+
+                        <td>
+
+                            <!-- Tipo -->
+                            
+                            <select class="form-control upselectr"
+                                data-toggle="select"
+                                id="selectrTipo{{location}}">
+                            </select>
+                            <!-- Fin Tipo -->
+
+                        </td>
+
+                        <td>
+                            <!-- U -->
+                            <input
+                                id="selectrU{{location}}"
+                                class="form-control"
+                                placeholder="0.0"
+                                disabled="disabled"
+                                type="number"
+                                min="0.0"
+                                step=".01"
+                                value="0.0" />
+                            <!-- Fin U​ -->
+                        </td>
+
+                        <td>
+                            <!-- SGHC -->
+                            <input
+                                id="selectrSGHC{{location}}"
+                                class="form-control"
+                                placeholder="0.0"
+                                disabled="disabled"
+                                type="number"
+                                min="0.0"
+                                step=".01"
+                                value="0.0" />
+                            <!-- Fin SGHC​ -->
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
