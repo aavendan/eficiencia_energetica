@@ -13,6 +13,8 @@ import { FormsComponentsComponent } from "./components/components.component";
 import { ElementsComponent } from "./elements/elements.component";
 import { ValidationComponent } from "./validation/validation.component";
 
+import { ProyectoComponent } from "../../components/ceela/proyecto/proyecto.component";
+import { GeneralComponent } from "../../components/ceela/general/general.component";
 import { ParedComponent } from "../../components/ceela/pared/pared.component";
 import { TechoComponent } from "../../components/ceela/techo/techo.component";
 import { PisosComponent } from '../../components/ceela/pisos/pisos.component';
@@ -28,6 +30,8 @@ import { FormsRoutes } from "./forms.routing";
     FormsComponentsOldComponent,
     ElementsComponent,
     ValidationComponent,
+    ProyectoComponent,
+    GeneralComponent,
     ParedComponent,
     TechoComponent,
     PisosComponent,

@@ -13,18 +13,10 @@ import Selectr from "mobius1-selectr";
   templateUrl: "components.component.html"
 })
 export class FormsComponentsComponent implements OnInit {
-  focus;
-  focus1;
-  focus2;
-  focus3;
-  focus4;
-  focus5;
-  focus6;
-  focus7;
-  focus8;
+  
 
 
-  locations: string[] = ["frontal", "trasera", "izquierda", "derecha"];
+  locations: string[] = ["frontal", "posterior", "izquierda", "derecha"];
 
   bsValue = new Date();
   bsRangeValue: Date[];
@@ -34,7 +26,7 @@ export class FormsComponentsComponent implements OnInit {
 
   selectr2:any;
 
-  constructor(private service: DataService) {
+  constructor() {
     this.maxDate.setDate(this.maxDate.getDate() + 7);
     this.bsRangeValue = [this.bsValue, this.maxDate];
 
@@ -45,43 +37,6 @@ export class FormsComponentsComponent implements OnInit {
     
     // https://www.tektutorialshub.com/angular/select-options-example-in-angular/
     // https://codepen.io/Mobius1/pen/QgdpLN
-
-    this.service.getCities().subscribe((response) => { 
-      
-      var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["city"],"value": objt[1]["id"]}
-      });
-
-      var configs = {
-        default: {
-          data: data
-        }
-      }
-
-      new Selectr((document.getElementById("selectr") as any), configs.default)
-
-    });
-
-    this.service.getZones().subscribe((response) => { 
-
-      let data = Object.entries(response)
-                        .map(item => item[1]["zc_label"] )
-                        .filter((name, index, currentVal) => currentVal.indexOf(name) === index )
-                        .map(txt =>  {
-                          return {"text": txt,"value": txt}
-                        });
-     
-      var configs = {
-        default: {
-          data: data
-        }
-      }
-
-      this.selectr2 = new Selectr((document.getElementById("selectr2") as any), configs.default)
-
-    });
-    
-
 
     var quill = new Quill("#dirtel", {
       modules: {
@@ -198,11 +153,5 @@ export class FormsComponentsComponent implements OnInit {
     
   }
 
-  onChange(id) {
-    this.service.getCitiesId(id).subscribe(response => {
-      
-      this.selectr2.setValue(response["zc_label"])
-
-    })
-  }
+  
 }
