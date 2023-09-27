@@ -1,8 +1,13 @@
 <div class="row justify-content-center">
+    <div class="col-md-2 mb-2 offset-md-10 text-right">
+      <button class=" btn btn-sm btn-primary" type="button"  (click)="addRowCapaTecho()">
+        Agregar capa
+      </button>
+    </div>
     <div class="col-md-12">
       
-      <!-- Pared expuesta -->
-      <div class=" table-responsive" id="first-list">
+      <!-- Techo -->
+      <div class id="first-list">
         <table class=" table align-items-center table-flush">
           <thead class=" thead-light">
             <tr>
@@ -20,7 +25,6 @@
               
               <th scope="col" class="size-1">Abs. Sol. [-]​</th>
 
-              <th scope="col"></th>
             </tr>
           </thead>
 
@@ -30,20 +34,16 @@
             <tr *ngFor="let layer of layers">
               <th scope="row">
                 <!-- Capa -->
-                <!-- <input
-                class="form-control"
-                placeholder="Capa"
-                value="Capa 1" /> -->
-                <span>Capa {{layer}}</span>
+                <span>Capa {{layer.idx}}</span>
                 <!-- Fin Capa -->
               </th>
 
               <td>
                 <!-- Material -->
-                <input
-                class="form-control"
-                placeholder="Material"
-                value="Mortero de Cemento" />
+                <select class="form-control upselectr" data-toggle="select"
+                  id="selectrMaterial{{layer.idx}}">
+                </select>
+                <!-- (change)="onChange(location,layer.idx,$event.target.value)" -->
                 <!-- Fin Material -->
               </td>
               

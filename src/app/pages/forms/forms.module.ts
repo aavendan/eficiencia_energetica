@@ -21,7 +21,6 @@ import { PisosComponent } from '../../components/ceela/pisos/pisos.component';
 import { VentanasComponent } from '../../components/ceela/ventanas/ventanas.component';
 
 
-
 import { RouterModule } from "@angular/router";
 import { FormsRoutes } from "./forms.routing";
 @NgModule({
@@ -35,7 +34,7 @@ import { FormsRoutes } from "./forms.routing";
     ParedComponent,
     TechoComponent,
     PisosComponent,
-    VentanasComponent
+    VentanasComponent,
   ],
   imports: [
     CommonModule,

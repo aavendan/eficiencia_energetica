@@ -10,7 +10,7 @@ import Selectr from "mobius1-selectr";
 })
 export class ParedComponent implements OnInit {
 
-  layers = [1,2,3]
+  layers = []
 
   @Input() location: string;
 
@@ -21,28 +21,28 @@ export class ParedComponent implements OnInit {
     let paredUV = document.getElementById("paredUV"+this.location) as HTMLElement | null
     paredUV.textContent = "Valor U: 0.0 [W/m2-K]"
 
-    this.service.getWallMaterials().subscribe((response) => { 
+    // this.service.getWallMaterials().subscribe((response) => { 
       
-      var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["material"],"value": objt[1]["id"]}
-      });
+    //   var data = Object.entries(response).map((objt) =>  {
+    //     return {"text": objt[1]["material"],"value": objt[1]["id"]}
+    //   });
 
-      var configs = {
-        default: {
-          data: data
-        }
-      }
+    //   var configs = {
+    //     default: {
+    //       data: data
+    //     }
+    //   }
 
-      this.layers.forEach(id => {
-        new Selectr((document.getElementById("selectrMaterial"+this.location+id.toString()) as any), configs.default)
-      });
+    //   this.layers.forEach(id => {
+    //     new Selectr((document.getElementById("selectrMaterial"+this.location+id.toString()) as any), configs.default)
+    //   });
 
-      
+    // });
 
-    });
   }
 
   onChange(location: string, id: string, materialId: string) {
+
     this.service.getWallMaterialsId(materialId).subscribe((response) => {
 
       let selectrConductividad = document.getElementById("selectrConductividad"+location+id) as HTMLInputElement | null
@@ -65,7 +65,10 @@ export class ParedComponent implements OnInit {
     
     let values = [];
 
-    this.layers.forEach(id => {
+    this.layers.forEach(obj => {
+
+      let id = obj.idx
+
       let espesorRef = document.getElementById("selectrEspesor"+this.location+id.toString()) as HTMLInputElement
       let conductividadRef = document.getElementById("selectrConductividad"+this.location+id.toString()) as HTMLInputElement
       
@@ -80,17 +83,38 @@ export class ParedComponent implements OnInit {
     });
 
     if(values.length > 0) {
+      
       this.service.postUV(values).subscribe(result => {
+
         let paredUV = document.getElementById("paredUV"+this.location) as HTMLElement | null
         paredUV.textContent = "Valor U: " +parseFloat(result.toString()).toFixed(2)+" [W/m2-K]"
         
-        // let paredUV = document.getElementById("paredUV"+this.location) as HTMLInputElement | null
-        // paredUV.value = parseFloat(result.toString()).toFixed(2)
-        
       })
+
     }
     
+  }
+
+  addRowCapaPared() {
     
+    let count = this.layers.length
+    this.layers.push({ idx: count+1 });
+
+    this.service.getWallMaterials().subscribe((response) => { 
+      
+      var data = Object.entries(response).map((objt) =>  {
+        return {"text": objt[1]["material"],"value": objt[1]["id"]}
+      });
+
+      var configs = {
+        default: {
+          data: data
+        }
+      }
+
+      new Selectr((document.getElementById("selectrMaterial"+this.location+(count+1).toString()) as any), configs.default)
+      
+    });
 
   }
 

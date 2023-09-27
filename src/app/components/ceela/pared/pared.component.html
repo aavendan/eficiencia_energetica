@@ -1,59 +1,53 @@
 <div class="row justify-content-center">
-    <div class="col-md-12">
-      
-      <!-- Pared expuesta -->
-      <div class="" id="first-list">
-        <table class=" table align-items-center table-flush">
-          <thead class=" thead-light">
-            <tr>
-              <th scope="col" class="size-1">Capa</th>
+  <div class="col-md-2 mb-2 offset-md-10 text-right">
+    <button class=" btn btn-sm btn-primary" type="button"  (click)="addRowCapaPared()">
+      Agregar capa
+    </button>
+  </div>
+  <div class="col-md-12">
 
-              <th scope="col">Material</th>
+    <!-- Pared expuesta -->
+    <div class id="first-list">
+      <table class=" table align-items-center table-flush">
+        <thead class=" thead-light">
+          <tr>
+            <th scope="col" class="size-1">Capa</th>
 
-              <th scope="col" class="size-1">Espesor [cm]</th>
+            <th scope="col">Material</th>
 
-              <th scope="col" class="size-1">k [W/m-K]​</th>
+            <th scope="col" class="size-1">Espesor [cm]</th>
 
-              <th scope="col" class="size-1">Dens. [kg/m3]</th>
+            <th scope="col" class="size-1">k [W/m-K]​</th>
 
-              <th scope="col" class="size-1">Cp [J/kg-K]​</th>
-              
-              <!-- <th scope="col" class="size-1">Abs. Sol. [-]​</th>
+            <th scope="col" class="size-1">Dens. [kg/m3]</th>
 
-              <th scope="col"></th> -->
-            </tr>
-          </thead>
+            <th scope="col" class="size-1">Cp [J/kg-K]​</th>
 
-          <tbody class=" list">
+          </tr>
+        </thead>
 
-            <!-- Ejemplo 1 -->
-            <tr *ngFor="let layer of layers">
-              <th scope="row">
-                <!-- Capa -->
-                <!-- <input
-                class="form-control"
-                placeholder="Capa"
-                value="Capa 1" /> -->
-                <span>Capa {{layer}}</span>
-                <!-- Fin Capa -->
-              </th>
+        <tbody class=" list">
 
-              <td>
-                <!-- Material -->
-                <!-- <input
-                class="form-control"
-                placeholder="Material"
-                value="Mortero de Cemento" /> -->
-                <select class="form-control upselectr" data-toggle="select"
-                  id="selectrMaterial{{location}}{{layer}}" (change)="onChange(location,layer,$event.target.value)">
-                </select>
-                <!-- Fin Material -->
-              </td>
-              
-              <td>
-                <!-- Espesor -->
-                <input
-                id="selectrEspesor{{location}}{{layer}}"
+          <tr *ngFor="let layer of layers; let i = index;">
+            <th scope="row">
+              <!-- Capa -->
+              <span>Capa {{layer.idx}}</span>
+              <!-- Fin Capa -->
+            </th>
+
+            <td>
+              <!-- Material -->
+              <select class="form-control upselectr" data-toggle="select"
+                id="selectrMaterial{{location}}{{layer.idx}}"
+                (change)="onChange(location,layer.idx,$event.target.value)">
+              </select>
+              <!-- Fin Material -->
+            </td>
+
+            <td>
+              <!-- Espesor -->
+              <input
+                id="selectrEspesor{{location}}{{layer.idx}}"
                 class="form-control"
                 placeholder="1.0"
                 type="number"
@@ -61,27 +55,27 @@
                 step=".01"
                 value="0.0"
                 (change)="onChangeEspesor()" />
-                <!-- Fin Espesor -->
-              </td>
+              <!-- Fin Espesor -->
+            </td>
 
-              <td>
-                <!-- Conductividad térmica​ -->
-                <input
-                id="selectrConductividad{{location}}{{layer}}"
+            <td>
+              <!-- Conductividad térmica​ -->
+              <input
+                id="selectrConductividad{{location}}{{layer.idx}}"
                 class="form-control"
                 placeholder="0.30"
                 disabled="disabled"
                 type="number"
                 min="0.0"
                 step=".01"
-                value="0.30"  />
-                <!-- Fin Conductividad térmica​ -->
-              </td>
-              
-              <td>
-                <!-- Densidad -->
-                <input
-                id="selectrDensidad{{location}}{{layer}}"
+                value="0.30" />
+              <!-- Fin Conductividad térmica​ -->
+            </td>
+
+            <td>
+              <!-- Densidad -->
+              <input
+                id="selectrDensidad{{location}}{{layer.idx}}"
                 class="form-control"
                 placeholder="1400.0​"
                 disabled="disabled"
@@ -89,13 +83,13 @@
                 min="0.0"
                 step=".01"
                 value="1400.0​" />
-                <!-- Fin Densidad​ -->
-              </td>
-              
-              <td>
-                <!-- Calor especifico -->
-                <input
-                id="selectrCalor{{location}}{{layer}}"
+              <!-- Fin Densidad​ -->
+            </td>
+
+            <td>
+              <!-- Calor especifico -->
+              <input
+                id="selectrCalor{{location}}{{layer.idx}}"
                 class="form-control"
                 placeholder="1000.0​"
                 disabled="disabled"
@@ -103,37 +97,22 @@
                 min="0.0"
                 step=".01"
                 value="1000.0​​" />
-                <!-- Fin Calor especifico -->
-              </td>
-              
-              <!-- <td> -->
-                <!-- Absortancia Solar -->
-                <!-- <input
-                class="form-control"
-                placeholder="0.7​"
-                disabled="disabled"
-                type="number"
-                min="0.0"
-                step=".01"
-                value="0.7​​​" /> -->
-                <!-- Fin Absortancia Solar -->
-              <!-- </td> -->
+              <!-- Fin Calor especifico -->
+            </td>
 
-              
-            </tr>
-           
-           
-          </tbody>
-        </table>
-      </div>
-      <!-- Fin -->
+          </tr>
 
+        </tbody>
+      </table>
     </div>
-    
-    <!-- <div class="col-md-3"> -->
-      
-      <!-- Pared expuesta Resultado -->
-      <!-- <div
+    <!-- Fin -->
+
+  </div>
+
+  <!-- <div class="col-md-3"> -->
+
+  <!-- Pared expuesta Resultado -->
+  <!-- <div
         class="form-group">
         <label class="form-control-label">
           Resultado: Valor U [W/m2-K]​
@@ -151,7 +130,7 @@
             id="paredUV{{location}}" />
         </div>
       </div> -->
-      <!-- Fin -->
-    <!-- </div> -->
+  <!-- Fin -->
+  <!-- </div> -->
 
-  </div>
+</div>
