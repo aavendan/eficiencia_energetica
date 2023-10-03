@@ -95,6 +95,8 @@ export class ParedComponent implements OnInit {
     
   }
 
+  //https://stackblitz.com/edit/angular-ivy-6bt4hk?file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.tsng
+
   addRowCapaPared() {
     
     let count = this.layers.length
@@ -103,7 +105,7 @@ export class ParedComponent implements OnInit {
     this.service.getWallMaterials().subscribe((response) => { 
       
       var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["material"],"value": objt[1]["id"]}
+        return {"text": objt[1]["material"],"value": objt[1]["id"]} 
       });
 
       var configs = {

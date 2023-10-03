@@ -1,5 +1,160 @@
-<div class="row justify-content-center">
-    <div class="col-md-6">Tipo de vivienda</div>
-    <div class="col-md-6">Imagen con el tipo de vivienda</div>
-    <div class="col-md-12">Dimensiones</div>
+ <div class="row justify-content-left">
+    <div class="col-md-4">
+  
+        <div class="card">
+
+            <div class="card-header pb-0 border-0">
+                <h5 class="h4 card-title mb-4">Tipo de vivienda</h5>
+            </div>
+            
+            <img
+                alt="Image placeholder"
+                class="card-img-top pt-4 pr-3"
+                src="assets/img/theme/tipos.png" />
+
+            <div class=" card-body">
+
+                
+
+                <div class=" custom-control custom-radio mb-3"
+                    *ngFor="let option of options; index as i">
+                    <input
+                        class=" custom-control-input"
+                        id="tipo{{i}}"
+                        name="tipo"
+                        type="radio" />
+
+                    <label class=" custom-control-label" for="tipo{{i}}">
+                        {{option.text}}
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        
+        <div class="card">
+
+            <div class="card-header pb-0 border-0">
+                <h5 class="h4 card-title mb-4">Dimensiones</h5>
+            </div>
+
+            <div class=" card-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <!-- Longitud Referencial en Fachada -->
+                        <div
+                            class="form-group"
+                            [ngClass]="{ focused: focus9 === true }">
+                            <label class="form-control-label">
+                                Longitud Referencial en Fachada [m]
+                            </label>
+                            <div class="input-group input-group-merge">
+        
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-credit-card"> </i>
+                                    </span>
+                                </div>
+        
+                                <input
+                                    class="form-control"
+                                    placeholder="Longitud Referencial en Fachada"
+                                    type="number"
+                                    (focus)="focus9 = true"
+                                    (blur)="focus9 = false"/>
+                            </div>
+                        </div>
+                        <!-- Longitud Referencial en Fachada -->
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Longitud Referencial en Profundidad​ -->
+                        <div
+                            class="form-group"
+                            [ngClass]="{ focused: focus10 === true }">
+                            <label class="form-control-label">
+                                Longitud Referencial en Profundidad​ [m]
+                            </label>
+                            <div class="input-group input-group-merge">
+        
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-credit-card"> </i>
+                                    </span>
+                                </div>
+        
+                                <input
+                                    class="form-control"
+                                    placeholder="Longitud Referencial en Profundidad​"
+                                    type="number"
+                                    (focus)="focus10 = true"
+                                    (blur)="focus10 = false"/>
+                            </div>
+                        </div>
+                        <!-- Longitud Referencial en Profundidad​ -->
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Área Referencial​ -->
+                        <div
+                            class="form-group"
+                            [ngClass]="{ focused: focus11 === true }">
+                            <label class="form-control-label">
+                                Área Referencial​ [m2]
+                            </label>
+                            <div class="input-group input-group-merge">
+        
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-credit-card"> </i>
+                                    </span>
+                                </div>
+        
+                                <input
+                                    class="form-control"
+                                    placeholder="Área Referencial​"
+                                    type="number"
+                                    (focus)="focus11 = true"
+                                    (blur)="focus11 = false"/>
+                            </div>
+                        </div>
+                        <!-- Área Referencial​ -->
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Altura Referencial​ -->
+                        <div
+                            class="form-group"
+                            [ngClass]="{ focused: focus12 === true }">
+                            <label class="form-control-label">
+                                Altura Referencial [m]
+                            </label>
+                            <div class="input-group input-group-merge">
+        
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-credit-card"> </i>
+                                    </span>
+                                </div>
+        
+                                <input
+                                    class="form-control"
+                                    placeholder="Altura Referencial​"
+                                    type="number"
+                                    (focus)="focus12 = true"
+                                    (blur)="focus12 = false"/>
+                            </div>
+                        </div>
+                        <!-- Altura Referencial​ -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
 </div>
