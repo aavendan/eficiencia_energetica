@@ -38,24 +38,24 @@ export class FormsComponentsComponent implements OnInit {
     // https://www.tektutorialshub.com/angular/select-options-example-in-angular/
     // https://codepen.io/Mobius1/pen/QgdpLN
 
-    var quill = new Quill("#dirtel", {
-      modules: {
-        toolbar: [
-          ["bold", "italic"],
-          ["link", "blockquote", "code"],
-          [
-            {
-              list: "ordered"
-            },
-            {
-              list: "bullet"
-            }
-          ]
-        ]
-      },
-      placeholder: "Dirección/Teléfono",
-      theme: "snow"
-    });
+    // var quill = new Quill("#dirtel", {
+    //   modules: {
+    //     toolbar: [
+    //       ["bold", "italic"],
+    //       ["link", "blockquote", "code"],
+    //       [
+    //         {
+    //           list: "ordered"
+    //         },
+    //         {
+    //           list: "bullet"
+    //         }
+    //       ]
+    //     ]
+    //   },
+    //   placeholder: "Dirección/Teléfono",
+    //   theme: "snow"
+    // });
 
     // var optionsMultiple = { multiple: true };
     // var selectrmultiple: any = document.getElementById("selectr-multiple");

@@ -6,15 +6,15 @@
             <table class=" table align-items-center table-flush">
                 <thead class=" thead-light">
                     <tr>
-                        <th scope="col">Tipo</th>
+                        <th scope="col"  class="size-3">Tipo</th>
 
-                        <th scope="col" class="size-1">Area [m2]</th>
+                        <th scope="col">Area [m2]</th>
 
-                        <th scope="col" class="size-1">WWR [%]</th>
+                        <th scope="col">WWR [%]</th>
 
-                        <th scope="col" class="size-1">U [W/m2-K]</th>
+                        <th scope="col">U [W/m2-K]</th>
 
-                        <th scope="col" class="size-1">SGHC[-]</th>
+                        <th scope="col">SGHC[-]</th>
 
                     </tr>
                 </thead>
@@ -28,7 +28,7 @@
 
                             <select class="form-control upselectr"
                                 data-toggle="select"
-                                id="selectrTipo{{location}}">
+                                id="selectorVentanaTipo{{location | titlecase}}">
                             </select>
                             <!-- Fin Tipo -->
 
@@ -37,7 +37,7 @@
                         <td>
                             <!-- Área -->
                             <input
-                                id="selectrArea{{location}}"
+                                id="inputVentanaArea{{location | titlecase}}"
                                 class="form-control"
                                 placeholder="0.0"
                                 type="number"
@@ -50,7 +50,7 @@
                         <td>
                             <!-- WWR -->
                             <input
-                                id="selectrWWR{{location}}"
+                                id="inputVentanaWWR{{location | titlecase}}"
                                 class="form-control"
                                 placeholder="0.0"
                                 type="number"
@@ -64,7 +64,7 @@
                         <td>
                             <!-- U -->
                             <input
-                                id="selectrU{{location}}"
+                                id="inputVentanaU{{location | titlecase}}"
                                 class="form-control"
                                 placeholder="0.0"
                                 disabled="disabled"
@@ -78,7 +78,7 @@
                         <td>
                             <!-- SGHC -->
                             <input
-                                id="selectrSGHC{{location}}"
+                                id="inputVentanaSGHC{{location | titlecase}}"
                                 class="form-control"
                                 placeholder="0.0"
                                 disabled="disabled"

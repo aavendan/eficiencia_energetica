@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <div class="col-md-2 mb-2 offset-md-10 text-right">
-    <button class=" btn btn-sm btn-primary" type="button"  (click)="addRowCapaPared()">
+    <button class=" btn btn-sm btn-success" type="button"  (click)="addRowCapaPared()">
       Agregar capa
     </button>
   </div>
@@ -11,17 +11,17 @@
       <table class="table align-items-center table-flush">
         <thead class=" thead-light">
           <tr>
-            <th scope="col" class="size-1">Capa</th>
+            <th scope="col">Capa</th>
 
-            <th scope="col">Material</th>
+            <th scope="col" class="size-3">Material</th>
 
-            <th scope="col" class="size-1">Espesor [cm]</th>
+            <th scope="col">Espesor [cm]</th>
 
-            <th scope="col" class="size-1">k [W/m-K]​</th>
+            <th scope="col">k [W/m-K]​</th>
 
-            <th scope="col" class="size-1">Dens. [kg/m3]</th>
+            <th scope="col">Dens. [kg/m3]</th>
 
-            <th scope="col" class="size-1">Cp [J/kg-K]​</th>
+            <th scope="col">Cp [J/kg-K]​</th>
 
           </tr>
         </thead>
@@ -31,14 +31,20 @@
           <tr *ngFor="let layer of layers; let i = index;">
             <th scope="row">
               <!-- Capa -->
-              <span>Capa {{layer.idx}}</span>
+              <input
+                id="capaPared{{location | titlecase}}{{layer.idx}}"
+                class="form-control"
+                placeholder="1.0"
+                disabled="disabled"
+                value="Capa {{layer.idx}}">
+              <!-- <span>Capa {{layer.idx}}</span> -->
               <!-- Fin Capa -->
             </th>
 
             <td>
               <!-- Material -->
               <select class="form-control upselectr" data-toggle="select"
-                id="selectrMaterial{{location}}{{layer.idx}}"
+                id="selectorParedMaterial{{location | titlecase}}{{layer.idx}}"
                 (change)="onChange(location,layer.idx,$event.target.value)">
               </select>
               <!-- Fin Material -->
@@ -47,7 +53,7 @@
             <td>
               <!-- Espesor -->
               <input
-                id="selectrEspesor{{location}}{{layer.idx}}"
+                id="inputParedEspesor{{location | titlecase}}{{layer.idx}}"
                 class="form-control"
                 placeholder="1.0"
                 type="number"
@@ -61,7 +67,7 @@
             <td>
               <!-- Conductividad térmica​ -->
               <input
-                id="selectrConductividad{{location}}{{layer.idx}}"
+                id="inputParedConductividad{{location | titlecase}}{{layer.idx}}"
                 class="form-control"
                 placeholder="0.30"
                 disabled="disabled"
@@ -75,7 +81,7 @@
             <td>
               <!-- Densidad -->
               <input
-                id="selectrDensidad{{location}}{{layer.idx}}"
+                id="inputParedDensidad{{location | titlecase}}{{layer.idx}}"
                 class="form-control"
                 placeholder="1400.0​"
                 disabled="disabled"
@@ -89,7 +95,7 @@
             <td>
               <!-- Calor especifico -->
               <input
-                id="selectrCalor{{location}}{{layer.idx}}"
+                id="inputParedCalor{{location | titlecase}}{{layer.idx}}"
                 class="form-control"
                 placeholder="1000.0​"
                 disabled="disabled"

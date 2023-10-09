@@ -16,6 +16,14 @@
     width: 20%;
 }
 
+.size-3 {
+    width: 35%;
+}
+
+table {
+    table-layout: fixed !important;
+}
+
 @media (max-width: 767.98px) {
     .nav-pills:not(.nav-pills-circle) .nav-item {
       padding-right: 1rem !important;

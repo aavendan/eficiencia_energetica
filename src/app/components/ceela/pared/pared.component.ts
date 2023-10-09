@@ -18,26 +18,8 @@ export class ParedComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let paredUV = document.getElementById("paredUV"+this.location) as HTMLElement | null
+    let paredUV = document.getElementById("pared"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
     paredUV.textContent = "Valor U: 0.0 [W/m2-K]"
-
-    // this.service.getWallMaterials().subscribe((response) => { 
-      
-    //   var data = Object.entries(response).map((objt) =>  {
-    //     return {"text": objt[1]["material"],"value": objt[1]["id"]}
-    //   });
-
-    //   var configs = {
-    //     default: {
-    //       data: data
-    //     }
-    //   }
-
-    //   this.layers.forEach(id => {
-    //     new Selectr((document.getElementById("selectrMaterial"+this.location+id.toString()) as any), configs.default)
-    //   });
-
-    // });
 
   }
 
@@ -45,16 +27,16 @@ export class ParedComponent implements OnInit {
 
     this.service.getWallMaterialsId(materialId).subscribe((response) => {
 
-      let selectrConductividad = document.getElementById("selectrConductividad"+location+id) as HTMLInputElement | null
+      let selectrConductividad = document.getElementById("inputParedConductividad"+this.toTitleCase(location)+id) as HTMLInputElement | null
       selectrConductividad.value = response["k"]
 
-      let selectrDensidad = document.getElementById("selectrDensidad"+location+id) as HTMLInputElement | null
+      let selectrDensidad = document.getElementById("inputParedDensidad"+this.toTitleCase(location)+id) as HTMLInputElement | null
       selectrDensidad.value = response["d"]
 
-      let selectrCalor = document.getElementById("selectrCalor"+location+id) as HTMLInputElement | null
+      let selectrCalor = document.getElementById("inputParedCalor"+this.toTitleCase(location)+id) as HTMLInputElement | null
       selectrCalor.value = response["c"]
       
-      let selectrEspesor = document.getElementById("selectrEspesor"+location+id) as HTMLInputElement | null
+      let selectrEspesor = document.getElementById("inputParedEspesor"+this.toTitleCase(location)+id) as HTMLInputElement | null
       selectrEspesor.value = "0.0"
       
       this.onChangeEspesor();
@@ -69,8 +51,8 @@ export class ParedComponent implements OnInit {
 
       let id = obj.idx
 
-      let espesorRef = document.getElementById("selectrEspesor"+this.location+id.toString()) as HTMLInputElement
-      let conductividadRef = document.getElementById("selectrConductividad"+this.location+id.toString()) as HTMLInputElement
+      let espesorRef = document.getElementById("inputParedEspesor"+this.toTitleCase(this.location)+id.toString()) as HTMLInputElement
+      let conductividadRef = document.getElementById("inputParedConductividad"+this.toTitleCase(this.location)+id.toString()) as HTMLInputElement
       
       let espesorValue = parseFloat(espesorRef.value)
       let conductividadValue = parseFloat(conductividadRef.value)
@@ -86,7 +68,7 @@ export class ParedComponent implements OnInit {
       
       this.service.postUV(values).subscribe(result => {
 
-        let paredUV = document.getElementById("paredUV"+this.location) as HTMLElement | null
+        let paredUV = document.getElementById("pared"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
         paredUV.textContent = "Valor U: " +parseFloat(result.toString()).toFixed(2)+" [W/m2-K]"
         
       })
@@ -114,10 +96,20 @@ export class ParedComponent implements OnInit {
         }
       }
 
-      new Selectr((document.getElementById("selectrMaterial"+this.location+(count+1).toString()) as any), configs.default)
+      new Selectr((document.getElementById("selectorParedMaterial"+this.toTitleCase(this.location)+(count+1).toString()) as any), configs.default)
       
     });
 
+  }
+
+
+  toTitleCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
   }
 
 }

@@ -10,6 +10,8 @@ import Selectr from "mobius1-selectr";
 })
 export class PisosComponent implements OnInit {
 
+  focus1;
+
   layers = []
 
   constructor(private service: DataService) { }
@@ -34,7 +36,7 @@ export class PisosComponent implements OnInit {
         }
       }
 
-      new Selectr((document.getElementById("selectrMaterialPiso"+(count+1).toString()) as any), configs.default)
+      new Selectr((document.getElementById("selectorMaterialPiso"+(count+1).toString()) as any), configs.default)
       
     });
 

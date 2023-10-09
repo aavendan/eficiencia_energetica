@@ -16,10 +16,10 @@ export class VentanasComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let ventanaUV = document.getElementById("ventanaUV"+this.location) as HTMLElement | null
+    let ventanaUV = document.getElementById("inputVentanaUV"+this.toTitleCase(this.location)) as HTMLElement | null
     ventanaUV.textContent = "Valor U: 0.0 [W/m2-K]"
 
-    let ventanaSHGC = document.getElementById("ventanaSHGC"+this.location) as HTMLElement | null
+    let ventanaSHGC = document.getElementById("inputVentanaSHGC"+this.toTitleCase(this.location)) as HTMLElement | null
     ventanaSHGC.textContent = "SGHC 0.00 [-]"
 
     this.service.getWallMaterials().subscribe((response) => { 
@@ -34,12 +34,23 @@ export class VentanasComponent implements OnInit {
         }
       }
 
-      new Selectr((document.getElementById("selectrTipo"+this.location) as any), configs.default)
+      console.log("selectorVentanaTipo"+this.toTitleCase(this.location))
+
+      new Selectr((document.getElementById("selectorVentanaTipo"+this.toTitleCase(this.location)) as any), configs.default)
       
       
 
     });
 
+  }
+
+  toTitleCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
   }
 
 }

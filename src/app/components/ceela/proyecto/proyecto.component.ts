@@ -10,7 +10,6 @@ import Selectr from "mobius1-selectr";
 })
 export class ProyectoComponent implements OnInit {
 
-  focus;
   focus1;
   focus2;
   focus3;

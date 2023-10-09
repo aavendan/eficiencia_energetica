@@ -5,7 +5,7 @@
       <div class="card pt-4">
   
         <div class="col-md-2 mb-2 offset-md-10 text-right">
-          <button class=" btn btn-sm btn-primary" type="button"
+          <button class=" btn btn-sm btn-success" type="button"
             (click)="addRowCapaPiso()">
             Agregar capa
           </button>
@@ -18,9 +18,9 @@
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col" class="size-1">Capa</th>
+                  <th scope="col">Capa</th>
   
-                  <th scope="col">Material</th>
+                  <th scope="col" class="size-3">Material</th>
   
                   <th scope="col">Espesor</th>
   
@@ -40,14 +40,20 @@
                 <tr *ngFor="let layer of layers">
                   <th scope="row">
                     <!-- Capa -->
-                    <span>Capa {{layer.idx}}</span>
+                    <input
+                    id="capaPiso{{layer.idx}}"
+                    class="form-control"
+                    placeholder="1.0"
+                    disabled="disabled"
+                    value="Capa {{layer.idx}}">
+                    <!-- <span>Capa {{layer.idx}}</span> -->
                     <!-- Fin Capa -->
                   </th>
   
                   <td>
                     <!-- Material -->
                     <select class="form-control upselectr" data-toggle="select"
-                      id="selectrMaterialPiso{{layer.idx}}">
+                      id="selectorMaterialPiso{{layer.idx}}">
                     </select>
                     <!-- (change)="onChange(location,layer.idx,$event.target.value)" -->
                     <!-- Fin Material -->
@@ -57,6 +63,7 @@
                     <!-- Espesor -->
                     <input
                       class="form-control"
+                      id="inputPisoEspesor{{layer.idx}}"
                       placeholder="1.0"
                       type="number"
                       min="0.0"
@@ -69,6 +76,7 @@
                     <!-- Conductividad térmica​ -->
                     <input
                       class="form-control"
+                      id="inputPisoConductividad{{layer.idx}}"
                       placeholder="0.30"
                       disabled="disabled"
                       type="number"
@@ -82,6 +90,7 @@
                     <!-- Densidad -->
                     <input
                       class="form-control"
+                      id="inputPisoDensidad{{layer.idx}}"
                       placeholder="1400.0​"
                       disabled="disabled"
                       type="number"
@@ -95,6 +104,7 @@
                     <!-- Calor especifico -->
                     <input
                       class="form-control"
+                      id="inputPisoCalor{{layer.idx}}"
                       placeholder="1000.0​"
                       disabled="disabled"
                       type="number"
@@ -120,7 +130,8 @@
           <div class="col-md-3">
   
             <div
-              class="form-group">
+              class="form-group"
+              [ngClass]="{ focused: focus1 === true }">
               <label class="form-control-label">
                 Valor U [W/m2-K]​
               </label>
@@ -133,7 +144,10 @@
   
                 <input
                   class="form-control"
-                  placeholder="0.35​" />
+                  placeholder="0.35​"
+                  id="inputPisoU"
+                  (focus)="focus1 = true"
+                  (blur)="focus1 = false" />
               </div>
             </div>
   

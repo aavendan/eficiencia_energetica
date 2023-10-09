@@ -10,6 +10,8 @@ import Selectr from "mobius1-selectr";
 })
 export class TechoComponent implements OnInit {
 
+  focus1;
+  focus2;
 
   layers = []
 
@@ -36,7 +38,7 @@ export class TechoComponent implements OnInit {
         }
       }
 
-      new Selectr((document.getElementById("selectrMaterialTecho"+(count+1).toString()) as any), configs.default)
+      new Selectr((document.getElementById("selectorTechoMaterial"+(count+1).toString()) as any), configs.default)
       
     });
 
