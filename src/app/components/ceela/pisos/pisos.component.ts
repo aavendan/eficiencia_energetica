@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from "../../../provider/data.service";
+
+import Selectr from "mobius1-selectr";
 
 @Component({
   selector: 'app-pisos',
@@ -7,29 +10,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PisosComponent implements OnInit {
 
-  editing = {};
-  rows = [
-    {
-      "capa": "Capa 1",
-      "espesor": 1.0
-    },
-    {
-      "capa": "Capa 2",
-      "espesor": 7.0
-    }
-  ];
+  layers = []
 
-  constructor() { }
+  constructor(private service: DataService) { }
 
   ngOnInit(): void {
   }
 
-  updateValue(event, cell, rowIndex) {
-    console.log('inline editing rowIndex', rowIndex);
-    this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = event.target.value;
-    this.rows = [...this.rows];
-    console.log('UPDATED!', this.rows[rowIndex][cell]);
+  addRowCapaPiso() {
+    
+    let count = this.layers.length
+    this.layers.push({ idx: count+1 });
+
+    this.service.getWallMaterials().subscribe((response) => { 
+      
+      var data = Object.entries(response).map((objt) =>  {
+        return {"text": objt[1]["material"],"value": objt[1]["id"]}
+      });
+
+      var configs = {
+        default: {
+          data: data
+        }
+      }
+
+      new Selectr((document.getElementById("selectrMaterialPiso"+(count+1).toString()) as any), configs.default)
+      
+    });
+
+
   }
+
+  
 
 }

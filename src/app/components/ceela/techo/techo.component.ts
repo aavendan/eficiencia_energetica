@@ -36,7 +36,7 @@ export class TechoComponent implements OnInit {
         }
       }
 
-      new Selectr((document.getElementById("selectrMaterial"+(count+1).toString()) as any), configs.default)
+      new Selectr((document.getElementById("selectrMaterialTecho"+(count+1).toString()) as any), configs.default)
       
     });
 
