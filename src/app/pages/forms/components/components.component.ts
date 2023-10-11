@@ -25,6 +25,7 @@ export class FormsComponentsComponent implements OnInit {
   // @ViewChild('zones') zones!: ElementRef;
 
   selectr2:any;
+  value: number = 0;
 
   constructor(private service: DataService) {
     this.maxDate.setDate(this.maxDate.getDate() + 7);
@@ -156,7 +157,7 @@ export class FormsComponentsComponent implements OnInit {
   simulate() {
     this.service.postSimulate().subscribe(result => {
 
-       console.log(result)
+       this.value = (result as number)
      })
   }
 }

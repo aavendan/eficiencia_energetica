@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SummaryService } from "../../../provider/summary.service";
 
@@ -13,6 +13,7 @@ export class ResultadoComponent implements OnInit {
 
   result: any;
   subscription: Subscription;
+  @Input() simulation: number;
 
   constructor(private summary: SummaryService) {
     this.summary.getResult().subscribe(result => { 
