@@ -18,8 +18,11 @@
                 <input
                     class="form-control"
                     placeholder="Nombre del proyecto"
+                    id="nombreProyecto"
+                    (change)="addData($event.target.id,$event.target.value)"
                     (focus)="focus1 = true"
                     (blur)="focus1 = false" />
+
             </div>
         </div>
 
@@ -51,8 +54,10 @@
 
                         <input
                             class="form-control"
+                            id="inputPropietarioCI"
                             placeholder="CI/RUC"
                             type="number"
+                            (change)="addData($event.target.id,$event.target.value)"
                             (focus)="focus2 = true"
                             (blur)="focus2 = false" />
                     </div>
@@ -77,8 +82,10 @@
 
                         <input
                             class="form-control"
+                            id="inputPropietarioNombre"
                             placeholder="Nombre"
                             type="text"
+                            (change)="addData($event.target.id,$event.target.value)"
                             (focus)="focus3 = true"
                             (blur)="focus3 = false" />
                     </div>
@@ -107,8 +114,10 @@
 
                         <input
                             class="form-control"
+                            id="inputTecnicoCI"
                             placeholder="CI/RUC"
                             type="number"
+                            (change)="addData($event.target.id,$event.target.value)"
                             (focus)="focus4 = true"
                             (blur)="focus4 = false" />
                     </div>
@@ -133,8 +142,10 @@
 
                         <input
                             class="form-control"
+                            id="inputTecnicoNombre"
                             placeholder="Nombre"
                             type="text"
+                            (change)="addData($event.target.id,$event.target.value)"
                             (focus)="focus5 = true"
                             (blur)="focus5 = false" />
                     </div>
@@ -167,6 +178,7 @@
 
                         <input
                             class="form-control"
+                            id="inputPais"
                             placeholder="Ecuador"
                             type="text"
                             disabled="disabled"
@@ -185,9 +197,9 @@
                     </label>
 
                     <select class=" form-control" data-toggle="select"
-                        id="selectr" (focus)="focus7 = true"
+                        id="selectorCiudad" (focus)="focus7 = true"
                         (blur)="focus7 = false"
-                        (change)="onChange($event.target.value)">
+                        (change)="onChange($event)">
                     </select>
                     <!-- Ciudad -->
                 </div>
@@ -201,7 +213,8 @@
                     </label>
 
                     <select #zones class=" form-control" data-toggle="select"
-                        id="selectr2" (focus)="focus8 = true"
+                        id="selectorZona" (focus)="focus8 = true"
+                        (change)="addData($event.target.id,$event.target.value)"
                         (blur)="focus8 = false">
                     </select>
                     <!-- Zona climática -->

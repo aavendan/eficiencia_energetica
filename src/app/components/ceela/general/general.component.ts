@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SummaryService } from "../../../provider/summary.service";
 
 @Component({
   selector: 'app-general',
@@ -27,9 +28,13 @@ export class GeneralComponent implements OnInit {
     }
   ]
 
-  constructor() { }
+  constructor(private summary: SummaryService) { }
 
   ngOnInit(): void {
+  }
+
+  addData(id, value) {
+    this.summary.replaceValue(id, value);
   }
 
 }

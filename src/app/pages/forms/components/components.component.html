@@ -17,32 +17,20 @@ http://bahamut.tamu.edu/Images/20150401%20IC3%204_0/Documentation/User%20Manual.
 https://fontawesome.com/v5/search -->
 
 <div class="container-fluid mt--6">
-  <!-- <div class="row justify-content-center">
-    <div class="col-lg-6 ">
-      <div class="card-wrapper">
-        <div class="card">
-          <div class="card-header"><h3 class=" mb-0">Global</h3></div>
-
-          <div class="card-body">
-            <form>
-              <div class="row">
-
-                
-
-              </div>
-
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
+  
   <div class="row">
     <div class="col-lg-12">
       <div class="card-wrapper">
         <div class="card">
-          <div class="card-header"><h3 class=" mb-0">Simulador</h3></div>
+          <div class="card-header">
+            <div class="row justify-content-center">
+              <div class="col-md-10">
+                <h3 class=" mb-0">Simulador</h3>
+              </div>
+              <div class="col-md-2 text-right">
+                <button class=" btn btn-info" (click)="simulate()">Simular</button>
+              </div>
+          </div>
 
           <div class="card-body">
             <form>
@@ -87,7 +75,7 @@ https://fontawesome.com/v5/search -->
 
                 <tab>
                   <ng-template tabHeading>5. Piso en contacto con terreno</ng-template>
-                  <app-pisos></app-pisos>
+                  <app-piso></app-piso>
                 </tab>
 
                 <tab>
@@ -101,10 +89,18 @@ https://fontawesome.com/v5/search -->
                         <span class="col-2 offset-6 text-right" id="inputVentanaUV{{location | titlecase}}"></span>
                         <span class="col-2 text-right" id="inputVentanaSHGC{{location | titlecase}}"></span>
                       </h5>
-                      <app-ventanas [location]="location"></app-ventanas>
+                      <app-ventana [location]="location"></app-ventana>
                     </accordion-group>
                   </accordion>
                   <!-- <app-ventanas></app-ventanas> -->
+
+                </tab>
+
+                <tab>
+
+                  <ng-template tabHeading>7. Resultado</ng-template>
+
+                  <app-resultado></app-resultado>
 
                 </tab>
 

@@ -19,7 +19,7 @@ import { ParedComponent } from "../../components/ceela/pared/pared.component";
 import { TechoComponent } from "../../components/ceela/techo/techo.component";
 import { PisosComponent } from '../../components/ceela/pisos/pisos.component';
 import { VentanasComponent } from '../../components/ceela/ventanas/ventanas.component';
-
+import { ResultadoComponent } from '../../components/ceela/resultado/resultado.component';
 
 import { RouterModule } from "@angular/router";
 import { FormsRoutes } from "./forms.routing";
@@ -35,6 +35,7 @@ import { FormsRoutes } from "./forms.routing";
     TechoComponent,
     PisosComponent,
     VentanasComponent,
+    ResultadoComponent,
   ],
   imports: [
     CommonModule,

@@ -4,7 +4,7 @@ import { DataService } from "../../../provider/data.service";
 import Selectr from "mobius1-selectr";
 
 @Component({
-  selector: 'app-pisos',
+  selector: 'app-piso',
   templateUrl: './pisos.component.html',
   styleUrls: ['./pisos.component.scss']
 })

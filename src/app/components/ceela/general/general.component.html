@@ -21,7 +21,9 @@
                     <input
                         class=" custom-control-input"
                         id="tipo{{i}}"
-                        name="tipo"
+                        value="{{option.text}}"
+                        (change)="addData($event.target.name,$event.target.value)"
+                        name="inputTipo"
                         type="radio" />
 
                     <label class=" custom-control-label" for="tipo{{i}}">
@@ -116,7 +118,9 @@
                                 <input
                                     class="form-control"
                                     placeholder="Área Referencial​"
+                                    id="inputArea"
                                     type="number"
+                                    (change)="addData($event.target.id,$event.target.value)"
                                     (focus)="focus11 = true"
                                     (blur)="focus11 = false"/>
                             </div>

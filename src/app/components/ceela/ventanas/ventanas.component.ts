@@ -4,7 +4,7 @@ import { DataService } from "../../../provider/data.service";
 import Selectr from "mobius1-selectr";
 
 @Component({
-  selector: 'app-ventanas',
+  selector: 'app-ventana',
   templateUrl: './ventanas.component.html',
   styleUrls: ['./ventanas.component.scss']
 })
@@ -34,12 +34,8 @@ export class VentanasComponent implements OnInit {
         }
       }
 
-      console.log("selectorVentanaTipo"+this.toTitleCase(this.location))
-
       new Selectr((document.getElementById("selectorVentanaTipo"+this.toTitleCase(this.location)) as any), configs.default)
       
-      
-
     });
 
   }

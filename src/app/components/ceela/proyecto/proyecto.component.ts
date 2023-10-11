@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { DataService } from "../../../provider/data.service";
+import { SummaryService } from "../../../provider/summary.service";
+
 
 import Selectr from "mobius1-selectr";
 
@@ -21,7 +23,8 @@ export class ProyectoComponent implements OnInit {
 
   selectr2:any;
 
-  constructor(private service: DataService) { }
+
+  constructor(private service: DataService, private summary: SummaryService) { }
 
   ngOnInit(): void {
     this.service.getCities().subscribe((response) => { 
@@ -36,7 +39,7 @@ export class ProyectoComponent implements OnInit {
         }
       }
 
-      new Selectr((document.getElementById("selectr") as any), configs.default)
+      new Selectr((document.getElementById("selectorCiudad") as any), configs.default)
 
     });
 
@@ -55,17 +58,26 @@ export class ProyectoComponent implements OnInit {
         }
       }
 
-      this.selectr2 = new Selectr((document.getElementById("selectr2") as any), configs.default)
+      this.selectr2 = new Selectr((document.getElementById("selectorZona") as any), configs.default)
 
     });
   }
 
-  onChange(id) {
-    this.service.getCitiesId(id).subscribe(response => {
+  onChange(event) {
+    let value = event.target.value
+    let text = event.target.options[event.target.options.selectedIndex].text;
+
+    this.addData( event.target.id, text )
+
+    this.service.getCitiesId(value).subscribe(response => {
       
       this.selectr2.setValue(response["zc_label"])
 
     })
+  }
+
+  addData(id, value) {
+    this.summary.replaceValue(id, value);
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input  } from '@angular/core';
 import { DataService } from "../../../provider/data.service";
+import { SummaryService } from "../../../provider/summary.service";
 
 import Selectr from "mobius1-selectr";
 
@@ -14,7 +15,7 @@ export class ParedComponent implements OnInit {
 
   @Input() location: string;
 
-  constructor(private service: DataService) { }
+  constructor(private service: DataService, private summary: SummaryService) { }
 
   ngOnInit(): void {
 
@@ -70,11 +71,17 @@ export class ParedComponent implements OnInit {
 
         let paredUV = document.getElementById("pared"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
         paredUV.textContent = "Valor U: " +parseFloat(result.toString()).toFixed(2)+" [W/m2-K]"
+
+        this.addData("pared"+this.toTitleCase(this.location)+"UV"  , parseFloat(result.toString()).toFixed(2))
         
       })
 
     }
     
+  }
+
+  addData(id, value) {
+    this.summary.replaceValue(id, value);
   }
 
   //https://stackblitz.com/edit/angular-ivy-6bt4hk?file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.tsng

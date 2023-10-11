@@ -1,6 +1,6 @@
 import { DataService } from "../../../provider/data.service";
 import { CityModel } from '../../../interface/city-model';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 
 import noUiSlider from "nouislider";
 import Dropzone from "dropzone";
@@ -26,7 +26,7 @@ export class FormsComponentsComponent implements OnInit {
 
   selectr2:any;
 
-  constructor() {
+  constructor(private service: DataService) {
     this.maxDate.setDate(this.maxDate.getDate() + 7);
     this.bsRangeValue = [this.bsValue, this.maxDate];
 
@@ -153,5 +153,10 @@ export class FormsComponentsComponent implements OnInit {
     
   }
 
-  
+  simulate() {
+    this.service.postSimulate().subscribe(result => {
+
+       console.log(result)
+     })
+  }
 }
