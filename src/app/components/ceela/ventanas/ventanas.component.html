@@ -28,7 +28,8 @@
 
                             <select class="form-control upselectr"
                                 data-toggle="select"
-                                id="selectorVentanaTipo{{location | titlecase}}">
+                                id="selectorVentanaTipo{{location | titlecase}}"
+                                (change)="onChange(location,$event.target.value)">
                             </select>
                             <!-- Fin Tipo -->
 

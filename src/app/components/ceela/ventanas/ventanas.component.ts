@@ -22,10 +22,10 @@ export class VentanasComponent implements OnInit {
     let ventanaSHGC = document.getElementById("inputVentanaSHGC"+this.toTitleCase(this.location)) as HTMLElement | null
     ventanaSHGC.textContent = "SGHC 0.00 [-]"
 
-    this.service.getWallMaterials().subscribe((response) => { 
+    this.service.getWindowMaterials().subscribe((response) => { 
       
       var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["material"],"value": objt[1]["id"]}
+        return {"text": objt[1]["material"],"value": objt[1]["id"], "u": objt[1]["u"] , "sghc": objt[1]["sghc"]}
       });
 
       var configs = {
@@ -39,6 +39,18 @@ export class VentanasComponent implements OnInit {
     });
 
   }
+
+  onChange(location: string, materialId: string) {
+    // alert(location + " " +materialId)
+
+    // let ventanaUV = document.getElementById("ventanaUV"+this.toTitleCase(this.location)) as HTMLElement | null
+    // ventanaUV.textContent = "Valor U: " +parseFloat(result.toString()).toFixed(2)+" [W/m2-K]"
+
+    // let ventanaRef = document.getElementById("selectorVentanaTipo"+this.toTitleCase(this.location)) as HTMLSelectElement
+    // let ventanaText = ventanaRef.options[ventanaRef.selectedIndex].text
+
+  }
+
 
   toTitleCase(str) {
     return str.replace(

@@ -288,7 +288,7 @@ export class FormsComponentsComponent implements OnInit {
       }
     }
 
-    console.log(values)
+    // console.log(values)
 
     this.service.postSimulate(values).subscribe(result => {
 
