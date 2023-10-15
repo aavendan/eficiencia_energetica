@@ -14,6 +14,7 @@ export class ParedComponent implements OnInit {
   layers = []
 
   @Input() location: string;
+  pared: any = {};
 
   constructor(private service: DataService, private summary: SummaryService) { }
 
@@ -47,24 +48,53 @@ export class ParedComponent implements OnInit {
   onChangeEspesor() {
     
     let values = [];
-
+    
     this.layers.forEach(obj => {
 
       let id = obj.idx
 
+      let materialRef = document.getElementById("selectorParedMaterial"+this.toTitleCase(this.location)+id.toString()) as HTMLSelectElement
       let espesorRef = document.getElementById("inputParedEspesor"+this.toTitleCase(this.location)+id.toString()) as HTMLInputElement
       let conductividadRef = document.getElementById("inputParedConductividad"+this.toTitleCase(this.location)+id.toString()) as HTMLInputElement
+      let densidadRef = document.getElementById("inputParedDensidad"+this.toTitleCase(this.location)+id.toString()) as HTMLInputElement
+      let calorRef = document.getElementById("inputParedCalor"+this.toTitleCase(this.location)+id.toString()) as HTMLInputElement
       
+      let materialText = materialRef.options[materialRef.selectedIndex].text
       let espesorValue = parseFloat(espesorRef.value)
       let conductividadValue = parseFloat(conductividadRef.value)
+      let densidadValue = parseFloat(densidadRef.value)
+      let calorValue = parseFloat(calorRef.value)
 
       if(espesorValue != 0 && conductividadValue != 0) {
         values.push( {"e":espesorValue, "k":conductividadValue } )
+
+        /* Inicio */
+        let valuesLocal = {
+          "nombre": materialText,
+          "espesor": espesorValue,
+          "k": conductividadValue,
+          "densidad":densidadValue,
+          "cp":calorValue
+        }
+
+        if( !(this.location.toString() in this.pared) ) {
+          this.pared[this.location.toString()] = {}
+        }
+
+        if(id.toString() in this.pared[this.location.toString()]  ) {
+          Object.assign(  this.pared[this.location.toString()]  , { [id.toString()]:  valuesLocal })
+        } else {
+          this.pared[this.location.toString()][id.toString()] =  valuesLocal
+        }
+
+        this.replaceDataObject("Pared", this.location.toString(), this.pared[this.location.toString()])
+        /* Fin */
+
       }
-      
 
     });
 
+   
     if(values.length > 0) {
       
       this.service.postUV(values).subscribe(result => {
@@ -72,7 +102,7 @@ export class ParedComponent implements OnInit {
         let paredUV = document.getElementById("pared"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
         paredUV.textContent = "Valor U: " +parseFloat(result.toString()).toFixed(2)+" [W/m2-K]"
 
-        this.addData("pared"+this.toTitleCase(this.location)+"UV"  , parseFloat(result.toString()).toFixed(2))
+        this.replaceData("pared"+this.toTitleCase(this.location)+"UV"  , parseFloat(result.toString()).toFixed(2))
         
       })
 
@@ -80,8 +110,12 @@ export class ParedComponent implements OnInit {
     
   }
 
-  addData(id, value) {
-    this.summary.replaceValue(id, value);
+  replaceData(id, value) {
+    this.summary.replaceData(id, value);
+  }
+
+  replaceDataObject(idOut, idIn, value) {
+    this.summary.replaceDataObject(idOut, idIn, value)
   }
 
   //https://stackblitz.com/edit/angular-ivy-6bt4hk?file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.tsng

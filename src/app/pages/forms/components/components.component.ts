@@ -1,4 +1,5 @@
 import { DataService } from "../../../provider/data.service";
+import { SummaryService } from "../../../provider/summary.service";
 import { CityModel } from '../../../interface/city-model';
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 
@@ -27,11 +28,15 @@ export class FormsComponentsComponent implements OnInit {
   selectr2:any;
   value: number = 0;
 
-  constructor(private service: DataService) {
+  result: any;
+
+  constructor(private service: DataService, private summary: SummaryService ) {
     this.maxDate.setDate(this.maxDate.getDate() + 7);
     this.bsRangeValue = [this.bsValue, this.maxDate];
 
-    
+    this.summary.getResult().subscribe(result => { 
+      this.result = result; 
+    });
   }
 
   ngOnInit() {
@@ -155,7 +160,137 @@ export class FormsComponentsComponent implements OnInit {
   }
 
   simulate() {
-    this.service.postSimulate().subscribe(result => {
+
+    // {
+    //   "frontal": {
+    //     "1": {
+    //       "nombre": "Adobe 1600 kg/m3",
+    //       "espesor": 2,
+    //       "k": 0.95,
+    //       "densidad": 1600,
+    //       "cp": 920
+    //     },
+    //     "2": {
+    //       "nombre": "Adobe 1300 kg/m3",
+    //       "espesor": 1.5,
+    //       "k": 0.58,
+    //       "densidad": 1280,
+    //       "cp": 850
+    //     }
+    //   },
+    //   "posterior": {
+    //     "1": {
+    //       "nombre": "Adobe 1600 kg/m3",
+    //       "espesor": 2,
+    //       "k": 0.95,
+    //       "densidad": 1600,
+    //       "cp": 920
+    //     },
+    //     "2": {
+    //       "nombre": "Adobe 1300 kg/m3",
+    //       "espesor": 1.5,
+    //       "k": 0.58,
+    //       "densidad": 1280,
+    //       "cp": 850
+    //     }
+    //   },
+    //   "izquierda": {
+    //     "1": {
+    //       "nombre": "Adobe 1600 kg/m3",
+    //       "espesor": 2,
+    //       "k": 0.95,
+    //       "densidad": 1600,
+    //       "cp": 920
+    //     },
+    //     "2": {
+    //       "nombre": "Adobe 1300 kg/m3",
+    //       "espesor": 1.5,
+    //       "k": 0.58,
+    //       "densidad": 1280,
+    //       "cp": 850
+    //     }
+    //   },
+    //   "derecha": {
+    //     "1": {
+    //       "nombre": "Adobe 1600 kg/m3",
+    //       "espesor": 2,
+    //       "k": 0.95,
+    //       "densidad": 1600,
+    //       "cp": 920
+    //     },
+    //     "2": {
+    //       "nombre": "Adobe 1300 kg/m3",
+    //       "espesor": 1.5,
+    //       "k": 0.58,
+    //       "densidad": 1280,
+    //       "cp": 850
+    //     }
+    //   }
+    // }
+
+    let values = {
+      "Proyecto" : {
+        "nombre": this.result?.nombreProyecto,
+        "propietario": {
+          "cedula": this.result?.inputPropietarioCI,
+          "nombre": this.result?.inputPropietarioNombre
+        },
+        "tecnico": {
+          "cedula": this.result?.inputTecnicoCI,
+          "nombre": this.result?.inputTecnicoNombre
+        },
+        "ubicacion": {
+          "ciudad": this.result?.selectorCiudad,
+          "zona": this.result?.selectorZona
+        }
+      },
+      "General": {
+        "tipo de vivienda": this.result?.inputTipo,
+        "dimensiones": {
+          "fachada": parseFloat(this.result?.inputLongitudFachada),
+          "profundidad": parseFloat(this.result?.inputLongitudProfundidad),
+          "area": parseFloat(this.result?.inputArea),
+          "altura": parseFloat(this.result?.inputAltura)
+        }
+      },
+      "Pared": this.result?.Pared,
+      "Techo": {
+        "1": {
+            "nombre": "Teja Fibrocemento",
+            "espesor": 3,
+            "k": 1,
+            "densidad": 1120,
+            "cp": 1000,
+            "absorcion": 0.7
+          }
+        
+      },
+      "Piso": {
+        "1": {
+            "nombre": "Losa de Hormigon Pisos",
+            "espesor": 5,
+            "k": 1.63,
+            "densidad": 2400,
+            "cp": 1050
+          }
+        
+      },
+      "Ventana": {
+        "frontal": {
+          "1": {
+            "nombre": "",
+            "area": 0,
+            "wwr": 0,
+            "u": 0,
+            "sghc": 0
+          }
+        }
+      }
+    }
+
+    console.log(values)
+
+    this.service.postSimulate(values).subscribe(result => {
 
        this.value = (result as number)
      })

@@ -34,7 +34,7 @@ export class GeneralComponent implements OnInit {
   }
 
   addData(id, value) {
-    this.summary.replaceValue(id, value);
+    this.summary.replaceData(id, value);
   }
 
 }

@@ -65,6 +65,8 @@
                                     class="form-control"
                                     placeholder="Longitud Referencial en Fachada"
                                     type="number"
+                                    id="inputLongitudFachada"
+                                    (change)="addData($event.target.id,$event.target.value)"
                                     (focus)="focus9 = true"
                                     (blur)="focus9 = false"/>
                             </div>
@@ -92,6 +94,8 @@
                                     class="form-control"
                                     placeholder="Longitud Referencial en Profundidad​"
                                     type="number"
+                                    id="inputLongitudProfundidad"
+                                    (change)="addData($event.target.id,$event.target.value)"
                                     (focus)="focus10 = true"
                                     (blur)="focus10 = false"/>
                             </div>
@@ -118,8 +122,8 @@
                                 <input
                                     class="form-control"
                                     placeholder="Área Referencial​"
-                                    id="inputArea"
                                     type="number"
+                                    id="inputArea"
                                     (change)="addData($event.target.id,$event.target.value)"
                                     (focus)="focus11 = true"
                                     (blur)="focus11 = false"/>
@@ -148,6 +152,8 @@
                                     class="form-control"
                                     placeholder="Altura Referencial​"
                                     type="number"
+                                    id="inputAltura"
+                                    (change)="addData($event.target.id,$event.target.value)"
                                     (focus)="focus12 = true"
                                     (blur)="focus12 = false"/>
                             </div>

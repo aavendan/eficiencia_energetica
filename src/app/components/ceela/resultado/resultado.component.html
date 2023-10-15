@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header pb-0 border-0">
                         <h5 class="h4 card-title mb-4">Datos del proyecto</h5>
-                        <!-- {{result | json }} -->
+                        {{result | json }}
                     </div>
                     <div class="card-body">
                         <table class="table align-items-center table-flush">
@@ -218,7 +218,7 @@
                                 prescriptivos de la NEC-HS-EE</li>
 
                             <li class=" list-group-item">El rendimiento del
-                                proyecto está {{simulation}}% sobre el rendimiento de los
+                                proyecto está {{simulation | number : '1.2-2'}}% sobre el rendimiento de los
                                 métodos de construcción tradicionales.</li>
                             
                             <li class=" list-group-item"><button class=" btn btn-default" (click)="basicSwal()">Imprimir resultado</button></li>

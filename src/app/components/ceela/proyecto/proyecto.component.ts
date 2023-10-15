@@ -77,7 +77,7 @@ export class ProyectoComponent implements OnInit {
   }
 
   addData(id, value) {
-    this.summary.replaceValue(id, value);
+    this.summary.replaceData(id, value);
   }
 
 }
