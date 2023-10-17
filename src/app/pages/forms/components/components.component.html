@@ -17,7 +17,7 @@ http://bahamut.tamu.edu/Images/20150401%20IC3%204_0/Documentation/User%20Manual.
 https://fontawesome.com/v5/search -->
 
 <div class="container-fluid mt--6">
-  
+
   <div class="row">
     <div class="col-lg-12">
       <div class="card-wrapper">
@@ -30,85 +30,96 @@ https://fontawesome.com/v5/search -->
               <div class="col-md-2 text-right">
                 <button class=" btn btn-info" (click)="simulate()">Simular</button>
               </div>
-          </div>
+            </div>
 
-          <div class="card-body">
-            <form>
-              <tabset type="pills"
-                class="nav-fill flex-column flex-md-row tab-container">
-                <tab>
-                  
-                  <ng-template tabHeading>1. Proyecto</ng-template>
-                  <app-proyecto></app-proyecto>
+            <div class="card-body">
+              <form>
+                <tabset type="pills"
+                  class="nav-fill flex-column flex-md-row tab-container">
+                  <tab>
 
-                </tab>
+                    <ng-template tabHeading>1. Proyecto</ng-template>
+                    <app-proyecto></app-proyecto>
 
-                <tab>
+                  </tab>
 
-                  <ng-template tabHeading>2. General</ng-template>
-                  <app-general></app-general>
-                
-                </tab>
+                  <tab>
 
-                <tab>
-                  
-                  <ng-template tabHeading>3. Pared expuesta</ng-template>
-                  <accordion [isAnimated]="false" [closeOthers]="true">
-                    <accordion-group *ngFor="let location of locations">
-                      
-                      <h5 class="mb-0 row" accordion-heading>
-                        <span class="col-2">Pared {{ location | titlecase }}</span>
-                        <span class="col-2 offset-8 text-right" id="pared{{ location | titlecase }}UV"></span>
-                      </h5>
-                      <app-pared [location]="location"></app-pared>
-                    </accordion-group>
-                  </accordion>
-                  
-                </tab>
+                    <ng-template tabHeading>2. General</ng-template>
+                    <app-general></app-general>
 
-                <tab>
-                  
-                  <ng-template tabHeading>4. Techo expuesto</ng-template>
-                  <app-techo></app-techo>
-                  
-                </tab>
+                  </tab>
 
-                <tab>
-                  <ng-template tabHeading>5. Piso en contacto con terreno</ng-template>
-                  <app-piso></app-piso>
-                </tab>
+                  <tab>
 
-                <tab>
+                    <ng-template tabHeading>3. Pared expuesta</ng-template>
+                    <accordion [isAnimated]="false" [closeOthers]="true">
+                      <accordion-group *ngFor="let location of locations">
 
-                  <ng-template tabHeading>6. Ventana expuesta</ng-template>
-                  <accordion [isAnimated]="false" [closeOthers]="true">
-                    <accordion-group *ngFor="let location of locations">
-                      
-                      <h5 class="mb-0 row" accordion-heading>
-                        <span class="col-2">Fachada {{ location | titlecase }}</span>
-                        <span class="col-2 offset-6 text-right" id="inputVentanaUV{{location | titlecase}}"></span>
-                        <span class="col-2 text-right" id="inputVentanaSHGC{{location | titlecase}}"></span>
-                      </h5>
-                      <app-ventana [location]="location"></app-ventana>
-                    </accordion-group>
-                  </accordion>
-                  <!-- <app-ventanas></app-ventanas> -->
+                        <h5 class="mb-0 row" accordion-heading>
+                          <span class="col-2">Pared {{ location | titlecase }}</span>
+                          <span class="col-2 offset-8 text-right"
+                            id="pared{{ location | titlecase }}UV"></span>
+                        </h5>
+                        <app-pared [location]="location"></app-pared>
+                      </accordion-group>
+                    </accordion>
 
-                </tab>
+                  </tab>
 
-                <tab>
+                  <tab>
 
-                  <ng-template tabHeading>7. Resultado</ng-template>
+                    <ng-template tabHeading>4. Techo expuesto</ng-template>
+                    <accordion [isAnimated]="false" [closeOthers]="true">
+                      <accordion-group [isOpen]="true">
+                        <h5 class="mb-0 row" accordion-heading>
+                          <span class="col-2 offset-8 text-right" id="techoUV"></span>
+                          <span class="col-2 text-right" id="techoSRI"></span>
+                        </h5>
+                        <app-techo></app-techo>
+                      </accordion-group>
+                    </accordion>
 
-                  <app-resultado [simulation]="value"></app-resultado>
+                  </tab>
 
-                </tab>
+                  <tab>
+                    <ng-template tabHeading>5. Piso en contacto con terreno</ng-template>
+                    <app-piso></app-piso>
+                  </tab>
 
-              </tabset>
-            </form>
+                  <tab>
+
+                    <ng-template tabHeading>6. Ventana expuesta</ng-template>
+                    <accordion [isAnimated]="false" [closeOthers]="true">
+                      <accordion-group *ngFor="let location of locations">
+
+                        <h5 class="mb-0 row" accordion-heading>
+                          <span class="col-2">Fachada {{ location | titlecase }}</span>
+                          <span class="col-2 offset-6 text-right"
+                            id="ventana{{location | titlecase}}UV"></span>
+                          <span class="col-2 text-right"
+                            id="ventana{{location | titlecase}}SHGC"></span>
+                        </h5>
+                        <app-ventana [location]="location"></app-ventana>
+                      </accordion-group>
+                    </accordion>
+                    <!-- <app-ventanas></app-ventanas> -->
+
+                  </tab>
+
+                  <tab>
+
+                    <ng-template tabHeading>7. Resultado</ng-template>
+
+                    <app-resultado [simulation]="value"></app-resultado>
+
+                  </tab>
+
+                </tabset>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>

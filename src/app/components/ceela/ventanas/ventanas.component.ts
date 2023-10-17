@@ -16,16 +16,16 @@ export class VentanasComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let ventanaUV = document.getElementById("inputVentanaUV"+this.toTitleCase(this.location)) as HTMLElement | null
+    let ventanaUV = document.getElementById("ventana"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
     ventanaUV.textContent = "Valor U: 0.0 [W/m2-K]"
 
-    let ventanaSHGC = document.getElementById("inputVentanaSHGC"+this.toTitleCase(this.location)) as HTMLElement | null
-    ventanaSHGC.textContent = "SGHC 0.00 [-]"
+    let ventanaSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
+    ventanaSHGC.textContent = "SGHC: 0.00 [-]"
 
     this.service.getWindowMaterials().subscribe((response) => { 
-      
+
       var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["material"],"value": objt[1]["id"], "u": objt[1]["u"] , "sghc": objt[1]["sghc"]}
+        return {"text": objt[1]["material"],"value": objt[1]["id"]}
       });
 
       var configs = {
@@ -41,13 +41,25 @@ export class VentanasComponent implements OnInit {
   }
 
   onChange(location: string, materialId: string) {
-    // alert(location + " " +materialId)
 
-    // let ventanaUV = document.getElementById("ventanaUV"+this.toTitleCase(this.location)) as HTMLElement | null
-    // ventanaUV.textContent = "Valor U: " +parseFloat(result.toString()).toFixed(2)+" [W/m2-K]"
+    this.service.getWindowMaterialsId(materialId).subscribe((result) => {
 
-    // let ventanaRef = document.getElementById("selectorVentanaTipo"+this.toTitleCase(this.location)) as HTMLSelectElement
-    // let ventanaText = ventanaRef.options[ventanaRef.selectedIndex].text
+      console.log(result["u"], result["sghc"])
+
+      let ventanaUV = document.getElementById("ventana"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
+      ventanaUV.textContent = "Valor U: " +parseFloat(result["u"].toString()).toFixed(2)+" [W/m2-K]"
+
+      let ventanaSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
+      ventanaSHGC.textContent = "SGHC: " +parseFloat(result["sghc"].toString()).toFixed(2)+" [-]"
+
+      this.onChangeArea();
+
+    });
+    
+
+  }
+
+  onChangeArea() {
 
   }
 

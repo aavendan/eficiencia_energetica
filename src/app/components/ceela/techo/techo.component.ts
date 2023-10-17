@@ -18,7 +18,11 @@ export class TechoComponent implements OnInit {
   constructor(private service: DataService) { }
 
   ngOnInit(): void {
-    
+    let techoUV = document.getElementById("techoUV") as HTMLElement | null
+    techoUV.textContent = "Valor U: 0.0 [W/m2-K]"
+
+    let techoSRI = document.getElementById("techoSRI") as HTMLElement | null
+    techoSRI.textContent = "SRI: 0.0 [-]"
   }
 
   addRowCapaTecho() {
@@ -26,7 +30,7 @@ export class TechoComponent implements OnInit {
     let count = this.layers.length
     this.layers.push({ idx: count+1 });
 
-    this.service.getWallMaterials().subscribe((response) => { 
+    this.service.getRoofMaterials().subscribe((response) => { 
       
       var data = Object.entries(response).map((objt) =>  {
         return {"text": objt[1]["material"],"value": objt[1]["id"]}
@@ -42,6 +46,26 @@ export class TechoComponent implements OnInit {
       
     });
 
+
+  }
+
+  onChange(id: string, materialId: string) {
+
+    this.service.getRoofMaterialsId(materialId).subscribe((response) => {
+
+      let selectrConductividad = document.getElementById("inputTechoConductividad"+id) as HTMLInputElement | null
+      selectrConductividad.value = response["k"]
+
+      let selectrDensidad = document.getElementById("inputTechoDensidad"+id) as HTMLInputElement | null
+      selectrDensidad.value = response["d"]
+
+      let selectrCalor = document.getElementById("inputTechoCalor"+id) as HTMLInputElement | null
+      selectrCalor.value = response["c"]
+
+      let selectrAbsortancia = document.getElementById("inputTechoAbsortancia"+id) as HTMLInputElement | null
+      selectrAbsortancia.value = response["a"]
+
+    });
 
   }
 

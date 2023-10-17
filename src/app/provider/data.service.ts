@@ -15,10 +15,12 @@ export class DataService {
   URL_CITY = this.IP + "/cities"
   URL_CITY_ID = this.IP + "/cities/id/";
   URL_ZONES = this.IP + "/cities";
-  URL_WINDOOW_MATERIALS = this.IP + "/windowMaterials";
-  URL_WINDOOW_MATERIALS_ID = this.IP + "/windowMaterials/id/";
+  URL_WINDOW_MATERIALS = this.IP + "/windowMaterials";
+  URL_WINDOW_MATERIALS_ID = this.IP + "/windowMaterials/id/";
   URL_WALL_MATERIALS = this.IP + "/wallMaterials";
   URL_WALL_MATERIALS_ID = this.IP + "/wallMaterials/id/";
+  URL_ROOF_MATERIALS = this.IP + "/roofMaterials";
+  URL_ROOF_MATERIALS_ID = this.IP + "/roofMaterials/id/";
 
   URL_UV = this.IP + "/uv"
 
@@ -47,11 +49,19 @@ export class DataService {
   }
 
   getWindowMaterials() {
-    return this.http.get(this.URL_WINDOOW_MATERIALS);
+    return this.http.get(this.URL_WINDOW_MATERIALS);
   }
 
   getWindowMaterialsId(id: string) {
-    return this.http.get(this.URL_WINDOOW_MATERIALS_ID + id);
+    return this.http.get(this.URL_WINDOW_MATERIALS_ID + id);
+  }
+
+  getRoofMaterials() {
+    return this.http.get(this.URL_ROOF_MATERIALS);
+  }
+
+  getRoofMaterialsId(id: string) {
+    return this.http.get(this.URL_ROOF_MATERIALS_ID + id);
   }
 
   postUV(values: any){

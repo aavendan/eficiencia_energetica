@@ -2,204 +2,140 @@
 
   <div class="col-md-12">
 
-    <div class="card pt-4">
-
-      <div class="col-md-2 mb-2 offset-md-10 text-right">
-        <button class=" btn btn-sm btn-success" type="button"
-          (click)="addRowCapaTecho()">
-          Agregar capa
-        </button>
-      </div>
-
-      <div class="col-md-12">
-
-        <!-- Techo -->
-        <div class id="table-responsive">
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Capa</th>
-
-                <th scope="col" class="size-3">Material</th>
-
-                <th scope="col">Espesor</th>
-
-                <th scope="col">k[W/m-K]​</th>
-
-                <th scope="col">Dens. [kg/m3]</th>
-
-                <th scope="col">Cp [J/kg-K]​</th>
-
-                <th scope="col">Abs. Sol. [-]​</th>
-
-              </tr>
-            </thead>
-
-            <tbody class=" list">
-
-              <!-- Ejemplo 1 -->
-              <tr *ngFor="let layer of layers">
-                <th scope="row">
-                  <!-- Capa -->
-                  <input
-                    id="capaTecho{{layer.idx}}"
-                    class="form-control"
-                    placeholder="1.0"
-                    disabled="disabled"
-                    value="Capa {{layer.idx}}">
-                  <!-- <span>Capa {{layer.idx}}</span> -->
-                  <!-- Fin Capa -->
-                </th>
-
-                <td>
-                  <!-- Material -->
-                  <select class="form-control upselectr" data-toggle="select"
-                    id="selectorTechoMaterial{{layer.idx}}">
-                  </select>
-                  <!-- (change)="onChange(location,layer.idx,$event.target.value)" -->
-                  <!-- Fin Material -->
-                </td>
-
-                <td>
-                  <!-- Espesor -->
-                  <input
-                    class="form-control"
-                    id="inputTechoEspesor{{layer.idx}}"
-                    placeholder="1.0"
-                    type="number"
-                    min="0.0"
-                    step=".01"
-                    value="1.0" />
-                  <!-- Fin Espesor -->
-                </td>
-
-                <td>
-                  <!-- Conductividad térmica​ -->
-                  <input
-                    class="form-control"
-                    id="inputTechoConductividad{{layer.idx}}"
-                    placeholder="0.30"
-                    disabled="disabled"
-                    type="number"
-                    min="0.0"
-                    step=".01"
-                    value="0.30" />
-                  <!-- Fin Conductividad térmica​ -->
-                </td>
-
-                <td>
-                  <!-- Densidad -->
-                  <input
-                    class="form-control"
-                    id="inputTechoDensidad{{layer.idx}}"
-                    placeholder="1400.0​"
-                    disabled="disabled"
-                    type="number"
-                    min="0.0"
-                    step=".01"
-                    value="1400.0​" />
-                  <!-- Fin Densidad​ -->
-                </td>
-
-                <td>
-                  <!-- Calor especifico -->
-                  <input
-                    class="form-control"
-                    id="inputTechoCalor{{layer.idx}}"
-                    placeholder="1000.0​"
-                    disabled="disabled"
-                    type="number"
-                    min="0.0"
-                    step=".01"
-                    value="1000.0​​" />
-                  <!-- Fin Calor especifico -->
-                </td>
-
-                <td>
-                  <!-- Absortancia Solar -->
-                  <input
-                    class="form-control"
-                    id="inputTechoAbsortancia{{layer.idx}}"
-                    placeholder="0.7​"
-                    disabled="disabled"
-                    type="number"
-                    min="0.0"
-                    step=".01"
-                    value="0.7​​​" />
-                  <!-- Fin Absortancia Solar -->
-                </td>
-
-              </tr>
-
-            </tbody>
-          </table>
-        </div>
-        <!-- Fin -->
-
-      </div>
-
-      <div class="row justify-content-center mt-3">
-
-        <!-- Pared expuesta Resultado Valor U -->
-        <div class="col-md-3">
-
-          <div
-            class="form-group"
-            [ngClass]="{ focused: focus1 === true }">
-            <label class="form-control-label">
-              Valor U [W/m2-K]​
-            </label>
-            <div class="input-group input-group-merge">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fas fa-check"> </i>
-                </span>
-              </div>
-
-              <input
-                class="form-control"
-                id="inputTechoU"
-                placeholder="0.35​"
-                (focus)="focus1 = true"
-                (blur)="focus1 = false" />
-            </div>
-          </div>
-
-        </div>
-        <!-- Fin -->
-
-        <!-- Pared expuesta Resultado SRI -->
-        <div class="col-md-3">
-
-          <div
-            class="form-group"
-            [ngClass]="{ focused: focus2 === true }">
-            <label class="form-control-label">
-              SRI[-]
-            </label>
-            <div class="input-group input-group-merge">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fas fa-check"> </i>
-                </span>
-              </div>
-
-              <input
-                class="form-control"
-                id="inputTechoSRI"
-                placeholder="0.64"
-                (focus)="focus2 = true"
-                (blur)="focus2 = false" />
-            </div>
-          </div>
-
-        </div>
-        <!-- Fin -->
-
-      </div>
-
+    <div class="col-md-2 mb-2 offset-md-10 text-right">
+      <button class=" btn btn-sm btn-success" type="button"
+        (click)="addRowCapaTecho()">
+        Agregar capa
+      </button>
     </div>
 
+    <div class="col-md-12">
+
+      <!-- Techo -->
+      <div class id="table-responsive">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Capa</th>
+
+              <th scope="col" class="size-3">Material</th>
+
+              <th scope="col">Espesor</th>
+
+              <th scope="col">k[W/m-K]​</th>
+
+              <th scope="col">Dens. [kg/m3]</th>
+
+              <th scope="col">Cp [J/kg-K]​</th>
+
+              <th scope="col">Abs. Sol. [-]​</th>
+
+            </tr>
+          </thead>
+
+          <tbody class=" list">
+
+            <!-- Ejemplo 1 -->
+            <tr *ngFor="let layer of layers">
+              <th scope="row">
+                <!-- Capa -->
+                <input
+                  id="capaTecho{{layer.idx}}"
+                  class="form-control"
+                  placeholder="1.0"
+                  disabled="disabled"
+                  value="Capa {{layer.idx}}">
+                <!-- <span>Capa {{layer.idx}}</span> -->
+                <!-- Fin Capa -->
+              </th>
+
+              <td>
+                <!-- Material -->
+                <select class="form-control upselectr" data-toggle="select"
+                  id="selectorTechoMaterial{{layer.idx}}"
+                  (change)="onChange(layer.idx,$event.target.value)">
+                </select>
+                <!-- (change)="onChange(location,layer.idx,$event.target.value)" -->
+                <!-- Fin Material -->
+              </td>
+
+              <td>
+                <!-- Espesor -->
+                <input
+                  class="form-control"
+                  id="inputTechoEspesor{{layer.idx}}"
+                  placeholder="0.0"
+                  type="number"
+                  min="0.0"
+                  step=".01"
+                  value="0.0" />
+                <!-- Fin Espesor -->
+              </td>
+
+              <td>
+                <!-- Conductividad térmica​ -->
+                <input
+                  class="form-control"
+                  id="inputTechoConductividad{{layer.idx}}"
+                  placeholder="0.0"
+                  disabled="disabled"
+                  type="number"
+                  min="0.0"
+                  step=".01"
+                  value="0.0" />
+                <!-- Fin Conductividad térmica​ -->
+              </td>
+
+              <td>
+                <!-- Densidad -->
+                <input
+                  class="form-control"
+                  id="inputTechoDensidad{{layer.idx}}"
+                  placeholder="0.0​"
+                  disabled="disabled"
+                  type="number"
+                  min="0.0"
+                  step=".01"
+                  value="0.0​" />
+                <!-- Fin Densidad​ -->
+              </td>
+
+              <td>
+                <!-- Calor especifico -->
+                <input
+                  class="form-control"
+                  id="inputTechoCalor{{layer.idx}}"
+                  placeholder="0.0​"
+                  disabled="disabled"
+                  type="number"
+                  min="0.0"
+                  step=".01"
+                  value="0.0​​" />
+                <!-- Fin Calor especifico -->
+              </td>
+
+              <td>
+                <!-- Absortancia Solar -->
+                <input
+                  class="form-control"
+                  id="inputTechoAbsortancia{{layer.idx}}"
+                  placeholder="0.0"
+                  disabled="disabled"
+                  type="number"
+                  min="0.0"
+                  step=".01"
+                  value="0.0​​​" />
+                <!-- Fin Absortancia Solar -->
+              </td>
+
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <!-- Fin -->
+
+    </div>
   </div>
 
 </div>
