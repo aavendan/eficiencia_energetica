@@ -22,7 +22,7 @@ export class DataService {
   URL_ROOF_MATERIALS = this.IP + "/roofMaterials";
   URL_ROOF_MATERIALS_ID = this.IP + "/roofMaterials/id/";
 
-  URL_UV = this.IP + "/uv"
+  URL_UPARED = this.IP + "/upared"
 
   URL_SIMULATOR = this.IP + "/simulacion"
 
@@ -65,7 +65,7 @@ export class DataService {
   }
 
   postUV(values: any){
-    return this.http.post(this.URL_UV, values)
+    return this.http.post(this.URL_UPARED, values)
   }
 
   postSimulate(values) {

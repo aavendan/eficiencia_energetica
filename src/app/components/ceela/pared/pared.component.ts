@@ -1,4 +1,4 @@
-import { Component, OnInit, Input  } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from "../../../provider/data.service";
 import { SummaryService } from "../../../provider/summary.service";
 
@@ -12,6 +12,7 @@ import Selectr from "mobius1-selectr";
 export class ParedComponent implements OnInit {
 
   layers = []
+  upared: any;
 
   @Input() location: string;
   pared: any = {};
@@ -20,8 +21,17 @@ export class ParedComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let paredUV = document.getElementById("pared"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
+    let paredUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
     paredUV.textContent = "Valor U: 0.0 [W/m2-K]"
+
+    let paredCumplimiento = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
+    paredCumplimiento.textContent = "---"
+
+    this.summary.getResult().subscribe(result => {
+      this.upared = {
+        "zona": result["selectorZona"]
+      }
+    })
 
   }
 
@@ -29,62 +39,62 @@ export class ParedComponent implements OnInit {
 
     this.service.getWallMaterialsId(materialId).subscribe((response) => {
 
-      let selectrConductividad = document.getElementById("inputParedConductividad"+this.toTitleCase(location)+id) as HTMLInputElement | null
+      let selectrConductividad = document.getElementById("inputParedConductividad" + this.toTitleCase(location) + id) as HTMLInputElement | null
       selectrConductividad.value = response["k"]
 
-      let selectrDensidad = document.getElementById("inputParedDensidad"+this.toTitleCase(location)+id) as HTMLInputElement | null
+      let selectrDensidad = document.getElementById("inputParedDensidad" + this.toTitleCase(location) + id) as HTMLInputElement | null
       selectrDensidad.value = response["d"]
 
-      let selectrCalor = document.getElementById("inputParedCalor"+this.toTitleCase(location)+id) as HTMLInputElement | null
+      let selectrCalor = document.getElementById("inputParedCalor" + this.toTitleCase(location) + id) as HTMLInputElement | null
       selectrCalor.value = response["c"]
-      
-      let selectrEspesor = document.getElementById("inputParedEspesor"+this.toTitleCase(location)+id) as HTMLInputElement | null
+
+      let selectrEspesor = document.getElementById("inputParedEspesor" + this.toTitleCase(location) + id) as HTMLInputElement | null
       selectrEspesor.value = "0.0"
-      
+
       this.onChangeEspesor();
     })
   }
 
   onChangeEspesor() {
-    
+
     let values = [];
-    
+
     this.layers.forEach(obj => {
 
       let id = obj.idx
 
-      let materialRef = document.getElementById("selectorParedMaterial"+this.toTitleCase(this.location)+id.toString()) as HTMLSelectElement
-      let espesorRef = document.getElementById("inputParedEspesor"+this.toTitleCase(this.location)+id.toString()) as HTMLInputElement
-      let conductividadRef = document.getElementById("inputParedConductividad"+this.toTitleCase(this.location)+id.toString()) as HTMLInputElement
-      let densidadRef = document.getElementById("inputParedDensidad"+this.toTitleCase(this.location)+id.toString()) as HTMLInputElement
-      let calorRef = document.getElementById("inputParedCalor"+this.toTitleCase(this.location)+id.toString()) as HTMLInputElement
-      
+      let materialRef = document.getElementById("selectorParedMaterial" + this.toTitleCase(this.location) + id.toString()) as HTMLSelectElement
+      let espesorRef = document.getElementById("inputParedEspesor" + this.toTitleCase(this.location) + id.toString()) as HTMLInputElement
+      let conductividadRef = document.getElementById("inputParedConductividad" + this.toTitleCase(this.location) + id.toString()) as HTMLInputElement
+      let densidadRef = document.getElementById("inputParedDensidad" + this.toTitleCase(this.location) + id.toString()) as HTMLInputElement
+      let calorRef = document.getElementById("inputParedCalor" + this.toTitleCase(this.location) + id.toString()) as HTMLInputElement
+
       let materialText = materialRef.options[materialRef.selectedIndex].text
       let espesorValue = parseFloat(espesorRef.value)
       let conductividadValue = parseFloat(conductividadRef.value)
       let densidadValue = parseFloat(densidadRef.value)
       let calorValue = parseFloat(calorRef.value)
 
-      if(espesorValue != 0 && conductividadValue != 0) {
-        values.push( {"e":espesorValue, "k":conductividadValue } )
+      if (espesorValue != 0 && conductividadValue != 0) {
+        values.push({ "e": espesorValue, "k": conductividadValue })
 
         /* Inicio */
         let valuesLocal = {
           "nombre": materialText,
           "espesor": espesorValue,
           "k": conductividadValue,
-          "densidad":densidadValue,
-          "cp":calorValue
+          "densidad": densidadValue,
+          "cp": calorValue
         }
 
-        if( !(this.location.toString() in this.pared) ) {
+        if (!(this.location.toString() in this.pared)) {
           this.pared[this.location.toString()] = {}
         }
 
-        if(id.toString() in this.pared[this.location.toString()]  ) {
-          Object.assign(  this.pared[this.location.toString()]  , { [id.toString()]:  valuesLocal })
+        if (id.toString() in this.pared[this.location.toString()]) {
+          Object.assign(this.pared[this.location.toString()], { [id.toString()]: valuesLocal })
         } else {
-          this.pared[this.location.toString()][id.toString()] =  valuesLocal
+          this.pared[this.location.toString()][id.toString()] = valuesLocal
         }
 
         this.replaceDataObject("Pared", this.location.toString(), this.pared[this.location.toString()])
@@ -94,20 +104,25 @@ export class ParedComponent implements OnInit {
 
     });
 
-   
-    if(values.length > 0) {
-      
-      this.service.postUV(values).subscribe(result => {
 
-        let paredUV = document.getElementById("pared"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
-        paredUV.textContent = "Valor U: " +parseFloat(result.toString()).toFixed(2)+" [W/m2-K]"
+    if (values.length > 0) {
 
-        this.replaceData("pared"+this.toTitleCase(this.location)+"UV"  , parseFloat(result.toString()).toFixed(2))
-        
+      this.upared["capas"] = values;
+
+      this.service.postUV(this.upared).subscribe(uparedResult => {
+
+        let paredCumplimiento = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
+        paredCumplimiento.textContent = uparedResult["cumple"]
+
+        let paredUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
+        paredUV.textContent = "Valor U: " + parseFloat(uparedResult["u"].toString()).toFixed(2) + " [W/m2-K]"
+
+        this.replaceData("pared" + this.toTitleCase(this.location) + "UV", parseFloat(uparedResult["u"].toString()).toFixed(2))
+
       })
 
     }
-    
+
   }
 
   replaceData(id, value) {
@@ -121,14 +136,14 @@ export class ParedComponent implements OnInit {
   //https://stackblitz.com/edit/angular-ivy-6bt4hk?file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.tsng
 
   addRowCapaPared() {
-    
-    let count = this.layers.length
-    this.layers.push({ idx: count+1 });
 
-    this.service.getWallMaterials().subscribe((response) => { 
-      
-      var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["material"],"value": objt[1]["id"]} 
+    let count = this.layers.length
+    this.layers.push({ idx: count + 1 });
+
+    this.service.getWallMaterials().subscribe((response) => {
+
+      var data = Object.entries(response).map((objt) => {
+        return { "text": objt[1]["material"], "value": objt[1]["id"] }
       });
 
       var configs = {
@@ -137,8 +152,8 @@ export class ParedComponent implements OnInit {
         }
       }
 
-      new Selectr((document.getElementById("selectorParedMaterial"+this.toTitleCase(this.location)+(count+1).toString()) as any), configs.default)
-      
+      new Selectr((document.getElementById("selectorParedMaterial" + this.toTitleCase(this.location) + (count + 1).toString()) as any), configs.default)
+
     });
 
   }
@@ -147,7 +162,7 @@ export class ParedComponent implements OnInit {
   toTitleCase(str) {
     return str.replace(
       /\w\S*/g,
-      function(txt) {
+      function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
       }
     );

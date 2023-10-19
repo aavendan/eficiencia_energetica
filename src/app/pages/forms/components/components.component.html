@@ -58,8 +58,10 @@ https://fontawesome.com/v5/search -->
 
                         <h5 class="mb-0 row" accordion-heading>
                           <span class="col-2">Pared {{ location | titlecase }}</span>
-                          <span class="col-2 offset-8 text-right"
+                          <span class="col-2 offset-6 text-right"
                             id="pared{{ location | titlecase }}UV"></span>
+                          <span class="col-2 text-right"
+                            id="pared{{ location | titlecase }}Cumplimiento"></span>
                         </h5>
                         <app-pared [location]="location"></app-pared>
                       </accordion-group>

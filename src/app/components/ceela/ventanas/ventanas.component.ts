@@ -44,8 +44,6 @@ export class VentanasComponent implements OnInit {
 
     this.service.getWindowMaterialsId(materialId).subscribe((result) => {
 
-      console.log(result["u"], result["sghc"])
-
       let ventanaUV = document.getElementById("ventana"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
       ventanaUV.textContent = "Valor U: " +parseFloat(result["u"].toString()).toFixed(2)+" [W/m2-K]"
 
