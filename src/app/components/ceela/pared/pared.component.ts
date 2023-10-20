@@ -21,11 +21,7 @@ export class ParedComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let paredUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
-    paredUV.textContent = "Valor U: 0.0 [W/m2-K]"
-
-    let paredCumplimiento = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
-    paredCumplimiento.textContent = "---"
+    this.resetOutput();
 
     this.summary.getResult().subscribe(result => {
       this.upared = {
@@ -56,6 +52,8 @@ export class ParedComponent implements OnInit {
   }
 
   onChangeEspesor() {
+
+    this.resetOutput();
 
     let values = [];
 
@@ -111,11 +109,19 @@ export class ParedComponent implements OnInit {
 
       this.service.postUV(this.upared).subscribe(uparedResult => {
 
+        let paredUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
+        paredUV.textContent = "Valor U: " + parseFloat(uparedResult["u"].toString()).toFixed(2) + " [W/m2-K]"
+
         let paredCumplimiento = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
         paredCumplimiento.textContent = uparedResult["cumple"]
 
-        let paredUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
-        paredUV.textContent = "Valor U: " + parseFloat(uparedResult["u"].toString()).toFixed(2) + " [W/m2-K]"
+        if(uparedResult["cumple"].toString() == "CUMPLE") {
+          paredCumplimiento.classList.replace("badge-default","badge-success")
+          paredCumplimiento.classList.replace("badge-danger","badge-success")
+        } else {
+          paredCumplimiento.classList.replace("badge-default","badge-danger")
+          paredCumplimiento.classList.replace("badge-success","badge-danger")
+        }
 
         this.replaceData("pared" + this.toTitleCase(this.location) + "UV", parseFloat(uparedResult["u"].toString()).toFixed(2))
 
@@ -158,6 +164,13 @@ export class ParedComponent implements OnInit {
 
   }
 
+  resetOutput() {
+    let paredUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
+    paredUV.textContent = "Valor U: 0.0 [W/m2-K]"
+
+    let paredCumplimiento = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
+    paredCumplimiento.textContent = "SIN VALOR"
+  }
 
   toTitleCase(str) {
     return str.replace(
