@@ -38,13 +38,21 @@ export class VentanasComponent implements OnInit {
 
     this.service.getWindowMaterialsId(materialId).subscribe((result) => {
 
-      let ventanaUV = document.getElementById("ventana"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
-      ventanaUV.textContent = "Valor U: " +parseFloat(result["u"].toString()).toFixed(2)+" [W/m2-K]"
+      let windowUV = document.getElementById("ventana"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
+      windowUV.textContent = "Valor U: " +parseFloat(result["u"].toString()).toFixed(2)+" [W/m2-K]"
 
-      let ventanaSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
-      ventanaSHGC.textContent = "SGHC: " +parseFloat(result["sghc"].toString()).toFixed(2)+" [-]"
+      let windowSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
+      windowSHGC.textContent = "SGHC: " +parseFloat(result["sghc"].toString()).toFixed(2)+" [-]"
 
-      this.onChangeArea();
+      /* Inicio */
+      let valuesLocal = {
+      }
+
+      //FALTA n49
+
+      /* Fin */
+
+      this.replaceData("ventana" + this.toTitleCase(this.location) + "UV", parseFloat(result["u"].toString()).toFixed(2))
 
     });
     
@@ -91,6 +99,14 @@ export class VentanasComponent implements OnInit {
       new Selectr((document.getElementById("selectorVentanaTipo"+this.toTitleCase(this.location)) as any), configs.default)
       
     });
+  }
+
+  replaceData(id, value) {
+    this.summary.replaceData(id, value);
+  }
+
+  replaceDataObject(idOut, idIn, value) {
+    this.summary.replaceDataObject(idOut, idIn, value)
   }
 
   toTitleCase(str) {
