@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from "../../../provider/data.service";
+import { SummaryService } from "../../../provider/summary.service";
 
 import Selectr from "mobius1-selectr";
 
@@ -12,31 +13,24 @@ export class VentanasComponent implements OnInit {
 
   @Input() location: string;
 
-  constructor(private service: DataService) { }
+  uwindow: any;
+  window: any = {};
+
+  constructor(private service: DataService, private summary: SummaryService) { }
 
   ngOnInit(): void {
 
-    let ventanaUV = document.getElementById("ventana"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
-    ventanaUV.textContent = "Valor U: 0.0 [W/m2-K]"
+    this.resetOutput();
 
-    let ventanaSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
-    ventanaSHGC.textContent = "SGHC: 0.00 [-]"
-
-    this.service.getWindowMaterials().subscribe((response) => { 
-
-      var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["material"],"value": objt[1]["id"]}
-      });
-
-      var configs = {
-        default: {
-          data: data
-        }
+    // U: preparing zona
+    this.summary.getResult().subscribe(result => {
+      this.uwindow = {
+        "zona": result["selectorZona"]
       }
+    })
+    
 
-      new Selectr((document.getElementById("selectorVentanaTipo"+this.toTitleCase(this.location)) as any), configs.default)
-      
-    });
+    this.addVentana()
 
   }
 
@@ -61,6 +55,43 @@ export class VentanasComponent implements OnInit {
 
   }
 
+
+  resetOutput() {
+
+    //U - value to zero
+    let windowUV = document.getElementById("ventana"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
+    windowUV.textContent = "Valor U: 0.0 [W/m2-K]"
+
+    //SRI - value to zero
+    let windowSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
+    windowSHGC.textContent = "SGHC: 0.00 [-]"
+
+    // Accomplishment
+    let windowCompliance = document.getElementById("ventana"+this.toTitleCase(this.location)+"Cumplimiento") as HTMLElement | null
+    windowCompliance.textContent = "SIN VALOR"
+
+    // Accomplishment - reset
+    windowCompliance.classList.replace("badge-success","badge-default")
+    windowCompliance.classList.replace("badge-danger","badge-default")
+  }
+
+  addVentana() {
+    this.service.getWindowMaterials().subscribe((response) => { 
+
+      var data = Object.entries(response).map((objt) =>  {
+        return {"text": objt[1]["material"],"value": objt[1]["id"]}
+      });
+
+      var configs = {
+        default: {
+          data: data
+        }
+      }
+
+      new Selectr((document.getElementById("selectorVentanaTipo"+this.toTitleCase(this.location)) as any), configs.default)
+      
+    });
+  }
 
   toTitleCase(str) {
     return str.replace(

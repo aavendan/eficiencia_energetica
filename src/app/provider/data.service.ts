@@ -22,7 +22,9 @@ export class DataService {
   URL_ROOF_MATERIALS = this.IP + "/roofMaterials";
   URL_ROOF_MATERIALS_ID = this.IP + "/roofMaterials/id/";
 
-  URL_UPARED = this.IP + "/upared"
+  URL_UWALL = this.IP + "/upared"
+  URL_UCEILING = this.IP + "/utecho"
+  URL_UFLOOR = this.IP + "/upiso"
 
   URL_SIMULATOR = this.IP + "/simulacion"
 
@@ -64,8 +66,16 @@ export class DataService {
     return this.http.get(this.URL_ROOF_MATERIALS_ID + id);
   }
 
-  postUV(values: any){
-    return this.http.post(this.URL_UPARED, values)
+  postUWall(values: any){
+    return this.http.post(this.URL_UWALL, values)
+  }
+
+  postUCeiling(values: any){
+    return this.http.post(this.URL_UCEILING, values)
+  }
+
+  postUFloor(values: any){
+    return this.http.post(this.URL_UFLOOR, values)
   }
 
   postSimulate(values) {

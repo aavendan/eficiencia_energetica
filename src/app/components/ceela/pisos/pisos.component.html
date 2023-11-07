@@ -2,11 +2,11 @@
 
     <div class="col-md-12">
   
-      <div class="card pt-4">
+      <!-- <div class="card pt-4"> -->
   
         <div class="col-md-2 mb-2 offset-md-10 text-right">
           <button class=" btn btn-sm btn-success" type="button"
-            (click)="addRowCapaPiso()">
+            (click)="addRowLayerFloor()">
             Agregar capa
           </button>
         </div>
@@ -53,7 +53,8 @@
                   <td>
                     <!-- Material -->
                     <select class="form-control upselectr" data-toggle="select"
-                      id="selectorMaterialPiso{{layer.idx}}">
+                      id="selectorMaterialPiso{{layer.idx}}"
+                      (change)="onChange(layer.idx,$event.target.value)">
                     </select>
                     <!-- (change)="onChange(location,layer.idx,$event.target.value)" -->
                     <!-- Fin Material -->
@@ -64,11 +65,12 @@
                     <input
                       class="form-control"
                       id="inputPisoEspesor{{layer.idx}}"
-                      placeholder="1.0"
+                      placeholder="0.0"
                       type="number"
                       min="0.0"
                       step=".01"
-                      value="1.0" />
+                      value="0.0"
+                      (change)="onChangeEspesor()" />
                     <!-- Fin Espesor -->
                   </td>
   
@@ -77,12 +79,12 @@
                     <input
                       class="form-control"
                       id="inputPisoConductividad{{layer.idx}}"
-                      placeholder="0.30"
+                      placeholder="0.0"
                       disabled="disabled"
                       type="number"
                       min="0.0"
                       step=".01"
-                      value="0.30" />
+                      value="0.0" />
                     <!-- Fin Conductividad térmica​ -->
                   </td>
   
@@ -91,12 +93,12 @@
                     <input
                       class="form-control"
                       id="inputPisoDensidad{{layer.idx}}"
-                      placeholder="1400.0​"
+                      placeholder="0.0​"
                       disabled="disabled"
                       type="number"
                       min="0.0"
                       step=".01"
-                      value="1400.0​" />
+                      value="0.0​" />
                     <!-- Fin Densidad​ -->
                   </td>
   
@@ -105,12 +107,12 @@
                     <input
                       class="form-control"
                       id="inputPisoCalor{{layer.idx}}"
-                      placeholder="1000.0​"
+                      placeholder="0.0​"
                       disabled="disabled"
                       type="number"
                       min="0.0"
                       step=".01"
-                      value="1000.0​​" />
+                      value="0.0​​" />
                     <!-- Fin Calor especifico -->
                   </td>
   
@@ -124,9 +126,9 @@
   
         </div>
   
-        <div class="row justify-content-center mt-3">
+        <!-- <div class="row justify-content-center mt-3">
   
-          <!-- Pared expuesta Resultado Valor U -->
+          Pared expuesta Resultado Valor U
           <div class="col-md-3">
   
             <div
@@ -152,11 +154,11 @@
             </div>
   
           </div>
-          <!-- Fin -->
+          Fin
   
-        </div>
+        </div> 
   
-      </div>
+      </div>-->
   
     </div>
   

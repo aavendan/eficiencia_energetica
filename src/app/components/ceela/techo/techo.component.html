@@ -4,7 +4,7 @@
 
     <div class="col-md-2 mb-2 offset-md-10 text-right">
       <button class=" btn btn-sm btn-success" type="button"
-        (click)="addRowCapaTecho()">
+        (click)="addRowLayerCeiling()">
         Agregar capa
       </button>
     </div>
@@ -68,7 +68,8 @@
                   type="number"
                   min="0.0"
                   step=".01"
-                  value="0.0" />
+                  value="0.0"
+                  (change)="onChangeEspesor()" />
                 <!-- Fin Espesor -->
               </td>
 

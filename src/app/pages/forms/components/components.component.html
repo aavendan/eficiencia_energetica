@@ -76,8 +76,12 @@ https://fontawesome.com/v5/search -->
                     <accordion [isAnimated]="false" [closeOthers]="true">
                       <accordion-group [isOpen]="true">
                         <h5 class="mb-0 row" accordion-heading>
-                          <span class="col-2 offset-8 text-right" id="techoUV"></span>
+                          <span class="col-2">Techo</span>
+                          <span class="col-2 offset-4 text-right" id="techoUV"></span>
                           <span class="col-2 text-right" id="techoSRI"></span>
+                          <span class="col-2 text-right">
+                            <span id="techoCumplimiento" class="badge badge-default"></span>
+                          </span>
                         </h5>
                         <app-techo></app-techo>
                       </accordion-group>
@@ -87,7 +91,19 @@ https://fontawesome.com/v5/search -->
 
                   <tab>
                     <ng-template tabHeading>5. Piso en contacto con terreno</ng-template>
-                    <app-piso></app-piso>
+                    <!-- <app-piso></app-piso> -->
+                    <accordion [isAnimated]="false" [closeOthers]="true">
+                      <accordion-group [isOpen]="true">
+                        <h5 class="mb-0 row" accordion-heading>
+                          <span class="col-2">Piso</span>
+                          <span class="col-2 offset-6 text-right" id="pisoUV"></span>
+                          <span class="col-2 text-right"> 
+                            <span id="pisoCumplimiento" class="badge badge-default"></span>
+                          </span>
+                        </h5>
+                        <app-piso></app-piso>
+                      </accordion-group>
+                    </accordion>
                   </tab>
 
                   <tab>
@@ -98,10 +114,13 @@ https://fontawesome.com/v5/search -->
 
                         <h5 class="mb-0 row" accordion-heading>
                           <span class="col-2">Fachada {{ location | titlecase }}</span>
-                          <span class="col-2 offset-6 text-right"
+                          <span class="col-2 offset-4 text-right"
                             id="ventana{{location | titlecase}}UV"></span>
                           <span class="col-2 text-right"
                             id="ventana{{location | titlecase}}SHGC"></span>
+                            <span class="col-2 text-right"> 
+                              <span id="ventana{{location | titlecase}}Cumplimiento" class="badge badge-default"></span>
+                            </span>
                         </h5>
                         <app-ventana [location]="location"></app-ventana>
                       </accordion-group>

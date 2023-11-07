@@ -11,11 +11,13 @@ import Selectr from "mobius1-selectr";
 })
 export class ParedComponent implements OnInit {
 
-  layers = []
-  upared: any;
+  wall: any = {};
+  layers = [];
+
+  uwall: any;
 
   @Input() location: string;
-  pared: any = {};
+  
 
   constructor(private service: DataService, private summary: SummaryService) { }
 
@@ -23,8 +25,9 @@ export class ParedComponent implements OnInit {
 
     this.resetOutput();
 
+    // U: preparing zona
     this.summary.getResult().subscribe(result => {
-      this.upared = {
+      this.uwall = {
         "zona": result["selectorZona"]
       }
     })
@@ -85,17 +88,20 @@ export class ParedComponent implements OnInit {
           "cp": calorValue
         }
 
-        if (!(this.location.toString() in this.pared)) {
-          this.pared[this.location.toString()] = {}
+        // n49
+        if (!(this.location.toString() in this.wall)) {
+          this.wall[this.location.toString()] = {}
         }
 
-        if (id.toString() in this.pared[this.location.toString()]) {
-          Object.assign(this.pared[this.location.toString()], { [id.toString()]: valuesLocal })
+        if (id.toString() in this.wall[this.location.toString()]) {
+          Object.assign(this.wall[this.location.toString()], { [id.toString()]: valuesLocal })
         } else {
-          this.pared[this.location.toString()][id.toString()] = valuesLocal
+          this.wall[this.location.toString()][id.toString()] = valuesLocal
         }
 
-        this.replaceDataObject("Pared", this.location.toString(), this.pared[this.location.toString()])
+        this.replaceDataObject("Pared", this.location.toString(), this.wall[this.location.toString()])
+        // n49
+
         /* Fin */
 
       }
@@ -105,25 +111,27 @@ export class ParedComponent implements OnInit {
 
     if (values.length > 0) {
 
-      this.upared["capas"] = values;
+      this.uwall["capas"] = values;
 
-      this.service.postUV(this.upared).subscribe(uparedResult => {
+      this.service.postUWall(this.uwall).subscribe(uWallResult => {
 
-        let paredUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
-        paredUV.textContent = "Valor U: " + parseFloat(uparedResult["u"].toString()).toFixed(2) + " [W/m2-K]"
+        //UV - set value
+        let wallUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
+        wallUV.textContent = "Valor U: " + parseFloat(uWallResult["u"].toString()).toFixed(2) + " [W/m2-K]"
 
-        let paredCumplimiento = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
-        paredCumplimiento.textContent = uparedResult["cumple"]
+        //Accomplishment - set value
+        let wallAccomplishment = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
+        wallAccomplishment.textContent = uWallResult["cumple"]
 
-        if(uparedResult["cumple"].toString() == "CUMPLE") {
-          paredCumplimiento.classList.replace("badge-default","badge-success")
-          paredCumplimiento.classList.replace("badge-danger","badge-success")
+        if(uWallResult["cumple"].toString() == "CUMPLE") {
+          wallAccomplishment.classList.replace("badge-default","badge-success")
+          wallAccomplishment.classList.replace("badge-danger","badge-success")
         } else {
-          paredCumplimiento.classList.replace("badge-default","badge-danger")
-          paredCumplimiento.classList.replace("badge-success","badge-danger")
+          wallAccomplishment.classList.replace("badge-default","badge-danger")
+          wallAccomplishment.classList.replace("badge-success","badge-danger")
         }
 
-        this.replaceData("pared" + this.toTitleCase(this.location) + "UV", parseFloat(uparedResult["u"].toString()).toFixed(2))
+        this.replaceData("pared" + this.toTitleCase(this.location) + "UV", parseFloat(uWallResult["u"].toString()).toFixed(2))
 
       })
 
@@ -141,7 +149,7 @@ export class ParedComponent implements OnInit {
 
   //https://stackblitz.com/edit/angular-ivy-6bt4hk?file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.tsng
 
-  addRowCapaPared() {
+  addRowLayerWall() {
 
     let count = this.layers.length
     this.layers.push({ idx: count + 1 });
@@ -165,11 +173,18 @@ export class ParedComponent implements OnInit {
   }
 
   resetOutput() {
-    let paredUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
-    paredUV.textContent = "Valor U: 0.0 [W/m2-K]"
 
-    let paredCumplimiento = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
-    paredCumplimiento.textContent = "SIN VALOR"
+    //U - value to zero
+    let wallUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
+    wallUV.textContent = "Valor U: 0.0 [W/m2-K]"
+
+    // Accomplishment
+    let wallCompliance = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
+    wallCompliance.textContent = "SIN VALOR"
+
+    // Accomplishment - reset
+    wallCompliance.classList.replace("badge-success","badge-default")
+    wallCompliance.classList.replace("badge-danger","badge-default")
   }
 
   toTitleCase(str) {
