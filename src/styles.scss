@@ -29,3 +29,12 @@ table {
       padding-right: 1rem !important;
     }
   }
+
+ngx-datatable.ngx-datatable.bootstrap {
+    .datatable-footer .datatable-pager ul li:not(.disabled).active a {
+        background-color: #5e72e4 !important;
+    }
+    .page-count {
+        color: #8898aa !important;
+    }
+}
