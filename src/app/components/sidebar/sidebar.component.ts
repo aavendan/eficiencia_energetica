@@ -105,6 +105,12 @@ export const ROUTES: RouteInfo[] = [
     type: "link",
     icontype: "ni-sound-wave text-green",
   },
+  {
+    path: "/eficiency/projects",
+    title: "Proyectos",
+    type: "link",
+    icontype: "ni-ungroup text-orange",
+  },
   // {
   //   path: "/eficiency/old",
   //   title: "Form elements Old",

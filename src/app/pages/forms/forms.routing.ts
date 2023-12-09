@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 
 import { FormsComponentsOldComponent } from "./componentsold/componentsold.component";
 import { FormsComponentsComponent } from "./components/components.component";
+import { ProjectsComponent } from "./projects/projects.component";
 import { ElementsComponent } from "./elements/elements.component";
 import { ValidationComponent } from "./validation/validation.component";
 
@@ -12,6 +13,10 @@ export const FormsRoutes: Routes = [
       {
         path: "simulator",
         component: FormsComponentsComponent
+      },
+      {
+        path: "projects",
+        component: ProjectsComponent
       }
     ]
   },

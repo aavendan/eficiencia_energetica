@@ -23,6 +23,7 @@ import { ResultadoComponent } from '../../components/ceela/resultado/resultado.c
 
 import { RouterModule } from "@angular/router";
 import { FormsRoutes } from "./forms.routing";
+import { ProjectsComponent } from './projects/projects.component';
 @NgModule({
   declarations: [
     FormsComponentsComponent,
@@ -36,6 +37,7 @@ import { FormsRoutes } from "./forms.routing";
     PisosComponent,
     VentanasComponent,
     ResultadoComponent,
+    ProjectsComponent,
   ],
   imports: [
     CommonModule,
