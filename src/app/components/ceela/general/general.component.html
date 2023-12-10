@@ -12,8 +12,8 @@
             
             <img
                 alt="Image placeholder"
-                class="card-img-top pt-4 pr-3"
-                src="assets/img/theme/tipos.png" />
+                class="card-img-top pt-4 px-3"
+                src="assets/img/formReferences/2.1TipoVivienda.jpg" />
 
             <div class=" card-body">
 
@@ -43,7 +43,10 @@
         <div class="card">
 
             <div class="card-header pb-0 border-0">
-                <h5 class="h4 card-title mb-4">Dimensiones</h5>
+                <h5 class="h4 card-title mb-1">Dimensiones</h5>
+                <p class="help-text m-0">
+                    Ingrese los valores solicitados
+                </p>
             </div>
 
             <div class=" card-body">
@@ -54,7 +57,7 @@
                             class="form-group"
                             [ngClass]="{ focused: focus9 === true }">
                             <label class="form-control-label">
-                                Longitud Referencial en Fachada Frontal [m]
+                                Longitud Fachada Frontal [m]
                             </label>
                             <div class="input-group input-group-merge">
         
@@ -66,7 +69,7 @@
         
                                 <input
                                     class="form-control"
-                                    placeholder="Longitud Referencial en Fachada"
+                                    placeholder="Longitud Fachada Frontal"
                                     type="number"
                                     id="inputLongitudFachada"
                                     (change)="addData($event.target.id,$event.target.value)"
@@ -83,7 +86,7 @@
                             class="form-group"
                             [ngClass]="{ focused: focus10 === true }">
                             <label class="form-control-label">
-                                Longitud Referencial en Profundidad​ [m]
+                                Profundidad [m]
                             </label>
                             <div class="input-group input-group-merge">
         
@@ -95,7 +98,7 @@
         
                                 <input
                                     class="form-control"
-                                    placeholder="Longitud Referencial en Profundidad​"
+                                    placeholder="Profundidad"
                                     type="number"
                                     id="inputLongitudProfundidad"
                                     (change)="addData($event.target.id,$event.target.value)"
@@ -112,7 +115,7 @@
                             class="form-group"
                             [ngClass]="{ focused: focus11 === true }">
                             <label class="form-control-label">
-                                Área Referencial​ [m2]
+                                Área de construcción [m2]
                             </label>
                             <div class="input-group input-group-merge">
         
@@ -124,7 +127,7 @@
         
                                 <input
                                     class="form-control"
-                                    placeholder="Área Referencial​"
+                                    placeholder="Área de construcción"
                                     type="number"
                                     id="inputArea"
                                     (change)="addData($event.target.id,$event.target.value)"
@@ -153,7 +156,7 @@
         
                                 <input
                                     class="form-control"
-                                    placeholder="Altura Referencial​"
+                                    placeholder="Altura Referencial"
                                     type="number"
                                     id="inputAltura"
                                     (change)="addData($event.target.id,$event.target.value)"
