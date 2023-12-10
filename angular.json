@@ -83,14 +83,7 @@
             },
             "development": {
              "buildOptimizer": false,
-             "optimization": {
-                "scripts": true,
-                "styles": {
-                  "minify": false,
-                  "inlineCritical": true
-                },
-                "fonts": true
-              },
+             "optimization": false,
              "outputHashing": "all"
            }
           }
@@ -108,7 +101,7 @@
               "browserTarget": "argon-dashboard-pro-angular:build:development"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
