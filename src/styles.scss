@@ -38,3 +38,19 @@ ngx-datatable.ngx-datatable.bootstrap {
         color: #8898aa !important;
     }
 }
+
+p.help-text {
+    font-size: 0.85rem;
+}
+
+.modal-backdrop.show {
+    opacity: 0.5 !important;
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef !important;
+}
+
+.modal-footer {
+    padding-top: 0 !important;
+}

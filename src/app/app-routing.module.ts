@@ -8,11 +8,11 @@ import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component
 import { PresentationComponent } from "./pages/presentation/presentation.component";
 
 const routes: Routes = [
-  // {
-  //   path: "",
-  //   redirectTo: "eficiency/simulator",
-  //   pathMatch: "full"
-  // },
+  {
+    path: "",
+    redirectTo: "eficiency/simulator",
+    pathMatch: "full"
+  },
   {
       path: "",
       component: AdminLayoutComponent,

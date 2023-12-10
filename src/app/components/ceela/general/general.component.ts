@@ -15,15 +15,15 @@ export class GeneralComponent implements OnInit {
 
   options = [
     {
-      "text": "Planta única",
+      "text": "Vivienda de una planta",
       "value": "unica"
     },
     {
-      "text": "Dos plantas",
+      "text": "Vivienda de dos plantas",
       "value": "dos"
     },
     {
-      "text": "En Altura",
+      "text": "Vivienda en altura",
       "value": "altura"
     }
   ]

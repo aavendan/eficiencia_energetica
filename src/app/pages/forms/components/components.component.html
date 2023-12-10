@@ -53,6 +53,24 @@ https://fontawesome.com/v5/search -->
                   <tab>
 
                     <ng-template tabHeading>3. Pared expuesta</ng-template>
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                          <div class="pr-2">
+                            <h5 class="h4 card-title mb-1">Pared expuesta</h5>
+                            <p class="help-text m-0">
+                              Defina la sección constructiva de las paredes exteriores expuestas de su proyecto. Debe detallar las capas que constituyen cada pared  con sus respectivos materiales y espesores.
+                              En caso de que alguna orientación, tenga más de un tipo de pared, se debe considerar la que tenga mayor área.
+                            </p>
+                            <p class="help-text mt-2">
+                              En caso de que alguna pared no esté expuesta, mantenerla como "Sin Valor".
+                            </p>
+                          </div>
+                          <img src="assets/img/formReferences/3.1ParedCapas.jpg" width="200px">
+                        </div>
+                        
+                      </div>
+                    </div>
                     <accordion [isAnimated]="false" [closeOthers]="true">
                       <accordion-group *ngFor="let location of locations">
 
@@ -73,6 +91,23 @@ https://fontawesome.com/v5/search -->
                   <tab>
 
                     <ng-template tabHeading>4. Techo expuesto</ng-template>
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                          <div class="pr-2">
+                            <h5 class="h4 card-title mb-1">Techo expuesto</h5>
+                            <p class="help-text m-0">
+                              Defina la sección constructiva del techo o cubierta de su proyecto. Debe detallar las capas que lo constituyen con sus respectivos materiales y espesores.
+                            </p>
+                            <p class="help-text mt-2">
+                              En caso de que el techo no esté expuesto al exterior, mantenerlo como "Sin Valor".
+                            </p>
+                          </div>
+                          <img src="assets/img/formReferences/3.2TechoCapas.jpg" width="260px">
+                        </div>
+                        
+                      </div>
+                    </div>
                     <accordion [isAnimated]="false" [closeOthers]="true">
                       <accordion-group [isOpen]="true">
                         <h5 class="mb-0 row" accordion-heading>
@@ -91,6 +126,22 @@ https://fontawesome.com/v5/search -->
 
                   <tab>
                     <ng-template tabHeading>5. Piso en contacto con terreno</ng-template>
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                          <div class="pr-2">
+                            <h5 class="h4 card-title mb-1">Piso en contacto con terreno</h5>
+                            <p class="help-text m-0">
+                              Indique el piso en contacto con el terreno de su proyecto. Debe detallar las capas que lo constituyen con sus respectivos materiales y espesores.
+                            </p>
+                            <p class="help-text mt-2">
+                              En caso de que el piso no esté en contacto con el exterior, mantenerlo como "Sin Valor".
+                            </p>
+                          </div>
+                          <img src="assets/img/formReferences/3.3PisoCapas.jpg" width="230px">
+                        </div>
+                      </div>
+                    </div>
                     <!-- <app-piso></app-piso> -->
                     <accordion [isAnimated]="false" [closeOthers]="true">
                       <accordion-group [isOpen]="true">
@@ -109,6 +160,22 @@ https://fontawesome.com/v5/search -->
                   <tab>
 
                     <ng-template tabHeading>6. Ventana expuesta</ng-template>
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                          <div class="pr-2">
+                            <h5 class="h4 card-title mb-1">Ventana expuesta</h5>
+                            <p class="help-text m-0">
+                              Defina el tipo de ventanas y el área total por fachada.
+                            </p>
+                            <p class="help-text mt-2">
+                              Si alguna fachada no tiene ventanas expuesta, mantener como "Sin Valor".
+                            </p>
+                          </div>
+                          <img src="assets/img/formReferences/3.4VentanasGeneral.jpg" width="230px">
+                        </div>
+                      </div>
+                    </div>
                     <accordion [isAnimated]="false" [closeOthers]="true">
                       <accordion-group *ngFor="let location of locations">
 
