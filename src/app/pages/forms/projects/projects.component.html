@@ -21,72 +21,80 @@
             </p>
           </div>
           <div class="dataTables_wrapper py-4">
-            <div class="row">
-              <div class="col-sm-12 col-md-6">
-                <div class="dataTables_length" id="datatable_length">
-                  <label>
-                    Mostrar
-                    <select
-                      name="datatable_length"
-                      aria-controls="datatable"
-                      class="form-control form-control-sm"
-                      (change)="entriesChange($event)"
-                    >
-                      <option value="5" [selected]="entries == 5">5</option>
-                      <option value="10" [selected]="entries == 10">10</option>
-                      <option value="15" [selected]="entries == 15">15</option>
-                      <option value="-1" [selected]="entries == -1">Todos</option>
-                    </select>
-                    proyectos
-                  </label>
-                </div>
+            <div *ngIf="loading" class="text-center">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Cargando...</span>
               </div>
             </div>
-            <div class="card m-4">
-              <ngx-datatable
-                class="bootstrap selection-cell"
-                [columnMode]="'force'"
-                [headerHeight]="50"
-                [footerHeight]="70"
-                [rowHeight]="'auto'"
-                [limit]="entries != -1 ? entries : undefined"
-                [rows]="projects"
-                [messages]="dataTableMessages"
-              >
-                <ngx-datatable-column
-                  name="Nombre"
-                  prop="name"
-                ></ngx-datatable-column>
-                <ngx-datatable-column
-                  name="Propietario"
-                  prop="ownerName"
-                ></ngx-datatable-column>
-                <ngx-datatable-column
-                  name="Técnico"
-                  prop="technicianName"
-                ></ngx-datatable-column>
-                <ngx-datatable-column
-                  name="Eficiencia"
-                  prop="efficiency"
-                ></ngx-datatable-column>
-                <ngx-datatable-column
-                  name="Actualizado el"
-                  prop="updatedAt"
-                ></ngx-datatable-column>
-                <ngx-datatable-column
-                  [sortable]="false"
+            <div *ngIf="!loading">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="dataTables_length" id="datatable_length">
+                    <label>
+                      Mostrar
+                      <select
+                        name="datatable_length"
+                        aria-controls="datatable"
+                        class="form-control form-control-sm"
+                        (change)="entriesChange($event)"
+                      >
+                        <option value="5" [selected]="entries == 5">5</option>
+                        <option value="10" [selected]="entries == 10">10</option>
+                        <option value="15" [selected]="entries == 15">15</option>
+                        <option value="-1" [selected]="entries == -1">Todos</option>
+                      </select>
+                      proyectos
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="card m-4">
+                <ngx-datatable
+                  class="bootstrap selection-cell"
+                  [columnMode]="'force'"
+                  [headerHeight]="50"
+                  [footerHeight]="70"
+                  [rowHeight]="'auto'"
+                  [scrollbarH]="true"
+                  [limit]="entries != -1 ? entries : undefined"
+                  [rows]="projects"
+                  [messages]="dataTableMessages"
                 >
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <button
-                      class="btn btn-info btn-sm ml-4"
-                      type="button"
-                      (click)="viewProject(row)"
-                    >
-                      Ver
-                    </button>
-                  </ng-template>
-                </ngx-datatable-column>
-              </ngx-datatable>
+                  <ngx-datatable-column
+                    name="Nombre"
+                    prop="name"
+                  ></ngx-datatable-column>
+                  <ngx-datatable-column
+                    name="Propietario"
+                    prop="ownerName"
+                  ></ngx-datatable-column>
+                  <ngx-datatable-column
+                    name="Técnico"
+                    prop="technicianName"
+                  ></ngx-datatable-column>
+                  <ngx-datatable-column
+                    name="Eficiencia"
+                    prop="efficiency"
+                  ></ngx-datatable-column>
+                  <ngx-datatable-column
+                    name="Actualizado el"
+                    prop="updatedAt"
+                  ></ngx-datatable-column>
+                  <ngx-datatable-column
+                    [sortable]="false"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <button
+                        class="btn btn-info btn-sm ml-4"
+                        type="button"
+                        (click)="viewProject(row)"
+                      >
+                        Ver
+                      </button>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+              </div>
             </div>
           </div>
         </div>
