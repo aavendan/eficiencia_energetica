@@ -13,6 +13,7 @@ import { FormsComponentsComponent } from "./components/components.component";
 import { ElementsComponent } from "./elements/elements.component";
 import { ValidationComponent } from "./validation/validation.component";
 
+import { FormInfoComponent } from '../../components/form-info/form-info.component';
 import { ProyectoComponent } from "../../components/ceela/proyecto/proyecto.component";
 import { GeneralComponent } from "../../components/ceela/general/general.component";
 import { ParedComponent } from "../../components/ceela/pared/pared.component";
@@ -38,6 +39,7 @@ import { ProjectsComponent } from './projects/projects.component';
     VentanasComponent,
     ResultadoComponent,
     ProjectsComponent,
+    FormInfoComponent,
   ],
   imports: [
     CommonModule,
