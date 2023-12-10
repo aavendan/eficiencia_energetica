@@ -101,7 +101,7 @@ export class ProjectsComponent implements OnInit {
         };
       });
       this.loading = false;
-    }, 2000);
+    }, 1000);
   }
 
   entriesChange($event) {
