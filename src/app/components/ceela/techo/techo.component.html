@@ -30,6 +30,7 @@
 
               <th scope="col">Abs. Sol. [-]​</th>
 
+              <th scope="col" aria-hidden="true"></th>
             </tr>
           </thead>
 
@@ -137,6 +138,14 @@
                 <!-- Fin Absortancia Solar -->
               </td>
 
+              <td>
+                <span
+                  class="d-flex justify-content-center remove-button"
+                  (click)="removeRowLayerCeiling(layer.idx)"
+                >
+                  <i class="fas fa-times"></i>
+                </span>
+              </td>
             </tr>
             <p
               class="help-text mb-0 ml-4"
