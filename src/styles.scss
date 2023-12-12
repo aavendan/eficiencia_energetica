@@ -54,3 +54,14 @@ p.help-text {
 .modal-footer {
     padding-top: 0 !important;
 }
+
+tr.borderLess {
+    th, td {
+        border: none !important;
+    }
+}
+
+.rel-top-2 {
+    position: relative;
+    top: 0.5rem;
+}
