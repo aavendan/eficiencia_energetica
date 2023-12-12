@@ -30,13 +30,22 @@
 
               <th scope="col">Abs. Sol. [-]​</th>
 
+              <th scope="col" aria-hidden="true"></th>
             </tr>
           </thead>
 
           <tbody class=" list">
-
+            <p
+              class="help-text mb-0 ml-4 rel-top-2"
+              *ngIf="layers.length > 1"
+            >
+              Exterior
+            </p>
             <!-- Ejemplo 1 -->
-            <tr *ngFor="let layer of layers">
+            <tr
+              *ngFor="let layer of layers; let i = index;"
+              [ngClass]="{ borderLess: i === 0 }"
+            >
               <th scope="row">
                 <!-- Capa -->
                 <input
@@ -129,8 +138,21 @@
                 <!-- Fin Absortancia Solar -->
               </td>
 
+              <td>
+                <span
+                  class="d-flex justify-content-center remove-button"
+                  (click)="removeRowLayerCeiling(layer.idx)"
+                >
+                  <i class="fas fa-times"></i>
+                </span>
+              </td>
             </tr>
-
+            <p
+              class="help-text mb-0 ml-4"
+              *ngIf="layers.length > 1"
+            >
+              Interior
+            </p>
           </tbody>
         </table>
       </div>

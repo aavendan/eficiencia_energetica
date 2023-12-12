@@ -54,3 +54,26 @@ p.help-text {
 .modal-footer {
     padding-top: 0 !important;
 }
+
+tr.borderLess {
+    th, td {
+        border: none !important;
+    }
+}
+
+.rel-top-2 {
+    position: relative;
+    top: 0.5rem;
+}
+
+.remove-button {
+    color: #f5365c;
+    cursor: pointer;
+    i {
+        font-size: 1rem;
+    }
+}
+
+.w-130 {
+    width: 130px;
+}

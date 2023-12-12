@@ -164,10 +164,19 @@ export class PisosComponent implements OnInit {
       new Selectr((document.getElementById("selectorMaterialPiso"+(count+1).toString()) as any), configs.default)
       
     });
-
-
   }
 
-  
+  removeRowLayerFloor(idx: number) {
+    const index = this.layers.findIndex(obj => obj.idx === idx);
+    this.layers.splice(index, 1);
+    this.layers.forEach((obj, index) => {
+      obj.idx = index + 1;
+    });
+    setTimeout(() => {
+      // We need to wait for the DOM to update
+      // Not the best way to achieve it, but its the only one to avoid total refactor
+      this.onChangeEspesor();
+    });
+  }
 
 }
