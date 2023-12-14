@@ -59,6 +59,7 @@ export class ParedComponent implements OnInit {
     this.resetOutput();
 
     let values = [];
+    const summaryObject = {};
 
     this.layers.forEach(obj => {
 
@@ -88,6 +89,7 @@ export class ParedComponent implements OnInit {
           "cp": calorValue
         }
 
+        summaryObject[id.toString()] = valuesLocal
         // n49
         if (!(this.location.toString() in this.wall)) {
           this.wall[this.location.toString()] = {}
@@ -99,7 +101,6 @@ export class ParedComponent implements OnInit {
           this.wall[this.location.toString()][id.toString()] = valuesLocal
         }
 
-        this.replaceDataObject("Pared", this.location.toString(), this.wall[this.location.toString()])
         // n49
 
         /* Fin */
@@ -108,6 +109,7 @@ export class ParedComponent implements OnInit {
 
     });
 
+    this.replaceDataObject("Pared", this.location, summaryObject);
 
     if (values.length > 0) {
 

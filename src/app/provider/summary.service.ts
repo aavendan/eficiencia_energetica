@@ -13,6 +13,7 @@ export class SummaryService {
   object: { [key: string]: any} = {}
  
     replaceData(key: string, value: any) {
+      console.log("replaceData", key, value);
 
       // let object: { [key: string]: any} = {}
       
@@ -33,6 +34,7 @@ export class SummaryService {
     }
 
     replaceDataObject(keyOut: string, keyIn:string, value: any ) {
+      console.log("replaceDataObject", keyOut, keyIn, value);
       if(keyOut in this.object  ) {
         
         this.object[keyOut] = { ...this.object[keyOut], [keyIn]:value} 

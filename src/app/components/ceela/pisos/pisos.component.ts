@@ -70,7 +70,7 @@ export class PisosComponent implements OnInit {
     this.resetOutput();
 
     let values = [];
-
+    const summaryObject = {};
     this.layers.forEach(obj => {
 
       let id = obj.idx
@@ -98,6 +98,7 @@ export class PisosComponent implements OnInit {
           "densidad": densidadValue,
           "cp": calorValue
         }
+        summaryObject[id.toString()] = valuesLocal
 
         //FALTA n49
 
@@ -107,6 +108,7 @@ export class PisosComponent implements OnInit {
 
     });
 
+    this.replaceData("Piso", summaryObject);
     if (values.length > 0) {
 
       this.ufloor["capas"] = values;

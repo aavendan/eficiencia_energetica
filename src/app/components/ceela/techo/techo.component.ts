@@ -64,7 +64,7 @@ export class TechoComponent implements OnInit {
     this.resetOutput();
 
     let values = [];
-
+    const summaryObject = {};
     this.layers.forEach(obj => {
 
       let id = obj.idx
@@ -93,9 +93,9 @@ export class TechoComponent implements OnInit {
           "k": conductividadValue,
           "densidad": densidadValue,
           "cp": calorValue,
-          "absortancia": absortanciaValue
+          "absorcion": absortanciaValue
         }
-
+        summaryObject[id.toString()] = valuesLocal
         //FALTA n49
 
         /* Fin */
@@ -103,6 +103,8 @@ export class TechoComponent implements OnInit {
       }
 
     });
+
+    this.replaceData("Techo", summaryObject);
 
     if (values.length > 0) {
 

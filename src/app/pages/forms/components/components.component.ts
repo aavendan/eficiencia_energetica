@@ -228,6 +228,12 @@ export class FormsComponentsComponent implements OnInit {
     //   }
     // }
 
+    const Ventana = {};
+    Object.entries(this.result?.Ventana||{}).forEach(([key, value]) => {
+      Ventana[key] = {
+        "1": value
+      };
+    });
     let values = {
       "Proyecto" : {
         "nombre": this.result?.nombreProyecto,
@@ -254,38 +260,41 @@ export class FormsComponentsComponent implements OnInit {
         }
       },
       "Pared": this.result?.Pared,
-      "Techo": {
-        "1": {
-            "nombre": "Teja Fibrocemento",
-            "espesor": 3,
-            "k": 1,
-            "densidad": 1120,
-            "cp": 1000,
-            "absorcion": 0.7
-          }
+      "Techo": this.result?.Techo,
+      "Piso": this.result?.Piso,
+      "Ventana": Ventana
+      // "Techo": {
+      //   "1": {
+      //       "nombre": "Teja Fibrocemento",
+      //       "espesor": 3,
+      //       "k": 1,
+      //       "densidad": 1120,
+      //       "cp": 1000,
+      //       "absorcion": 0.7
+      //     }
         
-      },
-      "Piso": {
-        "1": {
-            "nombre": "Losa de Hormigon Pisos",
-            "espesor": 5,
-            "k": 1.63,
-            "densidad": 2400,
-            "cp": 1050
-          }
+      // },
+      // "Piso": {
+      //   "1": {
+      //       "nombre": "Losa de Hormigon Pisos",
+      //       "espesor": 5,
+      //       "k": 1.63,
+      //       "densidad": 2400,
+      //       "cp": 1050
+      //     }
         
-      },
-      "Ventana": {
-        "frontal": {
-          "1": {
-            "nombre": "",
-            "area": 0,
-            "wwr": 0,
-            "u": 0,
-            "sghc": 0
-          }
-        }
-      }
+      // },
+      // "Ventana": {
+      //   "frontal": {
+      //     "1": {
+      //       "nombre": "",
+      //       "area": 0,
+      //       "wwr": 0,
+      //       "u": 0,
+      //       "sghc": 0
+      //     }
+      //   }
+      // }
     }
 
     // console.log(values)

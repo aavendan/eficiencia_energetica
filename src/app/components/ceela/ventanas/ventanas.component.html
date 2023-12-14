@@ -6,7 +6,7 @@
             <table class=" table align-items-center table-flush">
                 <thead class=" thead-light">
                     <tr>
-                        <th scope="col"  class="size-3">Tipo</th>
+                        <th scope="col"  class="size-3 w-50">Tipo</th>
 
                         <th scope="col">Area [m2]</th>
 
@@ -44,7 +44,9 @@
                                 type="number"
                                 min="0.0"
                                 step=".01"
-                                value="0.0" />
+                                value="0.0"
+                                (change)="onChangeArea($event.target.value)"
+                            />
                             <!-- Fin Área​ -->
                         </td>
 
@@ -55,10 +57,12 @@
                                 class="form-control"
                                 placeholder="0.0"
                                 type="number"
-                                disabled="disabled" git
+                                disabled="disabled"
                                 min="0.0"
                                 step=".01"
-                                value="0.0" />
+                                value="0.0"
+                                [value]="wwr"
+                            />
                             <!-- Fin WWR -->
                         </td>
 
