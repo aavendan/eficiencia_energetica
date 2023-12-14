@@ -22,9 +22,11 @@ export class DataService {
   URL_ROOF_MATERIALS = this.IP + "/roofMaterials";
   URL_ROOF_MATERIALS_ID = this.IP + "/roofMaterials/id/";
 
-  URL_UWALL = this.IP + "/upared"
-  URL_UCEILING = this.IP + "/utecho"
-  URL_UFLOOR = this.IP + "/upiso"
+  URL_UWALL = this.IP + "/upared";
+  URL_UCEILING = this.IP + "/utecho";
+  URL_UFLOOR = this.IP + "/upiso";
+  URL_UWINDOW = this.IP + "/uventana";
+  URL_WWR = this.IP + "/wwr";
 
   URL_SIMULATOR = this.IP + "/simulacion"
 
@@ -76,6 +78,14 @@ export class DataService {
 
   postUFloor(values: any){
     return this.http.post(this.URL_UFLOOR, values)
+  }
+
+  postUWindow(values: any){
+    return this.http.post(this.URL_UWINDOW, values)
+  }
+
+  postWWR(values: any){
+    return this.http.post(this.URL_WWR, values) as Observable<number>
   }
 
   postSimulate(values) {
