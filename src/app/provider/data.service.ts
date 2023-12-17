@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { CityModel } from '../interface/city-model';
 
 @Injectable({
@@ -27,8 +27,11 @@ export class DataService {
   URL_UFLOOR = this.IP + "/upiso";
   URL_UWINDOW = this.IP + "/uventana";
   URL_WWR = this.IP + "/wwr";
+  URL_PROJECTS = this.IP + "/projects/";
 
   URL_SIMULATOR = this.IP + "/simulacion"
+
+  cache: any = {};
 
   constructor(private http: HttpClient) { }
 
@@ -68,6 +71,22 @@ export class DataService {
     return this.http.get(this.URL_ROOF_MATERIALS_ID + id);
   }
 
+  async getProjectsAsync() {
+    const projects = await lastValueFrom(this.http.get(this.URL_PROJECTS)) as any[];
+    this.cache.projects = projects;
+    return projects;
+  }
+
+  async getProjectAsync(name: string) {
+    if (this.cache.projects?.[name]) {
+      return this.cache.projects[name];
+    }
+    const project = await lastValueFrom(this.http.get(this.URL_PROJECTS + name)) as any;
+    this.cache.projects ||= {};
+    this.cache.projects[name] = project;
+    return project;
+  }
+
   postUWall(values: any){
     return this.http.post(this.URL_UWALL, values)
   }
@@ -88,8 +107,11 @@ export class DataService {
     return this.http.post(this.URL_WWR, values) as Observable<number>
   }
 
-  postSimulate(values) {
+  postSimulate(values: any) {
     return this.http.post(this.URL_SIMULATOR, values)
   }
 
+  postSaveProject(name: string, value: any) {
+    return this.http.post(this.URL_PROJECTS + name, value)
+  }
 }
