@@ -73,7 +73,10 @@ export class DataService {
 
   async getProjectsAsync() {
     const projects = await lastValueFrom(this.http.get(this.URL_PROJECTS)) as any[];
-    this.cache.projects = projects;
+    this.cache.projects = {};
+    projects.forEach(project => {
+      this.cache.projects[project.name] = project;
+    });
     return projects;
   }
 
@@ -111,7 +114,7 @@ export class DataService {
     return this.http.post(this.URL_SIMULATOR, values)
   }
 
-  postSaveProject(name: string, value: any) {
-    return this.http.post(this.URL_PROJECTS + name, value)
+  async saveProjectAsync(name: string, value: any) {
+    return lastValueFrom(this.http.put(this.URL_PROJECTS + name, value));
   }
 }

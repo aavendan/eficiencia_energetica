@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/provider/data.service';
 
 @Component({
   selector: 'app-projects',
@@ -83,25 +84,27 @@ export class ProjectsComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private api: DataService
+  ) { }
 
   ngOnInit(): void {
     this.loadProjects();
   }
 
-  loadProjects() {
+  async loadProjects() {
     this.loading = true;
-
-    // Simulate a request
-    setTimeout(() => {
-      this.projects = this.response.map((project) => {
-        return {
-          ...project,
-          efficiency: `${(project.efficiency * 100).toFixed(2)}%`,
-        };
-      });
-      this.loading = false;
-    }, 1000);
+    const response = await this.api.getProjectsAsync();
+    console.log("response", response);
+    this.projects = response.map((project: any) => ({
+      name: project.name,
+      efficiency: `${project.output}%`,
+      ownerName: project.input?.Proyecto?.propietaio?.nombre || 'Sin nombre',
+      technicianName: project.input?.Proyecto?.tecnico?.nombre || 'Sin nombre',
+      updatedAt: project.updated_at,
+    }));
+    this.loading = false;
   }
 
   entriesChange($event) {

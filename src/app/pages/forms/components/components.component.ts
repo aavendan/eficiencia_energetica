@@ -50,19 +50,22 @@ export class FormsComponentsComponent implements OnInit {
     });
   }
 
-  save() {
+  async save() {
     const projectName = this.result?.nombreProyecto;
+    console.log("hola??", projectName);
     if (!projectName) {
       alert("Ingrese el nombre del proyecto");
       return;
     }
+    console.log("hola??");
     const project = {
       input: this.buildSimulateInput(),
       output: this.result?.simulationResult
     };
-    lastValueFrom(
-      this.service.postSaveProject(projectName, project)
-    );
+    console.log("hola??", project);
+
+    const result = await this.service.saveProjectAsync(projectName, project);
+    console.log("hola??", result);
   }
 
   buildSimulateInput() {
