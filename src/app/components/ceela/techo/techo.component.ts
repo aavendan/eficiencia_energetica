@@ -3,6 +3,7 @@ import { DataService } from "../../../provider/data.service";
 import { SummaryService } from "../../../provider/summary.service";
 
 import Selectr from "mobius1-selectr";
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-techo',
@@ -15,6 +16,8 @@ export class TechoComponent implements OnInit {
   focus2;
 
   layers = []
+  roofMaterials: any[] = [];
+  loadingProject: boolean = false;
 
   uceiling: any;
   ceiling: any = {};
@@ -25,6 +28,8 @@ export class TechoComponent implements OnInit {
 
     this.resetOutput();
 
+    this.loadRoofMaterials();
+    this.fillInputOnLoad();
     // U: preparing zona
     this.summary.getResult().subscribe(result => {
       this.uceiling = {
@@ -32,6 +37,34 @@ export class TechoComponent implements OnInit {
       }
     })
     
+  }
+
+  async loadRoofMaterials() {
+    const response:any = await lastValueFrom(this.service.getRoofMaterials());
+    this.roofMaterials = response;
+  }
+
+  fillInputOnLoad() {
+    const loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
+      if (prevLoading && !loading) { // Project loaded
+        this.loadingProject = true;
+
+        const { Techo } = this.summary.getResultSnapshot();
+        if (!Techo ) return;
+
+        if (!this.roofMaterials.length) {
+          await this.loadRoofMaterials();
+        }
+        for(const id in Techo) {
+          await this.addRowLayerCeiling(Techo[id].nombre);
+          const espesorRef = document.getElementById("inputTechoEspesor" + id) as HTMLInputElement;
+          espesorRef.setAttribute("value", Techo[id].espesor || 0);
+        }
+
+        loading$.unsubscribe();
+        this.loadingProject = false;
+      }
+    });
   }
 
   onChange(id: string, materialId: string) {
@@ -50,16 +83,13 @@ export class TechoComponent implements OnInit {
       let selectrAbsortancia = document.getElementById("inputTechoAbsortancia"+id) as HTMLInputElement | null
       selectrAbsortancia.value = response["a"]
 
-      let selectrEspesor = document.getElementById("inputTechoEspesor" + id) as HTMLInputElement | null
-      selectrEspesor.value = "0.0"
-
       this.onChangeEspesor();
 
     });
 
   }
 
-  onChangeEspesor() { 
+  onChangeEspesor() {
 
     this.resetOutput();
 
@@ -76,7 +106,7 @@ export class TechoComponent implements OnInit {
       let calorRef = document.getElementById("inputTechoCalor" + + id.toString()) as HTMLInputElement
       let absortanciaRef = document.getElementById("inputTechoAbsortancia" + + id.toString()) as HTMLInputElement
 
-      let materialText = materialRef.options[materialRef.selectedIndex].text
+      let materialText = materialRef.options[materialRef.selectedIndex]?.text || "";
       let espesorValue = parseFloat(espesorRef.value)
       let conductividadValue = parseFloat(conductividadRef.value)
       let densidadValue = parseFloat(densidadRef.value)
@@ -136,10 +166,12 @@ export class TechoComponent implements OnInit {
   }
 
   replaceData(id, value) {
+    if (this.loadingProject) return;
     this.summary.replaceData(id, value);
   }
 
   replaceDataObject(idOut, idIn, value) {
+    if (this.loadingProject) return;
     this.summary.replaceDataObject(idOut, idIn, value)
   }
 
@@ -162,28 +194,28 @@ export class TechoComponent implements OnInit {
     ceilingCompliance.classList.replace("badge-danger","badge-default")
   }
 
-  addRowLayerCeiling() {
+  addRowLayerCeiling(selectedValue?) {
+    return new Promise<void>((resolve, reject) => {
+      try {
+        const count = this.layers.length
+        this.layers.push({ idx: count + 1 });
     
-    let count = this.layers.length
-    this.layers.push({ idx: count+1 });
+        const data = this.roofMaterials.map((objt) =>  ({
+          text: objt.material,
+          value: objt.id,
+          selected: objt.material === selectedValue
+        }));
 
-    this.service.getRoofMaterials().subscribe((response) => { 
-      
-      var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["material"],"value": objt[1]["id"]}
-      });
-
-      var configs = {
-        default: {
-          data: data
-        }
+        setTimeout(() => { // wait to rerender u.u
+          const selectId = document.getElementById("selectorTechoMaterial"+(count+1));
+          new Selectr(selectId as any, { data });
+          resolve();
+        });
+      } catch (error) {
+        reject(error);
       }
-
-      new Selectr((document.getElementById("selectorTechoMaterial"+(count+1).toString()) as any), configs.default)
-      
     });
-
-
+    
   }
 
   removeRowLayerCeiling(idx: number) {

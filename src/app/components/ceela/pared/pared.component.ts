@@ -3,6 +3,7 @@ import { DataService } from "../../../provider/data.service";
 import { SummaryService } from "../../../provider/summary.service";
 
 import Selectr from "mobius1-selectr";
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-pared',
@@ -13,8 +14,9 @@ export class ParedComponent implements OnInit {
 
   wall: any = {};
   layers = [];
-
+  wallMaterials: any[] = [];
   uwall: any;
+  loadingProject: boolean = false;
 
   @Input() location: string;
   
@@ -25,6 +27,8 @@ export class ParedComponent implements OnInit {
 
     this.resetOutput();
 
+    this.loadWallMaterials();
+    this.fillInputOnLoad();
     // U: preparing zona
     this.summary.getResult().subscribe(result => {
       this.uwall = {
@@ -34,10 +38,38 @@ export class ParedComponent implements OnInit {
 
   }
 
+  async loadWallMaterials() {
+    const response = await lastValueFrom(this.service.getWallMaterials()) as any[];
+    this.wallMaterials = response;
+  }
+
+  fillInputOnLoad() {
+    const loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
+      if (prevLoading && !loading) { // Project loaded
+        this.loadingProject = true;
+        const {
+          Pared: {
+            [this.location]: capas
+          } = {}
+        } = this.summary.getResultSnapshot();
+        if (!capas) return;
+
+        if (!this.wallMaterials.length) {
+          await this.loadWallMaterials();
+        }
+        for(const id in capas) {
+          await this.addRowLayerWall(capas[id].nombre);
+          const espesorRef = document.getElementById("inputParedEspesor" + this.toTitleCase(this.location) + id) as HTMLInputElement;
+          espesorRef.setAttribute("value", capas[id].espesor || 0);
+        }
+        loading$.unsubscribe();
+        this.loadingProject = false;
+      }
+    });
+  }
+
   onChange(location: string, id: string, materialId: string) {
-
     this.service.getWallMaterialsId(materialId).subscribe((response) => {
-
       let selectrConductividad = document.getElementById("inputParedConductividad" + this.toTitleCase(location) + id) as HTMLInputElement | null
       selectrConductividad.value = response["k"]
 
@@ -46,9 +78,6 @@ export class ParedComponent implements OnInit {
 
       let selectrCalor = document.getElementById("inputParedCalor" + this.toTitleCase(location) + id) as HTMLInputElement | null
       selectrCalor.value = response["c"]
-
-      let selectrEspesor = document.getElementById("inputParedEspesor" + this.toTitleCase(location) + id) as HTMLInputElement | null
-      selectrEspesor.value = "0.0"
 
       this.onChangeEspesor();
     })
@@ -71,7 +100,7 @@ export class ParedComponent implements OnInit {
       let densidadRef = document.getElementById("inputParedDensidad" + this.toTitleCase(this.location) + id.toString()) as HTMLInputElement
       let calorRef = document.getElementById("inputParedCalor" + this.toTitleCase(this.location) + id.toString()) as HTMLInputElement
 
-      let materialText = materialRef.options[materialRef.selectedIndex].text
+      let materialText = materialRef.options[materialRef.selectedIndex]?.text || "";
       let espesorValue = parseFloat(espesorRef.value)
       let conductividadValue = parseFloat(conductividadRef.value)
       let densidadValue = parseFloat(densidadRef.value)
@@ -142,36 +171,39 @@ export class ParedComponent implements OnInit {
   }
 
   replaceData(id, value) {
+    if (this.loadingProject) return;
     this.summary.replaceData(id, value);
   }
 
   replaceDataObject(idOut, idIn, value) {
+    if (this.loadingProject) return;
     this.summary.replaceDataObject(idOut, idIn, value)
   }
 
   //https://stackblitz.com/edit/angular-ivy-6bt4hk?file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.tsng
 
-  addRowLayerWall() {
-
-    let count = this.layers.length
-    this.layers.push({ idx: count + 1 });
-
-    this.service.getWallMaterials().subscribe((response) => {
-
-      var data = Object.entries(response).map((objt) => {
-        return { "text": objt[1]["material"], "value": objt[1]["id"] }
-      });
-
-      var configs = {
-        default: {
-          data: data
-        }
+  addRowLayerWall(selectedValue?) {
+    return new Promise<void>((resolve, reject) => {
+      try {
+        const count = this.layers.length;
+        this.layers.push({ idx: count + 1 });
+    
+        const data = this.wallMaterials.map((objt) => ({
+          text: objt.material,
+          value: objt.id,
+          selected: objt.material === selectedValue
+        }));
+        setTimeout(() => { // Wait to rerender
+          const selectId = "selectorParedMaterial" + this.toTitleCase(this.location) + (count + 1);
+          new Selectr((document.getElementById(selectId) as any), { data });
+          resolve();
+        });
+      } catch (error) {
+        console.log(error);
+        reject(error);
       }
-
-      new Selectr((document.getElementById("selectorParedMaterial" + this.toTitleCase(this.location) + (count + 1).toString()) as any), configs.default)
-
     });
-
+    
   }
 
   removeRowLayerWall(idx: number) {

@@ -20,6 +20,8 @@ export class VentanasComponent implements OnInit {
   wwr: number = 0;
   summaryObject: any = {};
   materials: any[] = [];
+  windowMaterials: any[] = [];
+  selectrVentana: any;
 
   constructor(private service: DataService, private summary: SummaryService) { }
 
@@ -47,13 +49,41 @@ export class VentanasComponent implements OnInit {
       }
     })
     
+    this.addVentana();
+    this.fillInputOnLoad();
+  }
 
-    this.addVentana()
+  async loadWindowMaterials() {
+    const response = await lastValueFrom(this.service.getWindowMaterials()) as any[];
+    this.windowMaterials = response;
+  }
 
+  fillInputOnLoad() {
+    const loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
+      if (prevLoading && !loading) { // Project loaded
+        const {
+          Ventana: {
+            [this.location]: info
+          } = {}
+        } = this.summary.getResultSnapshot();
+        if (!info) return;
+
+        if (!this.selectrVentana) {
+          await (new Promise(resolve => setTimeout(resolve, 1000)));
+        }
+        const { id } = this.windowMaterials.find(material => material.material === info.nombre) || {};
+        if (id) {
+          this.selectrVentana.setValue(id);
+        }
+        const espesorRef = document.getElementById("inputVentanaArea" + this.toTitleCase(this.location) ) as HTMLInputElement;
+        espesorRef.setAttribute("value", info.area || 0);
+        loading$.unsubscribe();
+      }
+    });
   }
 
   onChange(location: string, materialId: string) {
-    this.summaryObject.nombre = this.materials.find((material) => material.value == materialId).text;
+    this.summaryObject.nombre = this.windowMaterials.find((material) => material.id == materialId).material;
     this.service.getWindowMaterialsId(materialId).subscribe(async (result) => {
 
       let windowSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
@@ -144,24 +174,17 @@ export class VentanasComponent implements OnInit {
     windowCompliance.classList.replace("badge-danger","badge-default")
   }
 
-  addVentana() {
-    this.service.getWindowMaterials().subscribe((response) => { 
+  async addVentana(selectedValue?) {
+    await this.loadWindowMaterials();
 
-      var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["material"],"value": objt[1]["id"]}
-      });
+    const data = this.windowMaterials.map((objt) => ({
+      text: objt.material,
+      value: objt.id,
+      selected: selectedValue === objt.material
+    }));
 
-      this.materials = data;
-
-      var configs = {
-        default: {
-          data: data
-        }
-      }
-
-      new Selectr((document.getElementById("selectorVentanaTipo"+this.toTitleCase(this.location)) as any), configs.default)
-      
-    });
+    const selectId = "selectorVentanaTipo" + this.toTitleCase(this.location);
+    this.selectrVentana = new Selectr((document.getElementById(selectId) as any), { data });
   }
 
   replaceData(id, value) {

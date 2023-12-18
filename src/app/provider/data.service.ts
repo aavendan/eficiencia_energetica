@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { CityModel } from '../interface/city-model';
 
 @Injectable({
@@ -27,12 +27,15 @@ export class DataService {
   URL_UFLOOR = this.IP + "/upiso";
   URL_UWINDOW = this.IP + "/uventana";
   URL_WWR = this.IP + "/wwr";
+  URL_PROJECTS = this.IP + "/projects/";
 
   URL_SIMULATOR = this.IP + "/simulacion"
 
+  cache: any = {};
+
   constructor(private http: HttpClient) { }
 
-  getCities() {
+  getCities(): Observable<any> {
     return this.http.get(this.URL_CITY);
   }
 
@@ -40,7 +43,7 @@ export class DataService {
     return this.http.get(this.URL_CITY_ID + id);
   }
 
-  getZones() {
+  getZones(): Observable<any> {
     return this.http.get(this.URL_ZONES);
   }
 
@@ -68,6 +71,25 @@ export class DataService {
     return this.http.get(this.URL_ROOF_MATERIALS_ID + id);
   }
 
+  async getProjectsAsync() {
+    const projects = await lastValueFrom(this.http.get(this.URL_PROJECTS)) as any[];
+    this.cache.projects = {};
+    projects.forEach(project => {
+      this.cache.projects[project.name] = project;
+    });
+    return projects;
+  }
+
+  async getProjectAsync(name: string) {
+    if (this.cache.projects?.[name]) {
+      return this.cache.projects[name];
+    }
+    const project = await lastValueFrom(this.http.get(this.URL_PROJECTS + name)) as any;
+    this.cache.projects ||= {};
+    this.cache.projects[name] = project;
+    return project;
+  }
+
   postUWall(values: any){
     return this.http.post(this.URL_UWALL, values)
   }
@@ -88,8 +110,11 @@ export class DataService {
     return this.http.post(this.URL_WWR, values) as Observable<number>
   }
 
-  postSimulate(values) {
+  postSimulate(values: any) {
     return this.http.post(this.URL_SIMULATOR, values)
   }
 
+  async saveProjectAsync(name: string, value: any) {
+    return lastValueFrom(this.http.put(this.URL_PROJECTS + name, value));
+  }
 }
