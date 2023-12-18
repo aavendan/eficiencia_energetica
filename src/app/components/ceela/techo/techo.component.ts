@@ -58,7 +58,7 @@ export class TechoComponent implements OnInit {
         for(const id in Techo) {
           await this.addRowLayerCeiling(Techo[id].nombre);
           const espesorRef = document.getElementById("inputTechoEspesor" + id) as HTMLInputElement;
-          espesorRef.setAttribute("value", Techo[id].espesor);
+          espesorRef.setAttribute("value", Techo[id].espesor || 0);
         }
 
         loading$.unsubscribe();
@@ -198,7 +198,7 @@ export class TechoComponent implements OnInit {
     return new Promise<void>((resolve, reject) => {
       try {
         const count = this.layers.length
-        this.layers.push({ idx: count+1 });
+        this.layers.push({ idx: count + 1 });
     
         const data = this.roofMaterials.map((objt) =>  ({
           text: objt.material,

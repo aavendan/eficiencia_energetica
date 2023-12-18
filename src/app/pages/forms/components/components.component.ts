@@ -22,7 +22,6 @@ export class FormsComponentsComponent implements OnInit {
 
   ngOnInit() {
     this.summary.getResult().subscribe(result => {
-      console.log("result update", result);
       this.result = result;
       this.value = result.simulationResult;
     });
@@ -51,7 +50,6 @@ export class FormsComponentsComponent implements OnInit {
   }
 
   async save() {
-    console.log("this.result", this.result);
     const projectName = this.result?.nombreProyecto;
     if (!projectName) {
       alert("Ingrese el nombre del proyecto");

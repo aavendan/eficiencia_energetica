@@ -96,15 +96,21 @@ export class ProjectsComponent implements OnInit {
   async loadProjects() {
     this.loading = true;
     const response = await this.api.getProjectsAsync();
-    console.log("response", response);
     this.projects = response.map((project: any) => ({
       name: project.name,
-      efficiency: `${project.output}%`,
-      ownerName: project.input?.Proyecto?.propietaio?.nombre || 'Sin nombre',
+      efficiency: this.getEficiency(project.output),
+      ownerName: project.input?.Proyecto?.propietario?.nombre || 'Sin nombre',
       technicianName: project.input?.Proyecto?.tecnico?.nombre || 'Sin nombre',
       updatedAt: project.updated_at,
     }));
     this.loading = false;
+  }
+
+  getEficiency(efficiency: number) {
+    if (efficiency == undefined) {
+      return '-'
+    }
+    return `${efficiency}%`;
   }
 
   entriesChange($event) {

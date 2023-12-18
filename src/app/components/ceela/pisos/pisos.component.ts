@@ -54,7 +54,7 @@ export class PisosComponent implements OnInit {
         for (const id in Piso) {
           await this.addRowLayerFloor(Piso[id].nombre);
           const espesorRef = document.getElementById("inputPisoEspesor" + id) as HTMLInputElement;
-          espesorRef.setAttribute("value", Piso[id].espesor);
+          espesorRef.setAttribute("value", Piso[id].espesor || 0);
         }
         loading$.unsubscribe();
         this.loadingProject = false;

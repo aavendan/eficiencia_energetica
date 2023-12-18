@@ -45,11 +45,11 @@ export class ProyectoComponent implements OnInit {
           inputTecnicoNombre, inputPropietarioCI, inputTecnicoCI
         } = result;
 
-        document.getElementById("nombreProyecto").setAttribute("value", nombreProyecto);
-        document.getElementById("inputPropietarioCI").setAttribute("value", inputPropietarioCI);
-        document.getElementById("inputPropietarioNombre").setAttribute("value", inputPropietarioNombre);
-        document.getElementById("inputTecnicoNombre").setAttribute("value", inputTecnicoNombre);
-        document.getElementById("inputTecnicoCI").setAttribute("value", inputTecnicoCI);
+        document.getElementById("nombreProyecto").setAttribute("value", nombreProyecto || "");
+        document.getElementById("inputPropietarioCI").setAttribute("value", inputPropietarioCI || "");
+        document.getElementById("inputPropietarioNombre").setAttribute("value", inputPropietarioNombre || "");
+        document.getElementById("inputTecnicoNombre").setAttribute("value", inputTecnicoNombre || "");
+        document.getElementById("inputTecnicoCI").setAttribute("value", inputTecnicoCI || "");
 
         if (this.selectrCuidad) {
           const { id } = this.cities.find(city => city.city === selectorCiudad) || {};
@@ -57,7 +57,9 @@ export class ProyectoComponent implements OnInit {
             this.selectrCuidad.setValue(id);
           }
         }
-        this.selectrZone?.setValue(selectorZona);
+        if (selectorZona) {
+          this.selectrZone?.setValue(selectorZona);
+        }
       }
       loading$.unsubscribe();
     });

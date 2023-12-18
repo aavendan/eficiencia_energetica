@@ -60,7 +60,7 @@ export class ParedComponent implements OnInit {
         for(const id in capas) {
           await this.addRowLayerWall(capas[id].nombre);
           const espesorRef = document.getElementById("inputParedEspesor" + this.toTitleCase(this.location) + id) as HTMLInputElement;
-          espesorRef.setAttribute("value", capas[id].espesor);
+          espesorRef.setAttribute("value", capas[id].espesor || 0);
         }
         loading$.unsubscribe();
         this.loadingProject = false;
@@ -70,7 +70,6 @@ export class ParedComponent implements OnInit {
 
   onChange(location: string, id: string, materialId: string) {
     this.service.getWallMaterialsId(materialId).subscribe((response) => {
-      console.log("response",  response);
       let selectrConductividad = document.getElementById("inputParedConductividad" + this.toTitleCase(location) + id) as HTMLInputElement | null
       selectrConductividad.value = response["k"]
 
