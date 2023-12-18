@@ -3,6 +3,7 @@ import { DataService } from "../../../provider/data.service";
 import { SummaryService } from "../../../provider/summary.service";
 
 import Selectr from "mobius1-selectr";
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-piso',
@@ -14,6 +15,8 @@ export class PisosComponent implements OnInit {
   focus1;
 
   layers = [];
+  wallMaterials: any[] = [];
+
 
   ufloor: any;
   floor: any = {};
@@ -23,12 +26,18 @@ export class PisosComponent implements OnInit {
   ngOnInit(): void {
     this.resetOutput();
 
+    this.loadWallMaterials();
     // U: preparing zona
     this.summary.getResult().subscribe(result => {
       this.ufloor = {
         "zona": result["selectorZona"]
       }
     })
+  }
+
+  async loadWallMaterials() {
+    const response = await lastValueFrom(this.service.getWallMaterials()) as any[];
+    this.wallMaterials = response;
   }
 
   resetOutput() {
