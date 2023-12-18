@@ -50,16 +50,13 @@ export class TechoComponent implements OnInit {
       let selectrAbsortancia = document.getElementById("inputTechoAbsortancia"+id) as HTMLInputElement | null
       selectrAbsortancia.value = response["a"]
 
-      let selectrEspesor = document.getElementById("inputTechoEspesor" + id) as HTMLInputElement | null
-      selectrEspesor.value = "0.0"
-
       this.onChangeEspesor();
 
     });
 
   }
 
-  onChangeEspesor() { 
+  onChangeEspesor() {
 
     this.resetOutput();
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, pairwise } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +9,11 @@ export class SummaryService {
   constructor() { }
 
   private subject: BehaviorSubject<any> = new BehaviorSubject({} as any);
-  
-  object: { [key: string]: any} = {}
- 
-    replaceData(key: string, value: any) {
-      console.log("replaceData", key, value);
+  private loading: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  object: { [key: string]: any} = {}
+
+    replaceData(key: string, value: any) {
       // let object: { [key: string]: any} = {}
       
       // this.object[key] = value
@@ -34,7 +33,6 @@ export class SummaryService {
     }
 
     replaceDataObject(keyOut: string, keyIn:string, value: any ) {
-      console.log("replaceDataObject", keyOut, keyIn, value);
       if(keyOut in this.object  ) {
         
         this.object[keyOut] = { ...this.object[keyOut], [keyIn]:value} 
@@ -55,5 +53,22 @@ export class SummaryService {
  
     getResult(): Observable<any> {
         return this.subject.asObservable();
+    }
+
+    getResultSnapshot(): any {
+      return this.subject.getValue();
+    }
+
+    setResult(result: any) {
+      this.object = result;
+      this.subject.next(result);
+    }
+
+    setLoading(loading: boolean) {
+      this.loading.next(loading);
+    }
+
+    getLoading(): Observable<[boolean, boolean]> {
+      return this.loading.asObservable().pipe(pairwise());
     }
 }

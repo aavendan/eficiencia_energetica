@@ -1,47 +1,47 @@
 import { DataService } from "../../../provider/data.service";
 import { SummaryService } from "../../../provider/summary.service";
-import { CityModel } from '../../../interface/city-model';
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import noUiSlider from "nouislider";
-import Dropzone from "dropzone";
-Dropzone.autoDiscover = false;
-import Quill from "quill";
-import Selectr from "mobius1-selectr";
-import { lastValueFrom } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-components",
   templateUrl: "components.component.html"
 })
 export class FormsComponentsComponent implements OnInit {
-  
-
 
   locations: string[] = ["frontal", "posterior", "izquierda", "derecha"];
-
-  bsValue = new Date();
-  bsRangeValue: Date[];
-  maxDate = new Date();
-
-  // @ViewChild('zones') zones!: ElementRef;
-
-  selectr2:any;
   value: number = 0;
-
   result: any;
 
-  constructor(private service: DataService, private summary: SummaryService ) {
-    this.maxDate.setDate(this.maxDate.getDate() + 7);
-    this.bsRangeValue = [this.bsValue, this.maxDate];
+  constructor(
+    private service: DataService,
+    private summary: SummaryService,
+    private router: Router
+  ) {}
 
-    this.summary.getResult().subscribe(result => { 
-      this.result = result; 
+  ngOnInit() {
+    this.summary.getResult().subscribe(result => {
+      console.log("result update", result);
+      this.result = result;
       this.value = result.simulationResult;
     });
+    const projectName = this.router.parseUrl(this.router.url).queryParams["name"];
+    if (projectName) {
+      this.loadProject(projectName);
+    }
   }
 
-  ngOnInit() {}
+  async loadProject(projectName: string) {
+    this.summary.setLoading(true);
+    const project = await this.service.getProjectAsync(projectName);
+    if (!project) {
+      alert("No se encontró el proyecto");
+      return;
+    }
+    this.summary.setResult(this.parseSavedProject(project));
+    this.summary.setLoading(false);
+  }
 
   simulate() {
     const values = this.buildSimulateInput();
@@ -51,53 +51,57 @@ export class FormsComponentsComponent implements OnInit {
   }
 
   async save() {
+    console.log("this.result", this.result);
     const projectName = this.result?.nombreProyecto;
-    console.log("hola??", projectName);
     if (!projectName) {
       alert("Ingrese el nombre del proyecto");
       return;
     }
-    console.log("hola??");
+
     const project = {
       input: this.buildSimulateInput(),
       output: this.result?.simulationResult
     };
-    console.log("hola??", project);
-
-    const result = await this.service.saveProjectAsync(projectName, project);
-    console.log("hola??", result);
+    await this.service.saveProjectAsync(projectName, project);
   }
 
   buildSimulateInput() {
+    const {
+      nombreProyecto, inputPropietarioCI, inputPropietarioNombre,
+      inputTecnicoCI, inputTecnicoNombre, selectorCiudad, selectorZona,
+      inputTipo, inputLongitudFachada, inputLongitudProfundidad, inputArea,
+      inputAltura, Pared, Techo, Piso, Ventana
+    } = this.result || {};
+
     return {
-      "Proyecto" : {
-        "nombre": this.result?.nombreProyecto,
-        "propietario": {
-          "cedula": this.result?.inputPropietarioCI,
-          "nombre": this.result?.inputPropietarioNombre
+      Proyecto : {
+        nombre: nombreProyecto,
+        propietario: {
+          cedula: inputPropietarioCI,
+          nombre: inputPropietarioNombre
         },
-        "tecnico": {
-          "cedula": this.result?.inputTecnicoCI,
-          "nombre": this.result?.inputTecnicoNombre
+        tecnico: {
+          cedula: inputTecnicoCI,
+          nombre: inputTecnicoNombre
         },
-        "ubicacion": {
-          "ciudad": this.result?.selectorCiudad,
-          "zona": this.result?.selectorZona
+        ubicacion: {
+          ciudad: selectorCiudad,
+          zona: selectorZona
         }
       },
-      "General": {
-        "tipo de vivienda": this.result?.inputTipo,
-        "dimensiones": {
-          "fachada": parseFloat(this.result?.inputLongitudFachada),
-          "profundidad": parseFloat(this.result?.inputLongitudProfundidad),
-          "area": parseFloat(this.result?.inputArea),
-          "altura": parseFloat(this.result?.inputAltura)
+      General: {
+        "tipo de vivienda": inputTipo,
+        dimensiones: {
+          fachada: parseFloat(inputLongitudFachada),
+          profundidad: parseFloat(inputLongitudProfundidad),
+          area: parseFloat(inputArea),
+          altura: parseFloat(inputAltura)
         }
       },
-      "Pared": this.parseMultiUbiLayers(this.result?.Pared),
-      "Techo": this.parseLayers(this.result?.Techo),
-      "Piso": this.parseLayers(this.result?.Piso),
-      "Ventana": this.parseVentana(this.result?.Ventana)
+      Pared: this.parseMultiUbiLayers(Pared),
+      Techo: this.parseLayers(Techo),
+      Piso: this.parseLayers(Piso),
+      Ventana: this.parseVentana(Ventana)
     };
   }
 
@@ -142,5 +146,57 @@ export class FormsComponentsComponent implements OnInit {
       }
     }
     return Object.keys(object || {}).length > 0 ? object : undefined;
+  }
+
+  parseSavedProject(project: any) {
+    const {
+      Proyecto: {
+        nombre: nombreProyecto,
+        propietario: {
+          cedula: inputPropietarioCI,
+          nombre: inputPropietarioNombre
+        } = <any> {},
+        tecnico: {
+          cedula: inputTecnicoCI,
+          nombre: inputTecnicoNombre
+        } = <any> {},
+        ubicacion: {
+          ciudad: selectorCiudad,
+          zona: selectorZona
+        } = <any> {}
+      } = <any> {},
+      General: {
+        "tipo de vivienda": inputTipo,
+        dimensiones: {
+          fachada: inputLongitudFachada,
+          profundidad: inputLongitudProfundidad,
+          area: inputArea,
+          altura: inputAltura
+        } = <any> {}
+      } = <any> {},
+      Pared,
+      Techo,
+      Piso,
+      Ventana
+    } = project.input || {};
+
+    return {
+      nombreProyecto,
+      inputPropietarioCI,
+      inputPropietarioNombre,
+      inputTecnicoCI,
+      inputTecnicoNombre,
+      selectorCiudad,
+      selectorZona,
+      inputTipo,
+      inputLongitudFachada,
+      inputLongitudProfundidad,
+      inputArea,
+      inputAltura,
+      Pared,
+      Techo,
+      Piso,
+      Ventana
+    };
   }
 }

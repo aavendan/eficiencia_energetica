@@ -21,28 +21,79 @@ export class ProyectoComponent implements OnInit {
   focus7;
   focus8;
 
-  selectr2:any;
 
+  selectrCuidad: any;
+  selectrZone:any;
+
+
+  cities: any[] = [];
+  zones: any[] = [];
 
   constructor(private service: DataService, private summary: SummaryService) { }
 
   ngOnInit(): void {
-    this.service.getCities().subscribe((response) => { 
-      
-      var data = Object.entries(response).map((objt) =>  {
-        return {"text": objt[1]["city"],"value": objt[1]["id"]}
+    this.loadCitiesAndZones();
+    this.fillInputOnLoad();
+  }
+
+  fillInputOnLoad() {
+    const loading$ = this.summary.getLoading().subscribe(([prevLoading, loading]) => {
+      if (prevLoading && !loading) { // Project loaded
+        const result = this.summary.getResultSnapshot();
+        const {
+          nombreProyecto, selectorCiudad, selectorZona, inputPropietarioNombre,
+          inputTecnicoNombre, inputPropietarioCI, inputTecnicoCI
+        } = result;
+
+        document.getElementById("nombreProyecto").setAttribute("value", nombreProyecto);
+        document.getElementById("inputPropietarioCI").setAttribute("value", inputPropietarioCI);
+        document.getElementById("inputPropietarioNombre").setAttribute("value", inputPropietarioNombre);
+        document.getElementById("inputTecnicoNombre").setAttribute("value", inputTecnicoNombre);
+        document.getElementById("inputTecnicoCI").setAttribute("value", inputTecnicoCI);
+
+        if (this.selectrCuidad) {
+          const { id } = this.cities.find(city => city.city === selectorCiudad) || {};
+          if (id) {
+            this.selectrCuidad.setValue(id);
+          }
+        }
+        this.selectrZone?.setValue(selectorZona);
+      }
+      loading$.unsubscribe();
+    });
+  }
+
+  loadCitiesAndZones() {
+    this.service.getCities().subscribe((response) => {
+      this.cities = response;
+      const result = this.summary.getResultSnapshot();
+
+      const citiesOptions = Object.entries(response).map((objt) =>  {
+        const option:any = {"text": objt[1]["city"],"value": objt[1]["id"]}
+        if (objt[1]["city"] === result.selectorCiudad) {
+          option.selected = true;
+        }
+        return option
+      });
+      this.selectrCuidad = new Selectr((document.getElementById("selectorCiudad") as any), {
+        data: citiesOptions
       });
 
-      var configs = {
-        default: {
-          data: data
+      const zonesOptions = [...new Set(response.map(city => city.zc_label))].map((zone) =>  {
+        const option:any = {"text": zone,"value": zone}
+        if (zone === result.selectorZona) {
+          option.selected = true;
         }
-      }
-
-      new Selectr((document.getElementById("selectorCiudad") as any), configs.default)
-
+        return option
+      });
+      this.selectrZone = new Selectr((document.getElementById("selectorZona") as any), {
+        data: zonesOptions
+      });
     });
+  }
 
+  // Deprecated, it loads cities again
+  loadZones() {
     this.service.getZones().subscribe((response) => { 
 
       let data = Object.entries(response)
@@ -51,29 +102,22 @@ export class ProyectoComponent implements OnInit {
                         .map(txt =>  {
                           return {"text": txt,"value": txt}
                         });
-     
-      var configs = {
+      const configs = {
         default: {
           data: data
         }
       }
-
-      this.selectr2 = new Selectr((document.getElementById("selectorZona") as any), configs.default)
-
+      this.selectrZone = new Selectr((document.getElementById("selectorZona") as any), configs.default)
     });
   }
 
   onChange(event) {
-    let value = event.target.value
     let text = event.target.options[event.target.options.selectedIndex].text;
 
-    this.addData( event.target.id, text )
+    this.addData(event.target.id, text);
 
-    this.service.getCitiesId(value).subscribe(response => {
-      
-      this.selectr2.setValue(response["zc_label"])
-
-    })
+    const zone = this.cities.find(city => city.city === text)?.zc_label;
+    this.selectrZone?.setValue(zone);
   }
 
   addData(id, value) {

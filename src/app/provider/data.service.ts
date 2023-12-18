@@ -35,7 +35,7 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getCities() {
+  getCities(): Observable<any> {
     return this.http.get(this.URL_CITY);
   }
 
@@ -43,7 +43,7 @@ export class DataService {
     return this.http.get(this.URL_CITY_ID + id);
   }
 
-  getZones() {
+  getZones(): Observable<any> {
     return this.http.get(this.URL_ZONES);
   }
 
