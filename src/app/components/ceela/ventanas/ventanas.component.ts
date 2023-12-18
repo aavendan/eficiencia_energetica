@@ -52,6 +52,11 @@ export class VentanasComponent implements OnInit {
 
   }
 
+  async loadWindowMaterials() {
+    const response = await lastValueFrom(this.service.getWindowMaterials()) as any[];
+    this.windowMaterials = response;
+  }
+
   onChange(location: string, materialId: string) {
     this.summaryObject.nombre = this.materials.find((material) => material.value == materialId).text;
     this.service.getWindowMaterialsId(materialId).subscribe(async (result) => {

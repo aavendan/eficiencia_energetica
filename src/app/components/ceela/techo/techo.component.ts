@@ -106,7 +106,7 @@ export class TechoComponent implements OnInit {
       let calorRef = document.getElementById("inputTechoCalor" + + id.toString()) as HTMLInputElement
       let absortanciaRef = document.getElementById("inputTechoAbsortancia" + + id.toString()) as HTMLInputElement
 
-      let materialText = materialRef.options[materialRef.selectedIndex].text
+      let materialText = materialRef.options[materialRef.selectedIndex]?.text || "";
       let espesorValue = parseFloat(espesorRef.value)
       let conductividadValue = parseFloat(conductividadRef.value)
       let densidadValue = parseFloat(densidadRef.value)
