@@ -27,6 +27,15 @@ export class FormsComponentsComponent implements OnInit {
       this.result = result;
       this.confort = result.simulationResult?.confort || 0;
       this.energia = result.simulationResult?.energia || 0;
+      const tabTecho = document.getElementById("tabTecho");
+      const tabPiso = document.getElementById("tabPiso");
+      if (result?.inputTipo === "Vivienda en altura") {
+        tabTecho?.parentElement.classList.add("disabled");
+        tabPiso?.parentElement.classList.add("disabled");
+      } else {
+        tabTecho?.parentElement.classList.remove("disabled");
+        tabPiso?.parentElement.classList.remove("disabled");
+      }
     });
     const projectName = this.router.parseUrl(this.router.url).queryParams["name"];
     if (projectName) {

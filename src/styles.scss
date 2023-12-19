@@ -77,3 +77,8 @@ tr.borderLess {
 .w-130 {
     width: 130px;
 }
+
+.nav-link.disabled {
+    background: #ededed !important;
+    box-shadow: none !important;
+}
