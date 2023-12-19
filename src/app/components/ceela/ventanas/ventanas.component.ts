@@ -91,7 +91,7 @@ export class VentanasComponent implements OnInit {
     this.service.getWindowMaterialsId(materialId).subscribe(async (result) => {
 
       let windowSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
-      windowSHGC.textContent = "SGHC: " +parseFloat(result["sghc"].toString()).toFixed(2)+" [-]"
+      windowSHGC.textContent = "SHGC: " +parseFloat(result["sghc"].toString()).toFixed(2)+" [-]"
       this.summaryObject.sghc = result["sghc"];
 
       const uwindow$ = this.service.postUWindow({
@@ -164,7 +164,7 @@ export class VentanasComponent implements OnInit {
     this.setCumplimiento("SIN VALOR");
 
     let windowSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
-    windowSHGC.textContent = "SGHC: 0.00 [-]"
+    windowSHGC.textContent = "SHGC: 0.00 [-]"
   }
 
   async addVentana(selectedValue?) {
