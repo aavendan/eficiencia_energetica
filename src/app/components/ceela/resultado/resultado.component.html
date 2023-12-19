@@ -115,10 +115,10 @@
                                                 ></accomplishment>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <th>SRI</th><td>{{result?.techoSRI
                                                 ?? '0.0'}}</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -257,20 +257,47 @@
                     <div class="col-md-12">
                         <img
                             alt="Image placeholder"
-                            class="card-img-top pt-4 pr-3"
-                            src="assets/img/theme/house.png" />
+                            class="card-img-top pr-3"
+                            src="assets/img/formReferences/3.4VentanasGeneral.jpg"
+                        />
 
                     </div>
 
                     <div class="col-md-12">
                         <ul class=" list-group list-group-flush">
-                            <li class=" list-group-item">Su proyecto (cumple
-                                satisfactoriamente/no cumple) los requisitos
+                            <li class=" list-group-item">Su proyecto
+                                <span *ngIf="generalAccomplishment == undefined">
+                                    (cumple satisfactoriamente/no cumple)
+                                </span>
+                                <strong *ngIf="generalAccomplishment">
+                                    cumple satisfactoriamente
+                                </strong>
+                                <strong *ngIf="generalAccomplishment === false">
+                                    no cumple
+                                </strong>
+                                los requisitos
                                 prescriptivos de la NEC-HS-EE</li>
 
-                            <li class=" list-group-item">El rendimiento del
-                                proyecto está {{simulation | number : '1.2-2'}}% sobre el rendimiento de los
-                                métodos de construcción tradicionales.</li>
+                            <li class="list-group-item" *ngIf="simulation.confort > 0">
+                                El proyecto presenta un
+                                    {{simulation.confort | number : '1.2-2'}}%
+                                de mejora en horas de confort respecto a la práctica de construcción usual.
+                            </li>
+                            <li class="list-group-item" *ngIf="simulation.confort < 0">
+                                El proyecto presenta una reducción de
+                                    {{simulation.confort | abs | number : '1.2-2'}}%
+                                en horas de confort respecto a la práctica de construcción usual.
+                            </li>
+                            <li class="list-group-item" *ngIf="simulation.energia > 0">
+                                El proyecto presenta una reducción de
+                                    {{simulation.energia | number : '1.2-2'}}%
+                                en desempeño energético respecto a la práctica de construcción usual
+                            </li>
+                            <li class="list-group-item" *ngIf="simulation.energia < 0">
+                                El proyecto presenta un 
+                                    {{simulation.energia | abs | number : '1.2-2'}}%
+                                de mejora en desempeño energético respecto a la práctica de construcción usual
+                            </li>
                             
                             <li class=" list-group-item"><button class=" btn btn-default" (click)="basicSwal()">Imprimir resultado</button></li>
 

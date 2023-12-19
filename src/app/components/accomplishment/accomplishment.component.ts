@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'accomplishment',
@@ -7,15 +7,20 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AccomplishmentComponent implements OnInit {
 
-  badgeClass: string = "badge-success";
+  badgeClass: string = "";
   @Input() value: any;
   constructor() { }
 
   ngOnInit(): void {
-    if (this.value === "CUMPLE") {
-      this.badgeClass = "badge-success";
-    } else if (this.value === "NO CUMPLE") {
-      this.badgeClass = "badge-danger";
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.value.currentValue !== changes.value.previousValue) {
+      if (this.value === "CUMPLE") {
+        this.badgeClass = "badge-success";
+      } else if (this.value === "NO CUMPLE") {
+        this.badgeClass = "badge-danger";
+      }
     }
   }
 

@@ -47,10 +47,10 @@ export class TechoComponent implements OnInit {
   fillInputOnLoad() {
     const loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
       if (prevLoading && !loading) { // Project loaded
-        this.loadingProject = true;
 
         const { Techo } = this.summary.getResultSnapshot();
         if (!Techo ) return;
+        this.loadingProject = true;
 
         if (!this.roofMaterials.length) {
           await this.loadRoofMaterials();
@@ -191,7 +191,7 @@ export class TechoComponent implements OnInit {
 
   resetOutput() {
     this.setUValue(0);
-    this.setSRI(0);
+    // this.setSRI(0);
     this.setCumplimiento("SIN VALOR");
   }
   addRowLayerCeiling(selectedValue?) {

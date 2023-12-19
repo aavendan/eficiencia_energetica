@@ -47,8 +47,7 @@ export class VentanasComponent implements OnInit {
         this.wwrInput.l2 = l2;
         this.changeWWR();
       }
-    })
-    
+    });
     this.addVentana();
     this.fillInputOnLoad();
   }
@@ -77,6 +76,11 @@ export class VentanasComponent implements OnInit {
         }
         const espesorRef = document.getElementById("inputVentanaArea" + this.toTitleCase(this.location) ) as HTMLInputElement;
         espesorRef.setAttribute("value", info.area || 0);
+
+        if (!this.selectrVentana) {
+          this.addVentana(info.nombre);
+        }
+        this.onChangeArea(info.area);
         loading$.unsubscribe();
       }
     });
@@ -96,7 +100,7 @@ export class VentanasComponent implements OnInit {
       })
       const uwindow = await lastValueFrom(uwindow$);
       this.setUValue(uwindow["u"]);
-      this.setCumplimiento(uwindow["cumple"]);
+      // this.setCumplimiento(uwindow["cumple"]);
 
       this.summaryObject.u = uwindow["u"];
       this.summaryObject.accomplishment = uwindow["cumple"];
@@ -106,7 +110,7 @@ export class VentanasComponent implements OnInit {
       } else {
         this.setCumplimiento("SIN VALOR");
       }
-      this.summary.replaceDataObject("Ventana", this.location, this.summaryObject);
+      this.replaceDataObject("Ventana", this.location, this.summaryObject);
     });
   }
 
@@ -119,11 +123,10 @@ export class VentanasComponent implements OnInit {
   }
 
   setCumplimiento(cumplimiento:string) {
-    const nodeId = "techoCumplimiento";
+    const nodeId = "ventana"+this.toTitleCase(this.location)+"Cumplimiento";
     const nodeCumplimiento = document.getElementById(nodeId) as HTMLElement | null;
     nodeCumplimiento.textContent = cumplimiento;
     this.replaceData(nodeId, cumplimiento);
-
     if (cumplimiento == "CUMPLE") {
       nodeCumplimiento.classList.replace("badge-default","badge-success")
       nodeCumplimiento.classList.replace("badge-danger","badge-success")
@@ -142,7 +145,7 @@ export class VentanasComponent implements OnInit {
 
     this.summaryObject.area = Number(area);
     this.summaryObject.wwr = this.wwr;
-    this.summary.replaceDataObject("Ventana", this.location, this.summaryObject);
+    this.replaceDataObject("Ventana", this.location, this.summaryObject);
   }
 
   async changeWWR() {

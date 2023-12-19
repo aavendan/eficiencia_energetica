@@ -22,6 +22,7 @@ import { PisosComponent } from '../../components/ceela/pisos/pisos.component';
 import { VentanasComponent } from '../../components/ceela/ventanas/ventanas.component';
 import { ResultadoComponent } from '../../components/ceela/resultado/resultado.component';
 import { AccomplishmentComponent } from '../../components/accomplishment/accomplishment.component';
+import { AbsPipe } from "src/app/abs.pipe";
 
 import { RouterModule } from "@angular/router";
 import { FormsRoutes } from "./forms.routing";
@@ -42,6 +43,7 @@ import { ProjectsComponent } from './projects/projects.component';
     ProjectsComponent,
     FormInfoComponent,
     AccomplishmentComponent,
+    AbsPipe,
   ],
   imports: [
     CommonModule,

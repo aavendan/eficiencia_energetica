@@ -46,13 +46,13 @@ export class ParedComponent implements OnInit {
   fillInputOnLoad() {
     const loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
       if (prevLoading && !loading) { // Project loaded
-        this.loadingProject = true;
         const {
           Pared: {
             [this.location]: capas
           } = {}
         } = this.summary.getResultSnapshot();
         if (!capas) return;
+        this.loadingProject = true;
 
         if (!this.wallMaterials.length) {
           await this.loadWallMaterials();
@@ -133,7 +133,6 @@ export class ParedComponent implements OnInit {
         // n49
 
         /* Fin */
-
       }
 
     });

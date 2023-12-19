@@ -44,9 +44,9 @@ export class PisosComponent implements OnInit {
   fillInputOnLoad() {
     const loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
       if (prevLoading && !loading) { // Project loaded
-        this.loadingProject = true;
         const { Piso } = this.summary.getResultSnapshot();
         if (!Piso) return;
+        this.loadingProject = true;
 
         if (!this.wallMaterials.length) {
           await this.loadWallMaterials();
