@@ -82,3 +82,22 @@ tr.borderLess {
     background: #ededed !important;
     box-shadow: none !important;
 }
+
+@media print {
+    /* Estilos para la impresión */
+    body * {
+        visibility: hidden;
+    }
+    #contenidoImprimir {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    #contenidoImprimir, #contenidoImprimir * {
+        visibility: visible;
+    }
+    #contenidoImprimir img,
+    #contenidoImprimir li:has(button) {
+        display: none;
+    }
+}
