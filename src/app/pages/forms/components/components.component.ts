@@ -56,14 +56,6 @@ export class FormsComponentsComponent implements OnInit {
 
   simulate() {
     this.isLoading = true;
-    setTimeout(() => {
-      this.summary.replaceData("simulationResult", {
-        confort: -13,
-        energia: 13
-      });
-      this.save();
-    }, 2000);
-    
     const values = this.buildSimulateInput();
     this.service.postSimulate(values).subscribe(result => {
       this.summary.replaceData("simulationResult", result);
