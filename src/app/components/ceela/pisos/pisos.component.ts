@@ -63,18 +63,8 @@ export class PisosComponent implements OnInit {
   }
 
   resetOutput() {
-
-    //U - value to zero
-    let floorUV = document.getElementById("pisoUV") as HTMLElement | null
-    floorUV.textContent = "Valor U: 0.0 [W/m2-K]"
-
-    // Accomplishment
-    let floorCompliance = document.getElementById("pisoCumplimiento") as HTMLElement | null
-    floorCompliance.textContent = "SIN VALOR"
-
-    // Accomplishment - reset
-    floorCompliance.classList.replace("badge-success","badge-default")
-    floorCompliance.classList.replace("badge-danger","badge-default")
+    this.setUValue(0);
+    this.setCumplimiento("SIN VALOR");
   }
 
   onChange(id: string, materialId: string) {
@@ -145,28 +135,36 @@ export class PisosComponent implements OnInit {
       this.ufloor["capas"] = values;
 
       this.service.postUFloor(this.ufloor).subscribe(uFloorResult => {
-
-        //UV - set value
-        let floorUV = document.getElementById("pisoUV") as HTMLElement | null
-        floorUV.textContent = "Valor U: " + parseFloat(uFloorResult["u"].toString()).toFixed(2) + " [W/m2-K]"
-
-        //Accomplishment - set value
-        let floorAccomplishment = document.getElementById("pisoCumplimiento") as HTMLElement | null
-        floorAccomplishment.textContent = uFloorResult["cumple"]
-
-        if(uFloorResult["cumple"].toString() == "CUMPLE") {
-          floorAccomplishment.classList.replace("badge-default","badge-success")
-          floorAccomplishment.classList.replace("badge-danger","badge-success")
-        } else {
-          floorAccomplishment.classList.replace("badge-default","badge-danger")
-          floorAccomplishment.classList.replace("badge-success","badge-danger")
-        }
-
-        this.replaceData("pisoUV", parseFloat(uFloorResult["u"].toString()).toFixed(2))
-
+        this.setUValue(uFloorResult["u"])
+        this.setCumplimiento(uFloorResult["cumple"])
       })
     }
+  }
 
+  setUValue(u:number) {
+    const nodeId = "pisoUV";
+    const nodeUv = document.getElementById(nodeId) as HTMLElement | null;
+    const value = parseFloat(u.toString()).toFixed(2);
+    nodeUv.textContent = "Valor U: " + value + " [W/m2-K]";
+    this.replaceData(nodeId, value);
+  }
+
+  setCumplimiento(cumplimiento:string) {
+    const nodeId = "pisoCumplimiento";
+    const nodeCumplimiento = document.getElementById(nodeId) as HTMLElement | null;
+    nodeCumplimiento.textContent = cumplimiento;
+    this.replaceData(nodeId, cumplimiento);
+
+    if (cumplimiento == "CUMPLE") {
+      nodeCumplimiento.classList.replace("badge-default","badge-success")
+      nodeCumplimiento.classList.replace("badge-danger","badge-success")
+    } else if (cumplimiento == "NO CUMPLE") {
+      nodeCumplimiento.classList.replace("badge-default","badge-danger")
+      nodeCumplimiento.classList.replace("badge-success","badge-danger")
+    } else { // Sin Valor
+      nodeCumplimiento.classList.replace("badge-success","badge-default")
+      nodeCumplimiento.classList.replace("badge-danger","badge-default")
+    }
   }
 
   replaceData(id, value) {

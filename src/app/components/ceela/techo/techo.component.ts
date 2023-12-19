@@ -137,32 +137,46 @@ export class TechoComponent implements OnInit {
     this.replaceData("Techo", summaryObject);
 
     if (values.length > 0) {
-
       this.uceiling["capas"] = values;
-
       this.service.postUCeiling(this.uceiling).subscribe(uCeilingResult => {
-
-        //UV - set value
-        let ceilingUV = document.getElementById("techoUV") as HTMLElement | null
-        ceilingUV.textContent = "Valor U: " + parseFloat(uCeilingResult["u"].toString()).toFixed(2) + " [W/m2-K]"
-
-        //Accomplishment - set value
-        let ceilingAccomplishment = document.getElementById("techoCumplimiento") as HTMLElement | null
-        ceilingAccomplishment.textContent = uCeilingResult["cumple"]
-
-        if(uCeilingResult["cumple"].toString() == "CUMPLE") {
-          ceilingAccomplishment.classList.replace("badge-default","badge-success")
-          ceilingAccomplishment.classList.replace("badge-danger","badge-success")
-        } else {
-          ceilingAccomplishment.classList.replace("badge-default","badge-danger")
-          ceilingAccomplishment.classList.replace("badge-success","badge-danger")
-        }
-
-        this.replaceData("techoUV", parseFloat(uCeilingResult["u"].toString()).toFixed(2))
-
-      })
+        this.setUValue(uCeilingResult["u"])
+        this.setCumplimiento(uCeilingResult["cumple"])
+      });
     }
+  }
 
+  setUValue(u:number) {
+    const nodeId = "techoUV";
+    const nodeUv = document.getElementById(nodeId) as HTMLElement | null;
+    const value = parseFloat(u.toString()).toFixed(2);
+    nodeUv.textContent = "Valor U: " + value + " [W/m2-K]";
+    this.replaceData(nodeId, value);
+  }
+
+  setCumplimiento(cumplimiento:string) {
+    const nodeId = "techoCumplimiento";
+    const nodeCumplimiento = document.getElementById(nodeId) as HTMLElement | null;
+    nodeCumplimiento.textContent = cumplimiento;
+    this.replaceData(nodeId, cumplimiento);
+
+    if (cumplimiento == "CUMPLE") {
+      nodeCumplimiento.classList.replace("badge-default","badge-success")
+      nodeCumplimiento.classList.replace("badge-danger","badge-success")
+    } else if (cumplimiento == "NO CUMPLE") {
+      nodeCumplimiento.classList.replace("badge-default","badge-danger")
+      nodeCumplimiento.classList.replace("badge-success","badge-danger")
+    } else { // Sin Valor
+      nodeCumplimiento.classList.replace("badge-success","badge-default")
+      nodeCumplimiento.classList.replace("badge-danger","badge-default")
+    }
+  }
+
+  setSRI(sri:number) {
+    const nodeId = "techoSRI";
+    const nodeSRI = document.getElementById(nodeId) as HTMLElement | null;
+    const value = parseFloat(sri.toString()).toFixed(2);
+    nodeSRI.textContent = "SRI: " + value + " [-]";
+    this.replaceData(nodeId, value);
   }
 
   replaceData(id, value) {
@@ -176,24 +190,10 @@ export class TechoComponent implements OnInit {
   }
 
   resetOutput() {
-
-    //U - value to zero
-    let ceilingUV = document.getElementById("techoUV") as HTMLElement | null
-    ceilingUV.textContent = "Valor U: 0.0 [W/m2-K]"
-
-    //SRI - value to zero
-    let ceilingSRI = document.getElementById("techoSRI") as HTMLElement | null
-    ceilingSRI.textContent = "SRI: 0.0 [-]"
-
-    // Accomplishment
-    let ceilingCompliance = document.getElementById("techoCumplimiento") as HTMLElement | null
-    ceilingCompliance.textContent = "SIN VALOR"
-
-    // Accomplishment - reset
-    ceilingCompliance.classList.replace("badge-success","badge-default")
-    ceilingCompliance.classList.replace("badge-danger","badge-default")
+    this.setUValue(0);
+    this.setSRI(0);
+    this.setCumplimiento("SIN VALOR");
   }
-
   addRowLayerCeiling(selectedValue?) {
     return new Promise<void>((resolve, reject) => {
       try {

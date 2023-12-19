@@ -88,7 +88,7 @@ export class ParedComponent implements OnInit {
     this.resetOutput();
 
     let values = [];
-    const summaryObject = {};
+    const summaryObject:any = {};
 
     this.layers.forEach(obj => {
 
@@ -110,7 +110,7 @@ export class ParedComponent implements OnInit {
         values.push({ "e": espesorValue, "k": conductividadValue })
 
         /* Inicio */
-        let valuesLocal = {
+        const valuesLocal = {
           "nombre": materialText,
           "espesor": espesorValue,
           "k": conductividadValue,
@@ -145,29 +145,37 @@ export class ParedComponent implements OnInit {
       this.uwall["capas"] = values;
 
       this.service.postUWall(this.uwall).subscribe(uWallResult => {
-
-        //UV - set value
-        let wallUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
-        wallUV.textContent = "Valor U: " + parseFloat(uWallResult["u"].toString()).toFixed(2) + " [W/m2-K]"
-
-        //Accomplishment - set value
-        let wallAccomplishment = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
-        wallAccomplishment.textContent = uWallResult["cumple"]
-
-        if(uWallResult["cumple"].toString() == "CUMPLE") {
-          wallAccomplishment.classList.replace("badge-default","badge-success")
-          wallAccomplishment.classList.replace("badge-danger","badge-success")
-        } else {
-          wallAccomplishment.classList.replace("badge-default","badge-danger")
-          wallAccomplishment.classList.replace("badge-success","badge-danger")
-        }
-
-        this.replaceData("pared" + this.toTitleCase(this.location) + "UV", parseFloat(uWallResult["u"].toString()).toFixed(2))
-
+        this.setUValue(uWallResult["u"]);
+        this.setCumplimiento(uWallResult["cumple"]);
       })
 
     }
+  }
 
+  setUValue(u:number) {
+    const nodeId = "pared" + this.toTitleCase(this.location) + "UV";
+    const wallUV = document.getElementById(nodeId) as HTMLElement | null;
+    const value = parseFloat(u.toString()).toFixed(2);
+    wallUV.textContent = "Valor U: " + value + " [W/m2-K]";
+    this.replaceData(nodeId, value);
+  }
+
+  setCumplimiento(cumplimiento:string) {
+    const nodeId = "pared" + this.toTitleCase(this.location) + "Cumplimiento";
+    const wallCumplimiento = document.getElementById(nodeId) as HTMLElement | null;
+    wallCumplimiento.textContent = cumplimiento;
+    this.replaceData(nodeId, cumplimiento);
+
+    if (cumplimiento == "CUMPLE") {
+      wallCumplimiento.classList.replace("badge-default","badge-success")
+      wallCumplimiento.classList.replace("badge-danger","badge-success")
+    } else if (cumplimiento == "NO CUMPLE") {
+      wallCumplimiento.classList.replace("badge-default","badge-danger")
+      wallCumplimiento.classList.replace("badge-success","badge-danger")
+    } else { // Sin Valor
+      wallCumplimiento.classList.replace("badge-success","badge-default")
+      wallCumplimiento.classList.replace("badge-danger","badge-default")
+    }
   }
 
   replaceData(id, value) {
@@ -220,18 +228,8 @@ export class ParedComponent implements OnInit {
   }
 
   resetOutput() {
-
-    //U - value to zero
-    let wallUV = document.getElementById("pared" + this.toTitleCase(this.location) + "UV") as HTMLElement | null
-    wallUV.textContent = "Valor U: 0.0 [W/m2-K]"
-
-    // Accomplishment
-    let wallCompliance = document.getElementById("pared" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
-    wallCompliance.textContent = "SIN VALOR"
-
-    // Accomplishment - reset
-    wallCompliance.classList.replace("badge-success","badge-default")
-    wallCompliance.classList.replace("badge-danger","badge-default")
+    this.setUValue(0);
+    this.setCumplimiento("SIN VALOR");
   }
 
   toTitleCase(str) {
