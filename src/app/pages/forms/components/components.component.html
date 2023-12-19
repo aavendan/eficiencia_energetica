@@ -24,10 +24,10 @@ https://fontawesome.com/v5/search -->
         <div class="card">
           <div class="card-header">
             <div class="row justify-content-center">
-              <div class="col-md-10">
+              <div class="col-md-6">
                 <h3 class=" mb-0">Simulador</h3>
               </div>
-              <div class="col-md-2 text-right">
+              <div class="col-md-6 text-right">
                 <button class=" btn btn-secondary" (click)="save()">Guardar</button>
                 <button class=" btn btn-info" (click)="simulate()">Simular</button>
               </div>
@@ -91,7 +91,7 @@ https://fontawesome.com/v5/search -->
 
                   <tab>
 
-                    <ng-template tabHeading>4. Techo expuesto</ng-template>
+                    <ng-template tabHeading><span id="tabTecho">4. Techo expuesto</span></ng-template>
                     <div class="card">
                       <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -113,8 +113,8 @@ https://fontawesome.com/v5/search -->
                       <accordion-group [isOpen]="true">
                         <h5 class="mb-0 row" accordion-heading>
                           <span class="col-2">Techo</span>
-                          <span class="col-2 offset-4 text-right" id="techoUV"></span>
-                          <span class="col-2 text-right" id="techoSRI"></span>
+                          <span class="col-2 offset-6 text-right" id="techoUV"></span>
+                          <!-- <span class="col-2 text-right" id="techoSRI"></span> -->
                           <span class="col-2 text-right">
                             <span id="techoCumplimiento" class="badge badge-default"></span>
                           </span>
@@ -126,7 +126,7 @@ https://fontawesome.com/v5/search -->
                   </tab>
 
                   <tab>
-                    <ng-template tabHeading>5. Piso en contacto con terreno</ng-template>
+                    <ng-template tabHeading> <span id="tabPiso">5. Piso en contacto con terreno</span></ng-template>
                     <div class="card">
                       <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -201,7 +201,7 @@ https://fontawesome.com/v5/search -->
 
                     <ng-template tabHeading>7. Resultado</ng-template>
 
-                    <app-resultado [simulation]="value"></app-resultado>
+                    <app-resultado [simulation]="{ confort, energia }"></app-resultado>
 
                   </tab>
 
@@ -213,3 +213,4 @@ https://fontawesome.com/v5/search -->
       </div>
     </div>
   </div>
+  <app-modal [isModalOpen]="isLoading" [isLoading]="true"></app-modal>

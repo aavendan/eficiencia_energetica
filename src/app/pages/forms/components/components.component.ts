@@ -11,8 +11,10 @@ import { Router } from "@angular/router";
 export class FormsComponentsComponent implements OnInit {
 
   locations: string[] = ["frontal", "posterior", "izquierda", "derecha"];
-  value: number = 0;
+  confort: number = 0;
+  energia: number = 0;
   result: any;
+  isLoading: boolean = false;
 
   constructor(
     private service: DataService,
@@ -23,7 +25,17 @@ export class FormsComponentsComponent implements OnInit {
   ngOnInit() {
     this.summary.getResult().subscribe(result => {
       this.result = result;
-      this.value = result.simulationResult;
+      this.confort = result.simulationResult?.confort || 0;
+      this.energia = result.simulationResult?.energia || 0;
+      const tabTecho = document.getElementById("tabTecho");
+      const tabPiso = document.getElementById("tabPiso");
+      if (result?.inputTipo === "Vivienda en altura") {
+        tabTecho?.parentElement.classList.add("disabled");
+        tabPiso?.parentElement.classList.add("disabled");
+      } else {
+        tabTecho?.parentElement.classList.remove("disabled");
+        tabPiso?.parentElement.classList.remove("disabled");
+      }
     });
     const projectName = this.router.parseUrl(this.router.url).queryParams["name"];
     if (projectName) {
@@ -43,10 +55,24 @@ export class FormsComponentsComponent implements OnInit {
   }
 
   simulate() {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.summary.replaceData("simulationResult", {
+        confort: -13,
+        energia: 13
+      });
+      this.save();
+    }, 2000);
+    
     const values = this.buildSimulateInput();
     this.service.postSimulate(values).subscribe(result => {
       this.summary.replaceData("simulationResult", result);
-    });
+      this.save();
+      this.isLoading = false;
+    }, error => {
+      window.alert(error.error);
+      this.isLoading = false;
+    })
   }
 
   async save() {
@@ -55,7 +81,6 @@ export class FormsComponentsComponent implements OnInit {
       alert("Ingrese el nombre del proyecto");
       return;
     }
-
     const project = {
       input: this.buildSimulateInput(),
       output: this.result?.simulationResult
@@ -70,7 +95,6 @@ export class FormsComponentsComponent implements OnInit {
       inputTipo, inputLongitudFachada, inputLongitudProfundidad, inputArea,
       inputAltura, Pared, Techo, Piso, Ventana
     } = this.result || {};
-
     return {
       Proyecto : {
         nombre: nombreProyecto,
@@ -175,7 +199,7 @@ export class FormsComponentsComponent implements OnInit {
       Pared,
       Techo,
       Piso,
-      Ventana
+      Ventana,
     } = project.input || {};
 
     return {
@@ -194,7 +218,8 @@ export class FormsComponentsComponent implements OnInit {
       Pared,
       Techo,
       Piso,
-      Ventana
+      Ventana,
+      simulationResult: project.output
     };
   }
 }

@@ -47,8 +47,7 @@ export class VentanasComponent implements OnInit {
         this.wwrInput.l2 = l2;
         this.changeWWR();
       }
-    })
-    
+    });
     this.addVentana();
     this.fillInputOnLoad();
   }
@@ -77,6 +76,11 @@ export class VentanasComponent implements OnInit {
         }
         const espesorRef = document.getElementById("inputVentanaArea" + this.toTitleCase(this.location) ) as HTMLInputElement;
         espesorRef.setAttribute("value", info.area || 0);
+
+        if (!this.selectrVentana) {
+          this.addVentana(info.nombre);
+        }
+        this.onChangeArea(info.area);
         loading$.unsubscribe();
       }
     });
@@ -95,44 +99,44 @@ export class VentanasComponent implements OnInit {
         u: result["u"],
       })
       const uwindow = await lastValueFrom(uwindow$);
-      let windowUV = document.getElementById("ventana"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
-      windowUV.textContent = "Valor U: " +parseFloat(uwindow["u"].toString()).toFixed(2)+" [W/m2-K]"
+      this.setUValue(uwindow["u"]);
+      // this.setCumplimiento(uwindow["cumple"]);
 
       this.summaryObject.u = uwindow["u"];
       this.summaryObject.accomplishment = uwindow["cumple"];
 
-      let windowAccomplishment = document.getElementById("ventana" + this.toTitleCase(this.location) + "Cumplimiento") as HTMLElement | null
-
       if (uwindow["u"] != 0) {
-        windowAccomplishment.textContent = uwindow["cumple"]
-  
-        if(uwindow["cumple"].toString() == "CUMPLE") {
-          windowAccomplishment.classList.replace("badge-default","badge-success")
-          windowAccomplishment.classList.replace("badge-danger","badge-success")
-        } else {
-          windowAccomplishment.classList.replace("badge-default","badge-danger")
-          windowAccomplishment.classList.replace("badge-success","badge-danger")
-        }
+        this.setCumplimiento(uwindow["cumple"]);
       } else {
-        windowAccomplishment.textContent = "SIN VALOR"
-        windowAccomplishment.classList.replace("badge-success","badge-default")
-        windowAccomplishment.classList.replace("badge-danger","badge-default")
+        this.setCumplimiento("SIN VALOR");
       }
-
-      /* Inicio */
-      let valuesLocal = {
-      }
-
-      //FALTA n49
-
-      /* Fin */
-
-      this.replaceData("ventana" + this.toTitleCase(this.location) + "UV", parseFloat(result["u"].toString()).toFixed(2))
-
-      this.summary.replaceDataObject("Ventana", this.location, this.summaryObject);
+      this.replaceDataObject("Ventana", this.location, this.summaryObject);
     });
-    
+  }
 
+  setUValue(u:number) {
+    const nodeId = "ventana"+this.toTitleCase(this.location)+"UV";
+    const nodeUv = document.getElementById(nodeId) as HTMLElement | null;
+    const value = parseFloat(u.toString()).toFixed(2);
+    nodeUv.textContent = "Valor U: " + value + " [W/m2-K]";
+    this.replaceData(nodeId, value);
+  }
+
+  setCumplimiento(cumplimiento:string) {
+    const nodeId = "ventana"+this.toTitleCase(this.location)+"Cumplimiento";
+    const nodeCumplimiento = document.getElementById(nodeId) as HTMLElement | null;
+    nodeCumplimiento.textContent = cumplimiento;
+    this.replaceData(nodeId, cumplimiento);
+    if (cumplimiento == "CUMPLE") {
+      nodeCumplimiento.classList.replace("badge-default","badge-success")
+      nodeCumplimiento.classList.replace("badge-danger","badge-success")
+    } else if (cumplimiento == "NO CUMPLE") {
+      nodeCumplimiento.classList.replace("badge-default","badge-danger")
+      nodeCumplimiento.classList.replace("badge-success","badge-danger")
+    } else { // Sin Valor
+      nodeCumplimiento.classList.replace("badge-success","badge-default")
+      nodeCumplimiento.classList.replace("badge-danger","badge-default")
+    }
   }
 
   async onChangeArea(area: number) {
@@ -141,7 +145,7 @@ export class VentanasComponent implements OnInit {
 
     this.summaryObject.area = Number(area);
     this.summaryObject.wwr = this.wwr;
-    this.summary.replaceDataObject("Ventana", this.location, this.summaryObject);
+    this.replaceDataObject("Ventana", this.location, this.summaryObject);
   }
 
   async changeWWR() {
@@ -156,22 +160,11 @@ export class VentanasComponent implements OnInit {
   }
 
   resetOutput() {
+    this.setUValue(0);
+    this.setCumplimiento("SIN VALOR");
 
-    //U - value to zero
-    let windowUV = document.getElementById("ventana"+this.toTitleCase(this.location)+"UV") as HTMLElement | null
-    windowUV.textContent = "Valor U: 0.0 [W/m2-K]"
-
-    //SRI - value to zero
     let windowSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
     windowSHGC.textContent = "SGHC: 0.00 [-]"
-
-    // Accomplishment
-    let windowCompliance = document.getElementById("ventana"+this.toTitleCase(this.location)+"Cumplimiento") as HTMLElement | null
-    windowCompliance.textContent = "SIN VALOR"
-
-    // Accomplishment - reset
-    windowCompliance.classList.replace("badge-success","badge-default")
-    windowCompliance.classList.replace("badge-danger","badge-default")
   }
 
   async addVentana(selectedValue?) {

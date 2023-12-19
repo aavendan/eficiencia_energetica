@@ -83,7 +83,7 @@
                                 </tr>
                                 <tr>
                                     <th>Zona Climática</th>
-                                    <td>{{result?.selectorZona}}</td>
+                                    <td>{{result?.selectorZona || '-'}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -106,13 +106,19 @@
                                             <th>Techo</th><td></td>
                                         </tr>
                                         <tr>
-                                            <th>Valor U</th><td>{{result?.techoUV
-                                                ?? '0.0'}} [W/m2-K]</td>
+                                            <th>Valor U</th>
+                                            <td>
+                                                {{result?.techoUV
+                                                ?? '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.techoCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <th>SRI</th><td>{{result?.techoSRI
                                                 ?? '0.0'}}</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -124,8 +130,13 @@
                                             <th>Piso</th><td></td>
                                         </tr>
                                         <tr>
-                                            <th>Valor U</th><td>{{result?.pisoUV
-                                                ?? '0.0'}} [W/m2-K]</td>
+                                            <th>Valor U</th>
+                                            <td>
+                                                {{result?.pisoUV ?? '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.pisoCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -139,23 +150,43 @@
                                         </tr>
                                         <tr>
                                             <th>Frontal / Valor U</th>
-                                            <td>{{result?.ventanaFrontalUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.ventanaFrontalUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.ventanaFrontalCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Posterior / Valor U</th>
-                                            <td>{{result?.ventanaPosteriorUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.ventanaPosteriorUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.ventanaPosteriorCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Izquierda / Valor U</th>
-                                            <td>{{result?.ventanaIzquierdaUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.ventanaIzquierdaUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.ventanaIzquierdaCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Derecha / Valor U</th>
-                                            <td>{{result?.ventanaDerechaUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.ventanaDerechaUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.ventanaDerechaCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -169,23 +200,43 @@
                                         </tr>
                                         <tr>
                                             <th>Frontal / Valor U</th>
-                                            <td>{{result?.paredFrontalUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.paredFrontalUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.paredFrontalCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Posterior / Valor U</th>
-                                            <td>{{result?.paredPosteriorUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.paredPosteriorUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.paredPosteriorCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Izquierda / Valor U</th>
-                                            <td>{{result?.paredIzquierdaUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.paredIzquierdaUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.paredIzquierdaCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Derecha / Valor U</th>
-                                            <td>{{result?.paredDerechaUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.paredDerechaUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.paredDerechaCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -206,20 +257,47 @@
                     <div class="col-md-12">
                         <img
                             alt="Image placeholder"
-                            class="card-img-top pt-4 pr-3"
-                            src="assets/img/theme/house.png" />
+                            class="card-img-top pr-3"
+                            src="assets/img/formReferences/3.4VentanasGeneral.jpg"
+                        />
 
                     </div>
 
                     <div class="col-md-12">
                         <ul class=" list-group list-group-flush">
-                            <li class=" list-group-item">Su proyecto (cumple
-                                satisfactoriamente/no cumple) los requisitos
+                            <li class=" list-group-item">Su proyecto
+                                <span *ngIf="generalAccomplishment == undefined">
+                                    (cumple satisfactoriamente/no cumple)
+                                </span>
+                                <strong *ngIf="generalAccomplishment">
+                                    cumple satisfactoriamente
+                                </strong>
+                                <strong *ngIf="generalAccomplishment === false">
+                                    no cumple
+                                </strong>
+                                los requisitos
                                 prescriptivos de la NEC-HS-EE</li>
 
-                            <li class=" list-group-item">El rendimiento del
-                                proyecto está {{simulation | number : '1.2-2'}}% sobre el rendimiento de los
-                                métodos de construcción tradicionales.</li>
+                            <li class="list-group-item" *ngIf="simulation.confort > 0">
+                                El proyecto presenta un
+                                    {{simulation.confort | number : '1.2-2'}}%
+                                de mejora en horas de confort respecto a la práctica de construcción usual.
+                            </li>
+                            <li class="list-group-item" *ngIf="simulation.confort < 0">
+                                El proyecto presenta una reducción de
+                                    {{simulation.confort | abs | number : '1.2-2'}}%
+                                en horas de confort respecto a la práctica de construcción usual.
+                            </li>
+                            <li class="list-group-item" *ngIf="simulation.energia > 0">
+                                El proyecto presenta una reducción de
+                                    {{simulation.energia | number : '1.2-2'}}%
+                                en desempeño energético respecto a la práctica de construcción usual
+                            </li>
+                            <li class="list-group-item" *ngIf="simulation.energia < 0">
+                                El proyecto presenta un 
+                                    {{simulation.energia | abs | number : '1.2-2'}}%
+                                de mejora en desempeño energético respecto a la práctica de construcción usual
+                            </li>
                             
                             <li class=" list-group-item"><button class=" btn btn-default" (click)="basicSwal()">Imprimir resultado</button></li>
 

@@ -1,42 +1,41 @@
-<i
-  class="fas fa-info-circle info-button ml-1"
-  (click)="openModal($event)"
-></i>
-
 <div
   class="modal fade"
   tabindex="-1"
   role="dialog"
   [ngClass]="{
-    show: isFadeShow
+    show: isModalOpen
   }"
   [ngStyle]="{
     display: isModalOpen ? 'block' : 'none'
   }"
-  (click)="closeModal()"
 >
   <div
     class="modal-dialog modal-dialog-centered"
     role="document"
     (click)="$event.stopPropagation(); $event.preventDefault();"
+    [ngClass]="{
+      'modal-sm': isLoading
+    }"
   >
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" *ngIf="!isLoading">
         <h5 class="modal-title" id="exampleModalLabel">{{ title || "Título" }}</h5>
       </div>
       <div class="modal-body">
         <div
-          *ngIf="image"
-          class="d-flex justify-content-center"
-        >
-          <img class="card-img-top mb-3" [src]="image">
-        </div>
-        <div
-          *ngIf="parseDescription"
-          [innerHTML]="parsedDescription"
+          *ngIf="!isLoading && text"
+          [innerHTML]="text"
         ></div>
+        <div *ngIf="isLoading">
+          <div class="d-flex flex-column justify-content-center align-items-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Cargando...</span>
+            </div>
+            <span>Cargando...</span>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" *ngIf="!isLoading">
         <button
           type="button"
           class="btn btn-primary"
