@@ -14,7 +14,7 @@ export class FormsComponentsComponent implements OnInit {
   confort: number = 0;
   energia: number = 0;
   result: any;
-  loading: boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     private service: DataService,
@@ -46,6 +46,7 @@ export class FormsComponentsComponent implements OnInit {
   }
 
   simulate() {
+    this.isLoading = true;
     setTimeout(() => {
       this.summary.replaceData("simulationResult", {
         confort: -13,
@@ -58,7 +59,11 @@ export class FormsComponentsComponent implements OnInit {
     this.service.postSimulate(values).subscribe(result => {
       this.summary.replaceData("simulationResult", result);
       this.save();
-    });
+      this.isLoading = false;
+    }, error => {
+      window.alert(error.error);
+      this.isLoading = false;
+    })
   }
 
   async save() {

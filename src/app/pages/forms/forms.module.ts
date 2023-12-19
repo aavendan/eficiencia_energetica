@@ -23,6 +23,7 @@ import { VentanasComponent } from '../../components/ceela/ventanas/ventanas.comp
 import { ResultadoComponent } from '../../components/ceela/resultado/resultado.component';
 import { AccomplishmentComponent } from '../../components/accomplishment/accomplishment.component';
 import { AbsPipe } from "src/app/abs.pipe";
+import { ModalComponent } from "src/app/components/modal/modal.component";
 
 import { RouterModule } from "@angular/router";
 import { FormsRoutes } from "./forms.routing";
@@ -43,6 +44,7 @@ import { ProjectsComponent } from './projects/projects.component';
     ProjectsComponent,
     FormInfoComponent,
     AccomplishmentComponent,
+    ModalComponent,
     AbsPipe,
   ],
   imports: [
