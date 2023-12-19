@@ -4,6 +4,7 @@ import { SummaryService } from "../../../provider/summary.service";
 
 import Selectr from "mobius1-selectr";
 import { lastValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ventana',
@@ -22,8 +23,9 @@ export class VentanasComponent implements OnInit {
   materials: any[] = [];
   windowMaterials: any[] = [];
   selectrVentana: any;
+  fistChange: boolean = true;
 
-  constructor(private service: DataService, private summary: SummaryService) { }
+  constructor(private service: DataService, private summary: SummaryService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -48,8 +50,13 @@ export class VentanasComponent implements OnInit {
         this.changeWWR();
       }
     });
-    this.addVentana();
-    this.fillInputOnLoad();
+
+    const projectName = this.router.parseUrl(this.router.url).queryParams["name"];
+    if (projectName) {
+      this.fillInputOnLoad();
+    } else {
+      this.addVentana();
+    }
   }
 
   async loadWindowMaterials() {
@@ -68,7 +75,7 @@ export class VentanasComponent implements OnInit {
         if (!info) return;
 
         if (!this.selectrVentana) {
-          await (new Promise(resolve => setTimeout(resolve, 1000)));
+          await this.addVentana(info.nombre);
         }
         const { id } = this.windowMaterials.find(material => material.material === info.nombre) || {};
         if (id) {
@@ -76,17 +83,17 @@ export class VentanasComponent implements OnInit {
         }
         const espesorRef = document.getElementById("inputVentanaArea" + this.toTitleCase(this.location) ) as HTMLInputElement;
         espesorRef.setAttribute("value", info.area || 0);
-
-        if (!this.selectrVentana) {
-          this.addVentana(info.nombre);
-        }
-        this.onChangeArea(info.area);
+        await this.onChangeArea(info.area);
         loading$.unsubscribe();
       }
     });
   }
 
   onChange(location: string, materialId: string) {
+    if (this.fistChange) {
+      this.fistChange = false;
+      return;
+    }
     this.summaryObject.nombre = this.windowMaterials.find((material) => material.id == materialId).material;
     this.service.getWindowMaterialsId(materialId).subscribe(async (result) => {
 
@@ -104,7 +111,6 @@ export class VentanasComponent implements OnInit {
 
       this.summaryObject.u = uwindow["u"];
       this.summaryObject.accomplishment = uwindow["cumple"];
-
       if (uwindow["u"] != 0) {
         this.setCumplimiento(uwindow["cumple"]);
       } else {
@@ -169,7 +175,6 @@ export class VentanasComponent implements OnInit {
 
   async addVentana(selectedValue?) {
     await this.loadWindowMaterials();
-
     const data = this.windowMaterials.map((objt) => ({
       text: objt.material,
       value: objt.id,
