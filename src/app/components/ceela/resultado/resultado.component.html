@@ -83,7 +83,7 @@
                                 </tr>
                                 <tr>
                                     <th>Zona Climática</th>
-                                    <td>{{result?.selectorZona}}</td>
+                                    <td>{{result?.selectorZona || '-'}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -106,8 +106,14 @@
                                             <th>Techo</th><td></td>
                                         </tr>
                                         <tr>
-                                            <th>Valor U</th><td>{{result?.techoUV
-                                                ?? '0.0'}} [W/m2-K]</td>
+                                            <th>Valor U</th>
+                                            <td>
+                                                {{result?.techoUV
+                                                ?? '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.techoCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>SRI</th><td>{{result?.techoSRI
@@ -124,8 +130,13 @@
                                             <th>Piso</th><td></td>
                                         </tr>
                                         <tr>
-                                            <th>Valor U</th><td>{{result?.pisoUV
-                                                ?? '0.0'}} [W/m2-K]</td>
+                                            <th>Valor U</th>
+                                            <td>
+                                                {{result?.pisoUV ?? '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.pisoCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -139,23 +150,43 @@
                                         </tr>
                                         <tr>
                                             <th>Frontal / Valor U</th>
-                                            <td>{{result?.ventanaFrontalUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.ventanaFrontalUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.ventanaFrontalCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Posterior / Valor U</th>
-                                            <td>{{result?.ventanaPosteriorUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.ventanaPosteriorUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.ventanaPosteriorCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Izquierda / Valor U</th>
-                                            <td>{{result?.ventanaIzquierdaUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.ventanaIzquierdaUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.ventanaIzquierdaCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Derecha / Valor U</th>
-                                            <td>{{result?.ventanaDerechaUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.ventanaDerechaUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.ventanaDerechaCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -169,23 +200,43 @@
                                         </tr>
                                         <tr>
                                             <th>Frontal / Valor U</th>
-                                            <td>{{result?.paredFrontalUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.paredFrontalUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.paredFrontalCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Posterior / Valor U</th>
-                                            <td>{{result?.paredPosteriorUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.paredPosteriorUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.paredPosteriorCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Izquierda / Valor U</th>
-                                            <td>{{result?.paredIzquierdaUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.paredIzquierdaUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.paredIzquierdaCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Derecha / Valor U</th>
-                                            <td>{{result?.paredDerechaUV ??
-                                                '0.0'}} [W/m2-K]</td>
+                                            <td>
+                                                {{result?.paredDerechaUV ??
+                                                '0.0'}} [W/m2-K]
+                                                <accomplishment
+                                                    [value]="result?.paredDerechaCumplimiento"
+                                                ></accomplishment>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
