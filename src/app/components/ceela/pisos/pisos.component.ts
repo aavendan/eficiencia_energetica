@@ -3,7 +3,6 @@ import { DataService } from "../../../provider/data.service";
 import { SummaryService } from "../../../provider/summary.service";
 
 import Selectr from "mobius1-selectr";
-import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-piso',
@@ -17,6 +16,8 @@ export class PisosComponent implements OnInit {
   layers = [];
   wallMaterials: any[] = [];
   loadingProject: boolean = false;
+  isSavedProject: boolean = false;
+  fistChange: boolean = true;
 
   ufloor: any;
   floor: any = {};
@@ -37,8 +38,7 @@ export class PisosComponent implements OnInit {
   }
 
   async loadWallMaterials() {
-    const response = await lastValueFrom(this.service.getWallMaterials()) as any[];
-    this.wallMaterials = response;
+    this.wallMaterials = await this.service.getWallMaterialsAsync();
   }
 
   fillInputOnLoad() {
@@ -47,6 +47,7 @@ export class PisosComponent implements OnInit {
         const { Piso } = this.summary.getResultSnapshot();
         if (!Piso) return;
         this.loadingProject = true;
+        this.isSavedProject = true;
 
         if (!this.wallMaterials.length) {
           await this.loadWallMaterials();
@@ -68,22 +69,22 @@ export class PisosComponent implements OnInit {
   }
 
   onChange(id: string, materialId: string) {
+    if (this.fistChange && this.isSavedProject) {
+      this.fistChange = false;
+      return;
+    }
+    const material = this.wallMaterials.find(material => material.id == materialId);
 
-    this.service.getRoofMaterialsId(materialId).subscribe((response) => {
+    const selectrConductividad = document.getElementById("inputPisoConductividad"+id) as HTMLInputElement | null
+    selectrConductividad.value = material["k"]
 
-      let selectrConductividad = document.getElementById("inputPisoConductividad"+id) as HTMLInputElement | null
-      selectrConductividad.value = response["k"]
+    const selectrDensidad = document.getElementById("inputPisoDensidad"+id) as HTMLInputElement | null
+    selectrDensidad.value = material["d"]
 
-      let selectrDensidad = document.getElementById("inputPisoDensidad"+id) as HTMLInputElement | null
-      selectrDensidad.value = response["d"]
+    const selectrCalor = document.getElementById("inputPisoCalor"+id) as HTMLInputElement | null
+    selectrCalor.value = material["c"]
 
-      let selectrCalor = document.getElementById("inputPisoCalor"+id) as HTMLInputElement | null
-      selectrCalor.value = response["c"]
-
-      this.onChangeEspesor();
-
-    });
-
+    this.onChangeEspesor();
   }
 
   onChangeEspesor() { 

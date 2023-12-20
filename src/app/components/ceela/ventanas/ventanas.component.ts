@@ -60,8 +60,7 @@ export class VentanasComponent implements OnInit {
   }
 
   async loadWindowMaterials() {
-    const response = await lastValueFrom(this.service.getWindowMaterials()) as any[];
-    this.windowMaterials = response;
+    this.windowMaterials = await this.service.getWindowMaterialsAsync();
   }
 
   fillInputOnLoad() {
@@ -72,7 +71,9 @@ export class VentanasComponent implements OnInit {
             [this.location]: info
           } = {}
         } = this.summary.getResultSnapshot();
-        if (!info) return;
+        if (!info) {
+          return this.addVentana();
+        };
 
         if (!this.selectrVentana) {
           await this.addVentana(info.nombre);
@@ -89,35 +90,34 @@ export class VentanasComponent implements OnInit {
     });
   }
 
-  onChange(location: string, materialId: string) {
+  async onChange(location: string, materialId: string) {
     if (this.fistChange) {
       this.fistChange = false;
       return;
     }
-    this.summaryObject.nombre = this.windowMaterials.find((material) => material.id == materialId).material;
-    this.service.getWindowMaterialsId(materialId).subscribe(async (result) => {
+    const material = this.windowMaterials.find(material => material.id == materialId);
+    this.summaryObject.nombre = material.material;
 
-      let windowSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
-      windowSHGC.textContent = "SHGC: " +parseFloat(result["sghc"].toString()).toFixed(2)+" [-]"
-      this.summaryObject.sghc = result["sghc"];
+    let windowSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
+    windowSHGC.textContent = "SHGC: " +parseFloat(material["sghc"].toString()).toFixed(2)+" [-]"
+    this.summaryObject.sghc = material["sghc"];
 
-      const uwindow$ = this.service.postUWindow({
-        zona: this.uwindow["zona"],
-        u: result["u"],
-      })
-      const uwindow = await lastValueFrom(uwindow$);
-      this.setUValue(uwindow["u"]);
-      // this.setCumplimiento(uwindow["cumple"]);
+    const uwindow$ = this.service.postUWindow({
+      zona: this.uwindow["zona"],
+      u: material["u"],
+    })
+    const uwindow = await lastValueFrom(uwindow$);
+    this.setUValue(uwindow["u"]);
+    // this.setCumplimiento(uwindow["cumple"]);
 
-      this.summaryObject.u = uwindow["u"];
-      this.summaryObject.accomplishment = uwindow["cumple"];
-      if (uwindow["u"] != 0) {
-        this.setCumplimiento(uwindow["cumple"]);
-      } else {
-        this.setCumplimiento("SIN VALOR");
-      }
-      this.replaceDataObject("Ventana", this.location, this.summaryObject);
-    });
+    this.summaryObject.u = uwindow["u"];
+    this.summaryObject.accomplishment = uwindow["cumple"];
+    if (uwindow["u"] != 0) {
+      this.setCumplimiento(uwindow["cumple"]);
+    } else {
+      this.setCumplimiento("SIN VALOR");
+    }
+    this.replaceDataObject("Ventana", this.location, this.summaryObject);
   }
 
   setUValue(u:number) {
