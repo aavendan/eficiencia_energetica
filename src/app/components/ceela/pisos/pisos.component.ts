@@ -17,6 +17,7 @@ export class PisosComponent implements OnInit {
   wallMaterials: any[] = [];
   loadingProject: boolean = false;
   isSavedProject: boolean = false;
+  loadedCalculated: boolean = false;
   fistChange: boolean = true;
 
   ufloor: any;
@@ -57,6 +58,7 @@ export class PisosComponent implements OnInit {
           const espesorRef = document.getElementById("inputPisoEspesor" + id) as HTMLInputElement;
           espesorRef.setAttribute("value", Piso[id].espesor || 0);
         }
+        this.onChangeEspesor();
         loading$.unsubscribe();
         this.loadingProject = false;
       }
@@ -84,7 +86,9 @@ export class PisosComponent implements OnInit {
     const selectrCalor = document.getElementById("inputPisoCalor"+id) as HTMLInputElement | null
     selectrCalor.value = material["c"]
 
-    this.onChangeEspesor();
+    if (!this.isSavedProject || this.loadedCalculated) {
+      this.onChangeEspesor();
+    }
   }
 
   onChangeEspesor() { 
@@ -131,6 +135,18 @@ export class PisosComponent implements OnInit {
     });
 
     this.replaceData("Piso", summaryObject);
+
+    if (this.isSavedProject && !this.loadedCalculated) {
+      this.loadedCalculated = true;
+      const result = this.summary.getResultSnapshot();
+      const uv = result["pisoUV"];
+      const cumplimiento = result["pisoCumplimiento"];
+
+      this.setUValue(uv);
+      this.setCumplimiento(cumplimiento);
+      return;
+    }
+
     if (values.length > 0) {
 
       this.ufloor["capas"] = values;

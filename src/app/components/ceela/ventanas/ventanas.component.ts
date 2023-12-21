@@ -23,6 +23,8 @@ export class VentanasComponent implements OnInit {
   materials: any[] = [];
   windowMaterials: any[] = [];
   selectrVentana: any;
+  isSavedProject: boolean = false;
+  loadedUV: boolean = false;
   fistChange: boolean = true;
 
   constructor(private service: DataService, private summary: SummaryService, private router: Router) { }
@@ -74,17 +76,14 @@ export class VentanasComponent implements OnInit {
         if (!info) {
           return this.addVentana();
         };
+        this.isSavedProject = true;
 
         if (!this.selectrVentana) {
           await this.addVentana(info.nombre);
         }
-        const { id } = this.windowMaterials.find(material => material.material === info.nombre) || {};
-        if (id) {
-          this.selectrVentana.setValue(id);
-        }
         const espesorRef = document.getElementById("inputVentanaArea" + this.toTitleCase(this.location) ) as HTMLInputElement;
         espesorRef.setAttribute("value", info.area || 0);
-        await this.onChangeArea(info.area);
+        await this.onChangeArea(info.area, info.wwr);
         loading$.unsubscribe();
       }
     });
@@ -102,11 +101,22 @@ export class VentanasComponent implements OnInit {
     windowSHGC.textContent = "SHGC: " +parseFloat(material["sghc"].toString()).toFixed(2)+" [-]"
     this.summaryObject.sghc = material["sghc"];
 
-    const uwindow$ = this.service.postUWindow({
-      zona: this.uwindow["zona"],
-      u: material["u"],
-    })
-    const uwindow = await lastValueFrom(uwindow$);
+    let uwindow;
+    if (this.isSavedProject && !this.loadedUV) {
+      this.loadedUV = true;
+      const result = this.summary.getResultSnapshot();
+      uwindow = {
+        u: result["ventana" + this.toTitleCase(this.location) + "UV"],
+        cumple: result["ventana" + this.toTitleCase(this.location) + "Cumplimiento"]
+      }
+    } else {
+      const uwindow$ = this.service.postUWindow({
+        zona: this.uwindow["zona"],
+        u: material["u"],
+      })
+      uwindow = await lastValueFrom(uwindow$);
+    }
+
     this.setUValue(uwindow["u"]);
     // this.setCumplimiento(uwindow["cumple"]);
 
@@ -145,9 +155,13 @@ export class VentanasComponent implements OnInit {
     }
   }
 
-  async onChangeArea(area: number) {
+  async onChangeArea(area: number, wwr?: number) {
     this.wwrInput.area = Number(area);
-    await this.changeWWR();
+    if (wwr) {
+      this.wwr = wwr;
+    } else {
+      await this.changeWWR();
+    }
 
     this.summaryObject.area = Number(area);
     this.summaryObject.wwr = this.wwr;

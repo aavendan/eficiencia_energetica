@@ -19,6 +19,8 @@ export class TechoComponent implements OnInit {
   roofMaterials: any[] = [];
   loadingProject: boolean = false;
   isSavedProject: boolean = false;
+  loadedCalculated: boolean = false;
+
   fistChange: boolean = true;
 
 
@@ -62,8 +64,8 @@ export class TechoComponent implements OnInit {
           await this.addRowLayerCeiling(Techo[id].nombre);
           const espesorRef = document.getElementById("inputTechoEspesor" + id) as HTMLInputElement;
           espesorRef.setAttribute("value", Techo[id].espesor || 0);
-          this.onChangeEspesor();
         }
+        this.onChangeEspesor();
 
         loading$.unsubscribe();
         this.loadingProject = false;
@@ -90,8 +92,9 @@ export class TechoComponent implements OnInit {
     const selectrAbsortancia = document.getElementById("inputTechoAbsortancia"+id) as HTMLInputElement | null
     selectrAbsortancia.value = material["a"]
 
-    this.onChangeEspesor();
-
+    if (!this.isSavedProject || this.loadedCalculated) {
+      this.onChangeEspesor();
+    }
   }
 
   onChangeEspesor() {
@@ -140,6 +143,17 @@ export class TechoComponent implements OnInit {
     });
 
     this.replaceData("Techo", summaryObject);
+
+    if (this.isSavedProject && !this.loadedCalculated) {
+      this.loadedCalculated = true;
+      const result = this.summary.getResultSnapshot();
+      const uv = result["techoUV"];
+      const cumplimiento = result["techoCumplimiento"];
+
+      this.setUValue(uv);
+      this.setCumplimiento(cumplimiento);
+      return;
+    }
 
     if (values.length > 0) {
       this.uceiling["capas"] = values;

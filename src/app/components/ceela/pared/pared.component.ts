@@ -18,6 +18,7 @@ export class ParedComponent implements OnInit {
   wallMaterials: any[] = [];
   uwall: any;
   loadingProject: boolean = false;
+  loadedCalculated: boolean = false;
   isSavedProject: boolean = false;
   fistChange: boolean = true;
 
@@ -38,7 +39,6 @@ export class ParedComponent implements OnInit {
         "zona": result["selectorZona"]
       }
     })
-
   }
 
   async loadWallMaterials() {
@@ -87,7 +87,9 @@ export class ParedComponent implements OnInit {
     let selectrCalor = document.getElementById("inputParedCalor" + this.toTitleCase(location) + id) as HTMLInputElement | null
     selectrCalor.value = material["c"]
 
-    this.onChangeEspesor();
+    if (!this.isSavedProject || this.loadedCalculated) {
+      this.onChangeEspesor();
+    }
   }
 
   onChangeEspesor() {
@@ -146,10 +148,20 @@ export class ParedComponent implements OnInit {
 
     this.replaceDataObject("Pared", this.location, summaryObject);
 
+    if (this.isSavedProject && !this.loadedCalculated) {
+      this.loadedCalculated = true;
+      const result = this.summary.getResultSnapshot();
+      const uv = result["pared" + this.toTitleCase(this.location) + "UV"];
+      const cumplimiento = result["pared" + this.toTitleCase(this.location) + "Cumplimiento"];
+
+      this.setUValue(uv);
+      this.setCumplimiento(cumplimiento);
+      return;
+    }
+
     if (values.length > 0) {
 
       this.uwall["capas"] = values;
-
       this.service.postUWall(this.uwall).subscribe(uWallResult => {
         this.setUValue(uWallResult["u"]);
         this.setCumplimiento(uWallResult["cumple"]);
