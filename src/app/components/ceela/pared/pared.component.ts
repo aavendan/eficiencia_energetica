@@ -4,6 +4,7 @@ import { SummaryService } from "../../../provider/summary.service";
 
 import Selectr from "mobius1-selectr";
 import { lastValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pared',
@@ -17,11 +18,14 @@ export class ParedComponent implements OnInit {
   wallMaterials: any[] = [];
   uwall: any;
   loadingProject: boolean = false;
+  loadedCalculated: boolean = false;
+  isSavedProject: boolean = false;
+  fistChange: boolean = true;
 
   @Input() location: string;
   
 
-  constructor(private service: DataService, private summary: SummaryService) { }
+  constructor(private service: DataService, private summary: SummaryService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -35,12 +39,10 @@ export class ParedComponent implements OnInit {
         "zona": result["selectorZona"]
       }
     })
-
   }
 
   async loadWallMaterials() {
-    const response = await lastValueFrom(this.service.getWallMaterials()) as any[];
-    this.wallMaterials = response;
+    this.wallMaterials = await this.service.getWallMaterialsAsync();
   }
 
   fillInputOnLoad() {
@@ -53,6 +55,7 @@ export class ParedComponent implements OnInit {
         } = this.summary.getResultSnapshot();
         if (!capas) return;
         this.loadingProject = true;
+        this.isSavedProject = true;
 
         if (!this.wallMaterials.length) {
           await this.loadWallMaterials();
@@ -61,6 +64,7 @@ export class ParedComponent implements OnInit {
           await this.addRowLayerWall(capas[id].nombre);
           const espesorRef = document.getElementById("inputParedEspesor" + this.toTitleCase(this.location) + id) as HTMLInputElement;
           espesorRef.setAttribute("value", capas[id].espesor || 0);
+          this.onChangeEspesor();
         }
         loading$.unsubscribe();
         this.loadingProject = false;
@@ -69,18 +73,23 @@ export class ParedComponent implements OnInit {
   }
 
   onChange(location: string, id: string, materialId: string) {
-    this.service.getWallMaterialsId(materialId).subscribe((response) => {
-      let selectrConductividad = document.getElementById("inputParedConductividad" + this.toTitleCase(location) + id) as HTMLInputElement | null
-      selectrConductividad.value = response["k"]
+    if (this.fistChange && this.isSavedProject) {
+      this.fistChange = false;
+      return;
+    }
+    const material = this.wallMaterials.find(material => material.id == materialId);
+    let selectrConductividad = document.getElementById("inputParedConductividad" + this.toTitleCase(location) + id) as HTMLInputElement | null
+    selectrConductividad.value = material["k"]
 
-      let selectrDensidad = document.getElementById("inputParedDensidad" + this.toTitleCase(location) + id) as HTMLInputElement | null
-      selectrDensidad.value = response["d"]
+    let selectrDensidad = document.getElementById("inputParedDensidad" + this.toTitleCase(location) + id) as HTMLInputElement | null
+    selectrDensidad.value = material["d"]
 
-      let selectrCalor = document.getElementById("inputParedCalor" + this.toTitleCase(location) + id) as HTMLInputElement | null
-      selectrCalor.value = response["c"]
+    let selectrCalor = document.getElementById("inputParedCalor" + this.toTitleCase(location) + id) as HTMLInputElement | null
+    selectrCalor.value = material["c"]
 
+    if (!this.isSavedProject || this.loadedCalculated) {
       this.onChangeEspesor();
-    })
+    }
   }
 
   onChangeEspesor() {
@@ -139,10 +148,20 @@ export class ParedComponent implements OnInit {
 
     this.replaceDataObject("Pared", this.location, summaryObject);
 
+    if (this.isSavedProject && !this.loadedCalculated) {
+      this.loadedCalculated = true;
+      const result = this.summary.getResultSnapshot();
+      const uv = result["pared" + this.toTitleCase(this.location) + "UV"];
+      const cumplimiento = result["pared" + this.toTitleCase(this.location) + "Cumplimiento"];
+
+      this.setUValue(uv);
+      this.setCumplimiento(cumplimiento);
+      return;
+    }
+
     if (values.length > 0) {
 
       this.uwall["capas"] = values;
-
       this.service.postUWall(this.uwall).subscribe(uWallResult => {
         this.setUValue(uWallResult["u"]);
         this.setCumplimiento(uWallResult["cumple"]);

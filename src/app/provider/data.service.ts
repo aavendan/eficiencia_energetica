@@ -33,6 +33,10 @@ export class DataService {
 
   cache: any = {};
 
+  wallMaterialsPromise: Promise<any>;
+  windowMaterialsPromise: Promise<any>;
+  roofMaterialsPromise: Promise<any>;
+
   constructor(private http: HttpClient) { }
 
   getCities(): Observable<any> {
@@ -51,6 +55,14 @@ export class DataService {
     return this.http.get(this.URL_WALL_MATERIALS);
   }
 
+  getWallMaterialsAsync() {
+    if (this.wallMaterialsPromise) {
+      return this.wallMaterialsPromise;
+    }
+    this.wallMaterialsPromise = lastValueFrom(this.getWallMaterials());
+    return this.wallMaterialsPromise;
+  }
+
   getWallMaterialsId(id: string) {
     return this.http.get(this.URL_WALL_MATERIALS_ID + id);
   }
@@ -59,12 +71,28 @@ export class DataService {
     return this.http.get(this.URL_WINDOW_MATERIALS);
   }
 
+  getWindowMaterialsAsync() {
+    if (this.windowMaterialsPromise) {
+      return this.windowMaterialsPromise;
+    }
+    this.windowMaterialsPromise = lastValueFrom(this.getWindowMaterials());
+    return this.windowMaterialsPromise;
+  }
+
   getWindowMaterialsId(id: string) {
     return this.http.get(this.URL_WINDOW_MATERIALS_ID + id);
   }
 
   getRoofMaterials() {
     return this.http.get(this.URL_ROOF_MATERIALS);
+  }
+
+  getRoofMaterialsAsync() {
+    if (this.roofMaterialsPromise) {
+      return this.roofMaterialsPromise;
+    }
+    this.roofMaterialsPromise = lastValueFrom(this.getRoofMaterials());
+    return this.roofMaterialsPromise;
   }
 
   getRoofMaterialsId(id: string) {

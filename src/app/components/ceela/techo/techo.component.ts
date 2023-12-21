@@ -18,6 +18,11 @@ export class TechoComponent implements OnInit {
   layers = []
   roofMaterials: any[] = [];
   loadingProject: boolean = false;
+  isSavedProject: boolean = false;
+  loadedCalculated: boolean = false;
+
+  fistChange: boolean = true;
+
 
   uceiling: any;
   ceiling: any = {};
@@ -40,8 +45,7 @@ export class TechoComponent implements OnInit {
   }
 
   async loadRoofMaterials() {
-    const response:any = await lastValueFrom(this.service.getRoofMaterials());
-    this.roofMaterials = response;
+    this.roofMaterials = await this.service.getRoofMaterialsAsync();
   }
 
   fillInputOnLoad() {
@@ -51,6 +55,7 @@ export class TechoComponent implements OnInit {
         const { Techo } = this.summary.getResultSnapshot();
         if (!Techo ) return;
         this.loadingProject = true;
+        this.isSavedProject = true;
 
         if (!this.roofMaterials.length) {
           await this.loadRoofMaterials();
@@ -60,6 +65,7 @@ export class TechoComponent implements OnInit {
           const espesorRef = document.getElementById("inputTechoEspesor" + id) as HTMLInputElement;
           espesorRef.setAttribute("value", Techo[id].espesor || 0);
         }
+        this.onChangeEspesor();
 
         loading$.unsubscribe();
         this.loadingProject = false;
@@ -68,25 +74,27 @@ export class TechoComponent implements OnInit {
   }
 
   onChange(id: string, materialId: string) {
+    if (this.fistChange && this.isSavedProject) {
+      this.fistChange = false;
+      return;
+    }
+    const material = this.roofMaterials.find(material => material.id == materialId);
 
-    this.service.getRoofMaterialsId(materialId).subscribe((response) => {
+    const selectrConductividad = document.getElementById("inputTechoConductividad"+id) as HTMLInputElement | null
+    selectrConductividad.value = material["k"]
 
-      let selectrConductividad = document.getElementById("inputTechoConductividad"+id) as HTMLInputElement | null
-      selectrConductividad.value = response["k"]
+    const selectrDensidad = document.getElementById("inputTechoDensidad"+id) as HTMLInputElement | null
+    selectrDensidad.value = material["d"]
 
-      let selectrDensidad = document.getElementById("inputTechoDensidad"+id) as HTMLInputElement | null
-      selectrDensidad.value = response["d"]
+    const selectrCalor = document.getElementById("inputTechoCalor"+id) as HTMLInputElement | null
+    selectrCalor.value = material["c"]
 
-      let selectrCalor = document.getElementById("inputTechoCalor"+id) as HTMLInputElement | null
-      selectrCalor.value = response["c"]
+    const selectrAbsortancia = document.getElementById("inputTechoAbsortancia"+id) as HTMLInputElement | null
+    selectrAbsortancia.value = material["a"]
 
-      let selectrAbsortancia = document.getElementById("inputTechoAbsortancia"+id) as HTMLInputElement | null
-      selectrAbsortancia.value = response["a"]
-
+    if (!this.isSavedProject || this.loadedCalculated) {
       this.onChangeEspesor();
-
-    });
-
+    }
   }
 
   onChangeEspesor() {
@@ -135,6 +143,17 @@ export class TechoComponent implements OnInit {
     });
 
     this.replaceData("Techo", summaryObject);
+
+    if (this.isSavedProject && !this.loadedCalculated) {
+      this.loadedCalculated = true;
+      const result = this.summary.getResultSnapshot();
+      const uv = result["techoUV"];
+      const cumplimiento = result["techoCumplimiento"];
+
+      this.setUValue(uv);
+      this.setCumplimiento(cumplimiento);
+      return;
+    }
 
     if (values.length > 0) {
       this.uceiling["capas"] = values;

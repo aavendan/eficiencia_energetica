@@ -74,7 +74,10 @@ export class FormsComponentsComponent implements OnInit {
       return;
     }
     const project = {
-      input: this.buildSimulateInput(),
+      input: {
+        ...this.buildSimulateInput(),
+        Calculated: this.parseCalculatedValues(this.result)
+      },
       output: this.result?.simulationResult
     };
     await this.service.saveProjectAsync(projectName, project);
@@ -153,6 +156,24 @@ export class FormsComponentsComponent implements OnInit {
     return this.parseEmptyObject(result);
   }
 
+  parseCalculatedValues(source: any) {
+    const {
+      paredDerechaUV, paredIzquierdaUV, paredFrontalUV, paredPosteriorUV,
+      paredDerechaCumplimiento, paredIzquierdaCumplimiento, paredFrontalCumplimiento, paredPosteriorCumplimiento,
+      ventanaDerechaUV, ventanaIzquierdaUV, ventanaFrontalUV, ventanaPosteriorUV,
+      ventanaDerechaCumplimiento, ventanaIzquierdaCumplimiento, ventanaFrontalCumplimiento, ventanaPosteriorCumplimiento,
+      techoUV, techoCumplimiento, pisoUV, pisoCumplimiento,
+    } = source || {};
+
+    return {
+      paredDerechaUV, paredIzquierdaUV, paredFrontalUV, paredPosteriorUV,
+      paredDerechaCumplimiento, paredIzquierdaCumplimiento, paredFrontalCumplimiento, paredPosteriorCumplimiento,
+      ventanaDerechaUV, ventanaIzquierdaUV, ventanaFrontalUV, ventanaPosteriorUV,
+      ventanaDerechaCumplimiento, ventanaIzquierdaCumplimiento, ventanaFrontalCumplimiento, ventanaPosteriorCumplimiento,
+      techoUV, techoCumplimiento, pisoUV, pisoCumplimiento,
+    };
+  }
+
   parseEmptyObject(object: any) {
     for (const [key, value] of Object.entries(object || {})) {
       if (!value) {
@@ -211,7 +232,8 @@ export class FormsComponentsComponent implements OnInit {
       Techo,
       Piso,
       Ventana,
-      simulationResult: project.output
+      simulationResult: project.output,
+      ...this.parseCalculatedValues(project.input?.Calculated)
     };
   }
 }
