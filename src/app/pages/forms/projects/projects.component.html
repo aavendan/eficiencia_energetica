@@ -47,6 +47,14 @@
                     </label>
                   </div>
                 </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="d-flex justify-content-end px-4">
+                    <button
+                      class="btn btn-info"
+                      [routerLink]="['/eficiency/simulator']"
+                    >Nuevo proyecto</button>
+                  </div>
+                </div>
               </div>
               <div class="card m-4">
                 <ngx-datatable
@@ -90,6 +98,13 @@
                         (click)="viewProject(row)"
                       >
                         Ver
+                      </button>
+                      <button
+                        class="btn btn-danger btn-sm ml-2"
+                        type="button"
+                        (click)="deleteProject(row)"
+                      >
+                        Eliminar
                       </button>
                     </ng-template>
                   </ngx-datatable-column>

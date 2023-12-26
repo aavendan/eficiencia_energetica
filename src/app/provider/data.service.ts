@@ -145,4 +145,8 @@ export class DataService {
   async saveProjectAsync(name: string, value: any) {
     return lastValueFrom(this.http.put(this.URL_PROJECTS + name, value));
   }
+
+  async deleteProjectAsync(name: string) {
+    return lastValueFrom(this.http.delete(this.URL_PROJECTS + name));
+  }
 }

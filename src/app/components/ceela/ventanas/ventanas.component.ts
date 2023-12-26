@@ -26,6 +26,7 @@ export class VentanasComponent implements OnInit {
   isSavedProject: boolean = false;
   loadedUV: boolean = false;
   fistChange: boolean = true;
+  loading$ = null;
 
   constructor(private service: DataService, private summary: SummaryService, private router: Router) { }
 
@@ -61,12 +62,16 @@ export class VentanasComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.loading$?.unsubscribe();
+  }
+
   async loadWindowMaterials() {
     this.windowMaterials = await this.service.getWindowMaterialsAsync();
   }
 
   fillInputOnLoad() {
-    const loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
+    this.loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
       if (prevLoading && !loading) { // Project loaded
         const {
           Ventana: {
@@ -84,7 +89,7 @@ export class VentanasComponent implements OnInit {
         const espesorRef = document.getElementById("inputVentanaArea" + this.toTitleCase(this.location) ) as HTMLInputElement;
         espesorRef.setAttribute("value", info.area || 0);
         await this.onChangeArea(info.area, info.wwr);
-        loading$.unsubscribe();
+        this.loading$.unsubscribe();
       }
     });
   }
@@ -106,7 +111,7 @@ export class VentanasComponent implements OnInit {
       this.loadedUV = true;
       const result = this.summary.getResultSnapshot();
       uwindow = {
-        u: result["ventana" + this.toTitleCase(this.location) + "UV"],
+        u: +result["ventana" + this.toTitleCase(this.location) + "UV"],
         cumple: result["ventana" + this.toTitleCase(this.location) + "Cumplimiento"]
       }
     } else {

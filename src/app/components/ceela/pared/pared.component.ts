@@ -3,7 +3,6 @@ import { DataService } from "../../../provider/data.service";
 import { SummaryService } from "../../../provider/summary.service";
 
 import Selectr from "mobius1-selectr";
-import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,6 +20,7 @@ export class ParedComponent implements OnInit {
   loadedCalculated: boolean = false;
   isSavedProject: boolean = false;
   fistChange: boolean = true;
+  loading$ = null;
 
   @Input() location: string;
   
@@ -41,12 +41,16 @@ export class ParedComponent implements OnInit {
     })
   }
 
+  ngOnDestroy() {
+    this.loading$?.unsubscribe();
+  }
+
   async loadWallMaterials() {
     this.wallMaterials = await this.service.getWallMaterialsAsync();
   }
 
   fillInputOnLoad() {
-    const loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
+    this.loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
       if (prevLoading && !loading) { // Project loaded
         const {
           Pared: {
@@ -64,9 +68,9 @@ export class ParedComponent implements OnInit {
           await this.addRowLayerWall(capas[id].nombre);
           const espesorRef = document.getElementById("inputParedEspesor" + this.toTitleCase(this.location) + id) as HTMLInputElement;
           espesorRef.setAttribute("value", capas[id].espesor || 0);
-          this.onChangeEspesor();
         }
-        loading$.unsubscribe();
+        this.onChangeEspesor();
+        this.loading$.unsubscribe();
         this.loadingProject = false;
       }
     });

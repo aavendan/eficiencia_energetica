@@ -121,4 +121,9 @@ export class ProjectsComponent implements OnInit {
     // add project name on query params
     this.router.navigate(['/eficiency/simulator'], { queryParams: { name: project.name } });
   }
+
+  async deleteProject(project) {
+    await this.api.deleteProjectAsync(project.name);
+    this.projects = this.projects.filter(p => p.name != project.name);
+  }
 }

@@ -19,6 +19,7 @@ export class PisosComponent implements OnInit {
   isSavedProject: boolean = false;
   loadedCalculated: boolean = false;
   fistChange: boolean = true;
+  loading$ = null;
 
   ufloor: any;
   floor: any = {};
@@ -38,12 +39,16 @@ export class PisosComponent implements OnInit {
     })
   }
 
+  ngOnDestroy() {
+    this.loading$?.unsubscribe();
+  }
+
   async loadWallMaterials() {
     this.wallMaterials = await this.service.getWallMaterialsAsync();
   }
 
   fillInputOnLoad() {
-    const loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
+    this.loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
       if (prevLoading && !loading) { // Project loaded
         const { Piso } = this.summary.getResultSnapshot();
         if (!Piso) return;
@@ -59,7 +64,7 @@ export class PisosComponent implements OnInit {
           espesorRef.setAttribute("value", Piso[id].espesor || 0);
         }
         this.onChangeEspesor();
-        loading$.unsubscribe();
+        this.loading$.unsubscribe();
         this.loadingProject = false;
       }
     });

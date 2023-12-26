@@ -23,16 +23,13 @@ export class TechoComponent implements OnInit {
 
   fistChange: boolean = true;
 
-
+  loading$ = null;
   uceiling: any;
   ceiling: any = {};
 
   constructor(private service: DataService, private summary: SummaryService) { }
 
   ngOnInit(): void {
-
-    this.resetOutput();
-
     this.loadRoofMaterials();
     this.fillInputOnLoad();
     // U: preparing zona
@@ -44,12 +41,16 @@ export class TechoComponent implements OnInit {
     
   }
 
+  ngOnDestroy() {
+    this.loading$?.unsubscribe();
+  }
+
   async loadRoofMaterials() {
     this.roofMaterials = await this.service.getRoofMaterialsAsync();
   }
 
   fillInputOnLoad() {
-    const loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
+    this.loading$ = this.summary.getLoading().subscribe(async ([prevLoading, loading]) => {
       if (prevLoading && !loading) { // Project loaded
 
         const { Techo } = this.summary.getResultSnapshot();
@@ -60,6 +61,7 @@ export class TechoComponent implements OnInit {
         if (!this.roofMaterials.length) {
           await this.loadRoofMaterials();
         }
+        console.log("Techo", Techo);
         for(const id in Techo) {
           await this.addRowLayerCeiling(Techo[id].nombre);
           const espesorRef = document.getElementById("inputTechoEspesor" + id) as HTMLInputElement;
@@ -67,7 +69,7 @@ export class TechoComponent implements OnInit {
         }
         this.onChangeEspesor();
 
-        loading$.unsubscribe();
+        this.loading$.unsubscribe();
         this.loadingProject = false;
       }
     });
@@ -224,7 +226,7 @@ export class TechoComponent implements OnInit {
           value: objt.id,
           selected: objt.material === selectedValue
         }));
-
+        console.log("count", count + 1);
         setTimeout(() => { // wait to rerender u.u
           const selectId = document.getElementById("selectorTechoMaterial"+(count+1));
           new Selectr(selectId as any, { data });
