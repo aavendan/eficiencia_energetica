@@ -34,6 +34,7 @@ export class ProyectoComponent implements OnInit {
   ngOnInit(): void {
     this.loadCitiesAndZones();
     this.fillInputOnLoad();
+    this.addProjectNameListener();
   }
 
   fillInputOnLoad() {
@@ -125,5 +126,25 @@ export class ProyectoComponent implements OnInit {
   addData(id, value) {
     this.summary.replaceData(id, value);
   }
+  
+  addProjectNameListener() {
+    const projectName = document.getElementById("nombreProyecto");
+    projectName.addEventListener("keypress", this.removeKeys);
+  }
+
+  removeKeys(e) {
+    // just accept characters, spaces and number
+    const regex = new RegExp(/^[a-zA-Z0-9 ]+$/);
+    const key = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (!regex.test(key)) {
+      e.preventDefault();
+      return false;
+    }
+  }
+
+  onUnmounted() {
+    const projectNameInput = document.getElementById("nombreProyecto");
+    projectNameInput.removeEventListener("keypress", this.removeKeys);
+  };
 
 }
