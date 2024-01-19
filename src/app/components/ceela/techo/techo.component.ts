@@ -61,11 +61,12 @@ export class TechoComponent implements OnInit {
         if (!this.roofMaterials.length) {
           await this.loadRoofMaterials();
         }
-        console.log("Techo", Techo);
         for(const id in Techo) {
           await this.addRowLayerCeiling(Techo[id].nombre);
           const espesorRef = document.getElementById("inputTechoEspesor" + id) as HTMLInputElement;
           espesorRef.setAttribute("value", Techo[id].espesor || 0);
+          const absorbanciaRef = document.getElementById("inputTechoAbsortancia" + + id.toString()) as HTMLInputElement;
+          absorbanciaRef.value = Techo[id].absorcion || 0;
         }
         this.onChangeEspesor();
 
@@ -92,6 +93,7 @@ export class TechoComponent implements OnInit {
     selectrCalor.value = material["c"]
 
     const selectrAbsortancia = document.getElementById("inputTechoAbsortancia"+id) as HTMLInputElement | null
+    console.log("selectrAbsortancia", selectrAbsortancia.value)
     selectrAbsortancia.value = material["a"]
 
     if (!this.isSavedProject || this.loadedCalculated) {
