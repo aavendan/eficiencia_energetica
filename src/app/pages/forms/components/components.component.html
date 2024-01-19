@@ -218,3 +218,8 @@ https://fontawesome.com/v5/search -->
     </div>
   </div>
   <app-modal [isModalOpen]="isLoading" [isLoading]="true"></app-modal>
+  <app-modal
+    title="Error"
+    [isModalOpen]="!!error" [text]="error"
+    (closeModal)="error = null"
+  ></app-modal>

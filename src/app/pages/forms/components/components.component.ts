@@ -15,6 +15,7 @@ export class FormsComponentsComponent implements OnInit {
   energia: number = 0;
   result: any;
   isLoading: boolean = false;
+  error: string = "";
 
   constructor(
     private service: DataService,
@@ -62,7 +63,8 @@ export class FormsComponentsComponent implements OnInit {
       this.save();
       this.isLoading = false;
     }, error => {
-      window.alert(error.error);
+      this.error = error.error;
+      // window.alert(error.error);
       this.isLoading = false;
     })
   }

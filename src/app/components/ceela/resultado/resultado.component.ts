@@ -27,7 +27,8 @@ export class ResultadoComponent implements OnInit {
         result.ventanaLateralCumplimiento,
         result.puertaFrontalCumplimiento,
         result.pisoCumplimiento,
-        result.techoCumplimiento
+        result.techoCumplimiento,
+        result.techoSRICumplimiento,
       ];
       if (cumplimientos.includes("NO CUMPLE")) {
         this.generalAccomplishment = false;
