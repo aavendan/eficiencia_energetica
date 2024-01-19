@@ -162,7 +162,7 @@ export class FormsComponentsComponent implements OnInit {
       paredDerechaCumplimiento, paredIzquierdaCumplimiento, paredFrontalCumplimiento, paredPosteriorCumplimiento,
       ventanaDerechaUV, ventanaIzquierdaUV, ventanaFrontalUV, ventanaPosteriorUV,
       ventanaDerechaCumplimiento, ventanaIzquierdaCumplimiento, ventanaFrontalCumplimiento, ventanaPosteriorCumplimiento,
-      techoUV, techoCumplimiento, pisoUV, pisoCumplimiento,
+      techoUV, techoCumplimiento, techoSRI, techoSRICumplimiento, pisoUV, pisoCumplimiento,
     } = source || {};
 
     return {
@@ -170,7 +170,7 @@ export class FormsComponentsComponent implements OnInit {
       paredDerechaCumplimiento, paredIzquierdaCumplimiento, paredFrontalCumplimiento, paredPosteriorCumplimiento,
       ventanaDerechaUV, ventanaIzquierdaUV, ventanaFrontalUV, ventanaPosteriorUV,
       ventanaDerechaCumplimiento, ventanaIzquierdaCumplimiento, ventanaFrontalCumplimiento, ventanaPosteriorCumplimiento,
-      techoUV, techoCumplimiento, pisoUV, pisoCumplimiento,
+      techoUV, techoCumplimiento, techoSRI, techoSRICumplimiento, pisoUV, pisoCumplimiento,
     };
   }
 
