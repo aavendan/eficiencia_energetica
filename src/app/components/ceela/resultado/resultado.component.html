@@ -115,10 +115,16 @@
                                                 ></accomplishment>
                                             </td>
                                         </tr>
-                                        <!-- <tr>
-                                            <th>SRI</th><td>{{result?.techoSRI
-                                                ?? '0.0'}}</td>
-                                        </tr> -->
+                                        <tr>
+                                            <th>SRI</th><td>
+                                                {{
+                                                result?.techoSRI
+                                                ?? '0.0'}}
+                                                <accomplishment
+                                                [value]="result?.techoSRICumplimiento"
+                                            ></accomplishment>
+                                    </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

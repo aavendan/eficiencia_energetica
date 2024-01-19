@@ -20,7 +20,7 @@ export class TechoComponent implements OnInit {
   loadingProject: boolean = false;
   isSavedProject: boolean = false;
   loadedCalculated: boolean = false;
-
+  absSolarEditableLayer: number = -1;
   fistChange: boolean = true;
 
   loading$ = null;
@@ -105,6 +105,7 @@ export class TechoComponent implements OnInit {
 
     let values = [];
     const summaryObject = {};
+    this.absSolarEditableLayer = -1;
     this.layers.forEach(obj => {
 
       let id = obj.idx
@@ -124,7 +125,14 @@ export class TechoComponent implements OnInit {
       let absortanciaValue = parseFloat(absortanciaRef.value)
 
       if (espesorValue != 0 && conductividadValue != 0) {
-        values.push({ "e": espesorValue, "k": conductividadValue })
+        if (this.absSolarEditableLayer === -1) {
+          this.absSolarEditableLayer = id;
+        }
+        values.push({
+          "e": espesorValue,
+          "k": conductividadValue,
+          "a": absortanciaValue,
+        });
 
         /* Inicio */
         let valuesLocal = {
@@ -151,20 +159,33 @@ export class TechoComponent implements OnInit {
       const result = this.summary.getResultSnapshot();
       const uv = result["techoUV"];
       const cumplimiento = result["techoCumplimiento"];
+      const sri = result["techoSRI"] || 0;
+      const sriCumplimiento = result["techoSRICumplimiento"];
 
       this.setUValue(uv);
       this.setCumplimiento(cumplimiento);
+      this.setSRI(sri);
+      this.setSRICumplimiento(sriCumplimiento);
       return;
     }
 
     if (values.length > 0) {
       this.uceiling["capas"] = values;
-      this.service.postUCeiling(this.uceiling).subscribe(uCeilingResult => {
-        this.setUValue(uCeilingResult["u"])
-        this.setCumplimiento(uCeilingResult["cumple"])
+      this.service.postUCeiling(this.uceiling).subscribe((uCeilingResult: any) => {
+        console.log("uCeilingResult", uCeilingResult);
+        const {
+          u: { valor: uValue, cumple: uCumplimiento },
+          sri: { valor: sriValue, cumple: sriCumplimiento },
+        } = uCeilingResult;
+        this.setUValue(uValue);
+        this.setCumplimiento(uCumplimiento);
+        this.setSRI(sriValue || 0);
+        this.setSRICumplimiento(sriCumplimiento);
       });
     }
   }
+
+  onChangeAbsortancia() {}
 
   setUValue(u:number) {
     const nodeId = "techoUV";
@@ -200,6 +221,24 @@ export class TechoComponent implements OnInit {
     this.replaceData(nodeId, value);
   }
 
+  setSRICumplimiento(cumplimiento: string) {
+    const nodeId = "techoSRICumplimiento";
+    this.replaceData(nodeId, cumplimiento);
+
+    const nodeCumplimiento = document.getElementById(nodeId) as HTMLElement | null;
+    nodeCumplimiento.textContent = cumplimiento;
+    if (cumplimiento == "CUMPLE") {
+      nodeCumplimiento.classList.replace("badge-default","badge-success")
+      nodeCumplimiento.classList.replace("badge-danger","badge-success")
+    } else if (cumplimiento == "NO CUMPLE") {
+      nodeCumplimiento.classList.replace("badge-default","badge-danger")
+      nodeCumplimiento.classList.replace("badge-success","badge-danger")
+    } else { // Sin Valor
+      nodeCumplimiento.classList.replace("badge-success","badge-default")
+      nodeCumplimiento.classList.replace("badge-danger","badge-default")
+    }
+  }
+
   replaceData(id, value) {
     if (this.loadingProject) return;
     this.summary.replaceData(id, value);
@@ -212,8 +251,9 @@ export class TechoComponent implements OnInit {
 
   resetOutput() {
     this.setUValue(0);
-    // this.setSRI(0);
+    this.setSRI(0);
     this.setCumplimiento("SIN VALOR");
+    this.setSRICumplimiento("SIN VALOR");
   }
   addRowLayerCeiling(selectedValue?) {
     return new Promise<void>((resolve, reject) => {
