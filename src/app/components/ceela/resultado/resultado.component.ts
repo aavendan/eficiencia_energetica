@@ -14,6 +14,7 @@ export class ResultadoComponent implements OnInit {
   generalAccomplishment: boolean;
   subscription: Subscription;
   error: string = '';
+  imgProject: string = 'assets/img/formReferences/3.4VentanasGeneral.jpg';
   @Input() simulation: any;
 
   constructor(private summary: SummaryService, private api: DataService) {
@@ -39,6 +40,14 @@ export class ResultadoComponent implements OnInit {
       } else { 
         this.generalAccomplishment = null;
       }
+      console.log("inputTipo", result.inputTipo);
+      const imageMap = {
+        "Vivienda de una planta": 'assets/img/formReferences/2.1TipoVivienda01.jpg',
+        "Vivienda de dos plantas": 'assets/img/formReferences/2.1TipoVivienda02.jpg',
+        "Vivienda en altura": 'assets/img/formReferences/2.1TipoVivienda03.jpg',
+      };
+      console.log("Aaa", imageMap[result.inputTipo])
+      this.imgProject = imageMap[result.inputTipo] || this.imgProject;
     });
   }
 
