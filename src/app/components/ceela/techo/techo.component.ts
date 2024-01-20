@@ -77,12 +77,7 @@ export class TechoComponent implements OnInit {
   }
 
   onChange(id: string, materialId: string) {
-    if (this.fistChange && this.isSavedProject) {
-      this.fistChange = false;
-      return;
-    }
     const material = this.roofMaterials.find(material => material.id == materialId);
-
     const selectrConductividad = document.getElementById("inputTechoConductividad"+id) as HTMLInputElement | null
     selectrConductividad.value = material["k"]
 
@@ -91,6 +86,11 @@ export class TechoComponent implements OnInit {
 
     const selectrCalor = document.getElementById("inputTechoCalor"+id) as HTMLInputElement | null
     selectrCalor.value = material["c"]
+
+    if (this.fistChange && this.isSavedProject) {
+      this.fistChange = false;
+      return;
+    }
 
     const selectrAbsortancia = document.getElementById("inputTechoAbsortancia"+id) as HTMLInputElement | null
     selectrAbsortancia.value = material["a"]
@@ -216,6 +216,7 @@ export class TechoComponent implements OnInit {
   setSRI(sri:number) {
     const nodeId = "techoSRI";
     const nodeSRI = document.getElementById(nodeId) as HTMLElement | null;
+    nodeSRI.parentElement.classList.remove("d-none");
     const value = parseFloat(sri.toString()).toFixed(2);
     nodeSRI.textContent = "SRI: " + value + " [-]";
     this.replaceData(nodeId, value);
