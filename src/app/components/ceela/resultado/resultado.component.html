@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-xl-8">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -107,19 +107,24 @@
                                         </tr>
                                         <tr>
                                             <th>Valor U</th>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{result?.techoUV
                                                 ?? '0.0'}} [W/m2-K]
+                                                </span>
                                                 <accomplishment
                                                     [value]="result?.techoCumplimiento"
                                                 ></accomplishment>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>SRI</th><td>
+                                            <th>SRI</th>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{
                                                 result?.techoSRI
-                                                ?? '0.0'}}
+                                                ?? '0.0'}} [-]
+                                                </span>
                                                 <accomplishment
                                                 [value]="result?.techoSRICumplimiento"
                                             ></accomplishment>
@@ -137,8 +142,10 @@
                                         </tr>
                                         <tr>
                                             <th>Valor U</th>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{result?.pisoUV ?? '0.0'}} [W/m2-K]
+                                                </span>
                                                 <accomplishment
                                                     [value]="result?.pisoCumplimiento"
                                                 ></accomplishment>
@@ -156,9 +163,11 @@
                                         </tr>
                                         <tr>
                                             <th>Frontal / Valor U</th>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{result?.ventanaFrontalUV ??
                                                 '0.0'}} [W/m2-K]
+                                                </span>
                                                 <accomplishment
                                                     [value]="result?.ventanaFrontalCumplimiento"
                                                 ></accomplishment>
@@ -166,9 +175,11 @@
                                         </tr>
                                         <tr>
                                             <th>Posterior / Valor U</th>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{result?.ventanaPosteriorUV ??
                                                 '0.0'}} [W/m2-K]
+                                                </span>
                                                 <accomplishment
                                                     [value]="result?.ventanaPosteriorCumplimiento"
                                                 ></accomplishment>
@@ -176,9 +187,11 @@
                                         </tr>
                                         <tr>
                                             <th>Izquierda / Valor U</th>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{result?.ventanaIzquierdaUV ??
                                                 '0.0'}} [W/m2-K]
+                                                </span>
                                                 <accomplishment
                                                     [value]="result?.ventanaIzquierdaCumplimiento"
                                                 ></accomplishment>
@@ -186,9 +199,11 @@
                                         </tr>
                                         <tr>
                                             <th>Derecha / Valor U</th>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{result?.ventanaDerechaUV ??
                                                 '0.0'}} [W/m2-K]
+                                                </span>
                                                 <accomplishment
                                                     [value]="result?.ventanaDerechaCumplimiento"
                                                 ></accomplishment>
@@ -206,9 +221,11 @@
                                         </tr>
                                         <tr>
                                             <th>Frontal / Valor U</th>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{result?.paredFrontalUV ??
                                                 '0.0'}} [W/m2-K]
+                                                </span>
                                                 <accomplishment
                                                     [value]="result?.paredFrontalCumplimiento"
                                                 ></accomplishment>
@@ -216,9 +233,11 @@
                                         </tr>
                                         <tr>
                                             <th>Posterior / Valor U</th>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{result?.paredPosteriorUV ??
                                                 '0.0'}} [W/m2-K]
+                                                </span>
                                                 <accomplishment
                                                     [value]="result?.paredPosteriorCumplimiento"
                                                 ></accomplishment>
@@ -226,9 +245,11 @@
                                         </tr>
                                         <tr>
                                             <th>Izquierda / Valor U</th>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{result?.paredIzquierdaUV ??
                                                 '0.0'}} [W/m2-K]
+                                                </span>
                                                 <accomplishment
                                                     [value]="result?.paredIzquierdaCumplimiento"
                                                 ></accomplishment>
@@ -236,9 +257,11 @@
                                         </tr>
                                         <tr>
                                             <th>Derecha / Valor U</th>
-                                            <td>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
                                                 {{result?.paredDerechaUV ??
                                                 '0.0'}} [W/m2-K]
+                                                </span>
                                                 <accomplishment
                                                     [value]="result?.paredDerechaCumplimiento"
                                                 ></accomplishment>
@@ -253,7 +276,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-xl-4">
         <div class="card">
             <div class="card-header pb-0 border-0">
                 <h5 class="h4 card-title mb-4">Resultados del proyecto</h5>
@@ -305,7 +328,7 @@
                                 de mejora en desempeño energético respecto a la práctica de construcción usual
                             </li>
                             
-                            <li class="list-group-item">
+                            <li class="list-group-item hide-print">
                                 <div
                                     class="btn btn-default btn-block"
                                     (click)="printResult()"

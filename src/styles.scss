@@ -83,6 +83,10 @@ tr.borderLess {
     box-shadow: none !important;
 }
 
+.nav {
+    row-gap: 8px;
+}
+
 @media print {
     /* Estilos para la impresión */
     body * {
@@ -99,5 +103,8 @@ tr.borderLess {
     #contenidoImprimir img,
     #contenidoImprimir li:has(button) {
         display: none;
+    }
+    .hide-print {
+        display: none !important;
     }
 }

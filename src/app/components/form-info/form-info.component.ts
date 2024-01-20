@@ -24,7 +24,7 @@ export class FormInfoComponent implements OnInit {
     paragraphs
       .filter(p => p.trim())
       .forEach(p => {
-        this.parsedDescription += `<p>${p.trim()}</p>`;
+        this.parsedDescription += `<p class="text-left">${p.trim()}</p>`;
       });
   }
 
