@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/provider/data.service';
 import { SummaryService } from "../../../provider/summary.service";
 
 @Component({
@@ -12,9 +13,10 @@ export class ResultadoComponent implements OnInit {
   result: any;
   generalAccomplishment: boolean;
   subscription: Subscription;
+  error: string = '';
   @Input() simulation: any;
 
-  constructor(private summary: SummaryService) {
+  constructor(private summary: SummaryService, private api: DataService) {
     this.summary.getResult().subscribe(result => { 
       this.result = result; 
       const cumplimientos = [
@@ -47,4 +49,11 @@ export class ResultadoComponent implements OnInit {
     window.print();
   }
 
+  async download() {
+    try {
+      await this.api.downloadProject(this.result.nombreProyecto);
+    } catch (error) {
+      this.error = error.message;
+    }
+  }
 }

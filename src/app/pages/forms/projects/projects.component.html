@@ -92,20 +92,29 @@
                     [sortable]="false"
                   >
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                      <button
-                        class="btn btn-info btn-sm ml-4"
-                        type="button"
-                        (click)="viewProject(row)"
-                      >
-                        Ver
-                      </button>
-                      <button
-                        class="btn btn-danger btn-sm ml-2"
-                        type="button"
-                        (click)="deleteProject(row)"
-                      >
-                        Eliminar
-                      </button>
+                      <div class="d-flex justify-content-center" style="flex-wrap: wrap; row-gap: 8px;">
+                        <button
+                          class="btn btn-info btn-sm ml-4"
+                          type="button"
+                          (click)="viewProject(row)"
+                        >
+                          Ver
+                        </button>
+                        <button
+                          class="btn btn-danger btn-sm ml-2"
+                          type="button"
+                          (click)="deleteProject(row)"
+                        >
+                          Eliminar
+                        </button>
+                        <button
+                          class="btn btn-secondary btn-sm ml-2"
+                          type="button"
+                          (click)="downloadProject(row)"
+                        >
+                          Descargar
+                        </button>
+                      </div>
                     </ng-template>
                   </ngx-datatable-column>
                 </ngx-datatable>
@@ -117,3 +126,8 @@
     </div>
   </div>
 </div>
+<app-modal
+  title="Error"
+  [isModalOpen]="!!error" [text]="error"
+  (closeModal)="error = null"
+></app-modal>

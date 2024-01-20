@@ -41,6 +41,8 @@ export class FormsComponentsComponent implements OnInit {
     const projectName = this.router.parseUrl(this.router.url).queryParams["name"];
     if (projectName) {
       this.loadProject(projectName);
+    } else {
+      this.summary.clearMessages();
     }
   }
 

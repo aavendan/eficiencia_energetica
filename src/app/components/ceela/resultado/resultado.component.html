@@ -307,12 +307,16 @@
                             
                             <li class="list-group-item">
                                 <div
-                                    class="btn btn-default"
+                                    class="btn btn-default btn-block"
                                     (click)="printResult()"
                                     style="cursor: pointer;"
                                 >Imprimir resultado</div>
+                                <div
+                                    class="btn btn-secondary btn-block mt-3"
+                                    (click)="download()"
+                                    style="cursor: pointer;"
+                                >Descargar</div>
                             </li>
-
                         </ul>
                     </div>
                 </div>
@@ -320,3 +324,8 @@
         </div>
     </div>
 </div>
+<app-modal
+    title="Error"
+    [isModalOpen]="!!error" [text]="error"
+    (closeModal)="error = null"
+></app-modal>

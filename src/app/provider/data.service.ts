@@ -28,6 +28,7 @@ export class DataService {
   URL_UWINDOW = this.IP + "/uventana";
   URL_WWR = this.IP + "/wwr";
   URL_PROJECTS = this.IP + "/projects/";
+  URL_DOWNLOAD_PROJECTS = this.IP + "/projects/download/";
 
   URL_SIMULATOR = this.IP + "/simulacion"
 
@@ -148,5 +149,23 @@ export class DataService {
 
   async deleteProjectAsync(name: string) {
     return lastValueFrom(this.http.delete(this.URL_PROJECTS + name));
+  }
+
+  async downloadProject(name: string) {
+    try {
+      const file = await lastValueFrom(this.http.get(this.URL_DOWNLOAD_PROJECTS + name, { responseType: 'blob' }));
+      const url = window.URL.createObjectURL(file);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = name + '.zip';
+      link.click();
+    } catch (error) {
+      if (error.error instanceof Blob) {
+        const message = await error.error.text();
+        const parsedMessage = JSON.parse(message);
+        throw new Error(parsedMessage);
+      }
+      throw error;
+    }
   }
 }

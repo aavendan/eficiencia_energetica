@@ -93,7 +93,6 @@ export class TechoComponent implements OnInit {
     selectrCalor.value = material["c"]
 
     const selectrAbsortancia = document.getElementById("inputTechoAbsortancia"+id) as HTMLInputElement | null
-    console.log("selectrAbsortancia", selectrAbsortancia.value)
     selectrAbsortancia.value = material["a"]
 
     if (!this.isSavedProject || this.loadedCalculated) {
@@ -174,7 +173,6 @@ export class TechoComponent implements OnInit {
     if (values.length > 0) {
       this.uceiling["capas"] = values;
       this.service.postUCeiling(this.uceiling).subscribe((uCeilingResult: any) => {
-        console.log("uCeilingResult", uCeilingResult);
         const {
           u: { valor: uValue, cumple: uCumplimiento },
           sri: { valor: sriValue, cumple: sriCumplimiento },
@@ -268,7 +266,6 @@ export class TechoComponent implements OnInit {
           value: objt.id,
           selected: objt.material === selectedValue
         }));
-        console.log("count", count + 1);
         setTimeout(() => { // wait to rerender u.u
           const selectId = document.getElementById("selectorTechoMaterial"+(count+1));
           new Selectr(selectId as any, { data });
