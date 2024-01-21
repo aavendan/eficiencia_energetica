@@ -113,7 +113,7 @@ export class VentanasComponent implements OnInit {
         u: +result["ventana" + this.toTitleCase(this.location) + "UV"],
         cumple: result["ventana" + this.toTitleCase(this.location) + "Cumplimiento"]
       }
-      sghcCumplimiento = result["ventana"+this.toTitleCase(this.location)+"SGCHCumplimiento"];
+      sghcCumplimiento = result["ventana"+this.toTitleCase(this.location)+"SHGCCumplimiento"];
     } else {
       const uwindow$ = this.service.postUWindow({
         zona: this.uwindow["zona"],
