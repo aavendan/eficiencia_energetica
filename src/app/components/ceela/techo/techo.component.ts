@@ -167,11 +167,20 @@ export class TechoComponent implements OnInit {
       this.setCumplimiento(cumplimiento);
       this.setSRI(sri);
       this.setSRICumplimiento(sriCumplimiento);
+      if (sri) {
+        const { Techo } = result;
+        if (Techo["1"]) {
+          const {absorcion, k} = Techo["1"];
+          this.setSRIInfoMessage(absorcion, k);
+        }
+      }
       return;
     }
 
     if (values.length > 0) {
       this.uceiling["capas"] = values;
+      const [{k, a}] = values;
+      this.setSRIInfoMessage(a, k);
       this.service.postUCeiling(this.uceiling).subscribe((uCeilingResult: any) => {
         const {
           u: { valor: uValue, cumple: uCumplimiento },
@@ -182,6 +191,8 @@ export class TechoComponent implements OnInit {
         this.setSRI(sriValue || 0);
         this.setSRICumplimiento(sriCumplimiento);
       });
+    } else {
+      this.setSRIInfoMessage();
     }
   }
 
@@ -220,6 +231,18 @@ export class TechoComponent implements OnInit {
     const value = parseFloat(sri.toString()).toFixed(2);
     nodeSRI.textContent = "SRI: " + value + " [-]";
     this.replaceData(nodeId, value);
+  }
+
+  setSRIInfoMessage(a?, k?) {
+    const nodeId = "form-info-SRI";
+    const infoNode = document.getElementById(nodeId);
+    let message; 
+    if (!a || !k) {
+      message = "El valor de SRI es calculado considerando la emisividad superficial y el coeficiente convectivo sobre la superficie";
+    } else {
+      message = `El valor de SRI es calculado considerando una emisividad superficial de ${a || "0.0"} y un coeficiente convectivo sobre la superficie de ${k || "0.0"} W/m2-K`;
+    }
+    infoNode.innerHTML = `<p class="text-left">${message}</p>`;
   }
 
   setSRICumplimiento(cumplimiento: string) {

@@ -30,6 +30,7 @@ export class FormInfoComponent implements OnInit {
 
   openModal($event: Event) {
     $event.preventDefault();
+    $event.stopPropagation();
     this.isModalOpen = true;
     document.body.classList.add('modal-open');
     setTimeout(() => this.isFadeShow = true, 100);

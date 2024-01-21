@@ -32,7 +32,8 @@
           <img class="card-img-top mb-3" [src]="image">
         </div>
         <div
-          *ngIf="parseDescription"
+          [id]="'form-info-' + title"
+          *ngIf="parsedDescription"
           [innerHTML]="parsedDescription"
         ></div>
       </div>
