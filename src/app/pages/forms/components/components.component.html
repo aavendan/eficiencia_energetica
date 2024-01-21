@@ -194,11 +194,14 @@ https://fontawesome.com/v5/search -->
                           <span class="col-2">Fachada {{ location | titlecase }}</span>
                           <span class="col-2 offset-4 text-right"
                             id="ventana{{location | titlecase}}UV"></span>
+                          <span class="col-1 text-left d-flex align-items-center"> 
+                            <span id="ventana{{location | titlecase}}Cumplimiento" class="badge badge-default"></span>
+                          </span>
                           <span class="col-2 text-right"
                             id="ventana{{location | titlecase}}SHGC"></span>
-                            <span class="col-2 text-right"> 
-                              <span id="ventana{{location | titlecase}}Cumplimiento" class="badge badge-default"></span>
-                            </span>
+                          <span class="col-1 text-left d-flex align-items-center"> 
+                            <span id="ventana{{location | titlecase}}SHGCCumplimiento" class="badge badge-default"></span>
+                          </span>
                         </h5>
                         <app-ventana [location]="location"></app-ventana>
                       </accordion-group>

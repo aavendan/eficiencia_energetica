@@ -174,6 +174,18 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <th>Frontal / SHGC</th>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
+                                                {{result?.ventanaFrontalSHGC ??
+                                                '0.0'}} [-]
+                                                </span>
+                                                <accomplishment
+                                                    [value]="result?.ventanaFrontalSHGCCumplimiento"
+                                                ></accomplishment>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <th>Posterior / Valor U</th>
                                             <td class="d-flex justify-content-between">
                                                 <span>
@@ -182,6 +194,18 @@
                                                 </span>
                                                 <accomplishment
                                                     [value]="result?.ventanaPosteriorCumplimiento"
+                                                ></accomplishment>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Posterior / SHGC</th>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
+                                                {{result?.ventanaPosteriorSHGC ??
+                                                '0.0'}} [-]
+                                                </span>
+                                                <accomplishment
+                                                    [value]="result?.ventanaPosteriorSHGCCumplimiento"
                                                 ></accomplishment>
                                             </td>
                                         </tr>
@@ -198,6 +222,18 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <th>Izquierda / SHGC</th>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
+                                                {{result?.ventanaIzquierdaSHGC ??
+                                                '0.0'}} [-]
+                                                </span>
+                                                <accomplishment
+                                                    [value]="result?.ventanaIzquierdaSHGCCumplimiento"
+                                                ></accomplishment>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <th>Derecha / Valor U</th>
                                             <td class="d-flex justify-content-between">
                                                 <span>
@@ -206,6 +242,18 @@
                                                 </span>
                                                 <accomplishment
                                                     [value]="result?.ventanaDerechaCumplimiento"
+                                                ></accomplishment>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Derecha / SHGC</th>
+                                            <td class="d-flex justify-content-between">
+                                                <span>
+                                                {{result?.ventanaDerechaSHGC ??
+                                                '0.0'}} [-]
+                                                </span>
+                                                <accomplishment
+                                                    [value]="result?.ventanaDerechaSHGCCumplimiento"
                                                 ></accomplishment>
                                             </td>
                                         </tr>

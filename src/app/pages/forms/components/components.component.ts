@@ -166,6 +166,8 @@ export class FormsComponentsComponent implements OnInit {
       paredDerechaCumplimiento, paredIzquierdaCumplimiento, paredFrontalCumplimiento, paredPosteriorCumplimiento,
       ventanaDerechaUV, ventanaIzquierdaUV, ventanaFrontalUV, ventanaPosteriorUV,
       ventanaDerechaCumplimiento, ventanaIzquierdaCumplimiento, ventanaFrontalCumplimiento, ventanaPosteriorCumplimiento,
+      ventanaDerechaSHGC, ventanaIzquierdaSHGC, ventanaFrontalSHGC, ventanaPosteriorSHGC,
+      ventanaDerechaSHGCCumplimiento, ventanaIzquierdaSHGCCumplimiento, ventanaFrontalSHGCCumplimiento, ventanaPosteriorSHGCCumplimiento,
       techoUV, techoCumplimiento, techoSRI, techoSRICumplimiento, pisoUV, pisoCumplimiento,
     } = source || {};
 
@@ -174,6 +176,8 @@ export class FormsComponentsComponent implements OnInit {
       paredDerechaCumplimiento, paredIzquierdaCumplimiento, paredFrontalCumplimiento, paredPosteriorCumplimiento,
       ventanaDerechaUV, ventanaIzquierdaUV, ventanaFrontalUV, ventanaPosteriorUV,
       ventanaDerechaCumplimiento, ventanaIzquierdaCumplimiento, ventanaFrontalCumplimiento, ventanaPosteriorCumplimiento,
+      ventanaDerechaSHGC, ventanaIzquierdaSHGC, ventanaFrontalSHGC, ventanaPosteriorSHGC,
+      ventanaDerechaSHGCCumplimiento, ventanaIzquierdaSHGCCumplimiento, ventanaFrontalSHGCCumplimiento, ventanaPosteriorSHGCCumplimiento,
       techoUV, techoCumplimiento, techoSRI, techoSRICumplimiento, pisoUV, pisoCumplimiento,
     };
   }

@@ -101,12 +101,11 @@ export class VentanasComponent implements OnInit {
     }
     const material = this.windowMaterials.find(material => material.id == materialId);
     this.summaryObject.nombre = material.material;
-
-    let windowSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
-    windowSHGC.textContent = "SHGC: " +parseFloat(material["sghc"].toString()).toFixed(2)+" [-]"
     this.summaryObject.sghc = material["sghc"];
+    this.setSGHCValue(material["sghc"])
 
     let uwindow;
+    let sghcCumplimiento;
     if (this.isSavedProject && !this.loadedUV) {
       this.loadedUV = true;
       const result = this.summary.getResultSnapshot();
@@ -114,16 +113,22 @@ export class VentanasComponent implements OnInit {
         u: +result["ventana" + this.toTitleCase(this.location) + "UV"],
         cumple: result["ventana" + this.toTitleCase(this.location) + "Cumplimiento"]
       }
+      sghcCumplimiento = result["ventana"+this.toTitleCase(this.location)+"SGCHCumplimiento"];
     } else {
       const uwindow$ = this.service.postUWindow({
         zona: this.uwindow["zona"],
         u: material["u"],
+        shgc: material["sghc"]
       })
-      uwindow = await lastValueFrom(uwindow$);
+      const result: any = await lastValueFrom(uwindow$);
+      uwindow = {
+        u: result.u.valor,
+        cumple: result.u.cumple
+      };
+      sghcCumplimiento = result.shgc.cumple;
     }
 
     this.setUValue(uwindow["u"]);
-    // this.setCumplimiento(uwindow["cumple"]);
 
     this.summaryObject.u = uwindow["u"];
     this.summaryObject.accomplishment = uwindow["cumple"];
@@ -131,6 +136,11 @@ export class VentanasComponent implements OnInit {
       this.setCumplimiento(uwindow["cumple"]);
     } else {
       this.setCumplimiento("SIN VALOR");
+    }
+    if (material["sghc"] == 0) {
+      this.setSGHCumplimiento("SIN VALOR")
+    } else {
+      this.setSGHCumplimiento(sghcCumplimiento);
     }
     this.replaceDataObject("Ventana", this.location, this.summaryObject);
   }
@@ -143,8 +153,33 @@ export class VentanasComponent implements OnInit {
     this.replaceData(nodeId, value);
   }
 
+  setSGHCValue(sghc: number) {
+    const nodeId = "ventana"+this.toTitleCase(this.location)+"SHGC";
+    const windowSHGC = document.getElementById(nodeId) as HTMLElement | null
+    const value = parseFloat(sghc.toString()).toFixed(2);
+    windowSHGC.textContent = "SHGC: " + value + " [-]";
+    this.replaceData(nodeId, value);
+  }
+
   setCumplimiento(cumplimiento:string) {
     const nodeId = "ventana"+this.toTitleCase(this.location)+"Cumplimiento";
+    const nodeCumplimiento = document.getElementById(nodeId) as HTMLElement | null;
+    nodeCumplimiento.textContent = cumplimiento;
+    this.replaceData(nodeId, cumplimiento);
+    if (cumplimiento == "CUMPLE") {
+      nodeCumplimiento.classList.replace("badge-default","badge-success")
+      nodeCumplimiento.classList.replace("badge-danger","badge-success")
+    } else if (cumplimiento == "NO CUMPLE") {
+      nodeCumplimiento.classList.replace("badge-default","badge-danger")
+      nodeCumplimiento.classList.replace("badge-success","badge-danger")
+    } else { // Sin Valor
+      nodeCumplimiento.classList.replace("badge-success","badge-default")
+      nodeCumplimiento.classList.replace("badge-danger","badge-default")
+    }
+  }
+
+  setSGHCumplimiento(cumplimiento:string) {
+    const nodeId = "ventana"+this.toTitleCase(this.location)+"SHGCCumplimiento";
     const nodeCumplimiento = document.getElementById(nodeId) as HTMLElement | null;
     nodeCumplimiento.textContent = cumplimiento;
     this.replaceData(nodeId, cumplimiento);
@@ -187,9 +222,8 @@ export class VentanasComponent implements OnInit {
   resetOutput() {
     this.setUValue(0);
     this.setCumplimiento("SIN VALOR");
-
-    let windowSHGC = document.getElementById("ventana"+this.toTitleCase(this.location)+"SHGC") as HTMLElement | null
-    windowSHGC.textContent = "SHGC: 0.00 [-]"
+    this.setSGHCValue(0);
+    this.setSGHCumplimiento("SIN VALOR");
   }
 
   async addVentana(selectedValue?) {
